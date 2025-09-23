@@ -11,7 +11,7 @@ const props = defineProps(['title', 'icon', 'videos'])
                 <i :class="icon"></i>
                 {{ title }}
             </h3>
-            <button class="see-all-btn">모두 보기</button>
+<!--            <button class="see-all-btn">모두 보기</button>-->
         </div>
 
         <div class="video-grid">

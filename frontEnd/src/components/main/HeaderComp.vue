@@ -1,25 +1,45 @@
 <script setup>
-import { reactive, watch } from 'vue';
-import { useRoute } from 'vue-router'
+import { reactive, watch, ref, computed, onMounted, onUnmounted } from 'vue';
+import {useRoute, useRouter} from 'vue-router'
 import useMemberStore from '@/stores/useMemberStore';
+import api from '@/api/auth'
+import SearchBarComp from "@/components/search/SearchBarComp.vue";
 
 const route = useRoute()
 const memberStore = useMemberStore();
+const currentUserIdx = ref(null);
+const profileWrapperRef = ref(null);
+const router = useRouter();
+
+
 const state = reactive({
   isDropdownOpen: false
 })
 
-const toggleDropdown = () => {
-  state.isDropdownOpen = !state.isDropdownOpen;
-  console.log(state.isDropdownOpen)
+// 사용자 정보 조회
+const toMyChannel = async () => {
+  const channelName = memberStore.getChannelNameWithEncrypt()
+  await toggleDropdown()
+  await router.push(`/channel/${channelName}`)
 }
 
-watch(
-  () => route.fullPath,
-  () => {
-    state.isDropdownOpen = false
-  }
-)
+const logoutMember = async () => {
+  const data = await api.logout()
+  memberStore.removeWithEncrypt()
+  currentUserIdx.value = null; // 로그아웃 시 초기화
+  await toggleDropdown()
+  window.location.href = '/'
+}
+
+const toDM = async () => {
+  await router.push(`/message`)
+  await toggleDropdown()
+}
+
+const toggleDropdown = async () => {
+  state.isDropdownOpen = !state.isDropdownOpen;
+}
+
 </script>
 
 <template>
@@ -27,7 +47,7 @@ watch(
     <div class="header-left">
       <div class="header-logo">
         <a href="/">
-          <img src="@/assets/images/dabom2.png" alt="DaBom Logo" class="logo-image" />
+          <img src="@/assets/images/dabom2.png" alt="Dabom Logo" class="logo-image" />
         </a>
       </div>
       <div class="nav-left">
@@ -37,9 +57,7 @@ watch(
         </nav>
       </div>
     </div>
-
-    <!---->
-
+    <SearchBarComp/>
     <div class="header-right">
       <div v-if="!memberStore.checkLogin()" class="login-menu">
         <RouterLink :to="{ name: 'login' }" class="login-item">로그인</RouterLink>
@@ -47,15 +65,14 @@ watch(
       </div>
 
       <div v-else class="nav-right">
-        <div class="profile-wrapper">
+        <div class="profile-wrapper" ref="profileWrapperRef">
           <div class="profile-trigger" @click="toggleDropdown">
             <img src="@/assets/images/dabom2.png" alt="프로필" class="profile-img" />
           </div>
           <div class="profile-dropdown" v-if="state.isDropdownOpen">
-            <RouterLink :to="{ name: 'mychannel' }" class="dropdown-item">내 채널</RouterLink>
-            <RouterLink :to="{ name: 'message' }" class="dropdown-item">DM</RouterLink>
-            <RouterLink :to="{ name: 'playlist'}" class="dropdown-item">플레이리스트</RouterLink>
-            <a href="#" class="dropdown-item">로그아웃</a>
+            <a @click="toMyChannel" class="dropdown-item" href="#" @click.prevent>내 채널</a>
+            <a @click="toDM" class="dropdown-item" href="/message" @click.prevent>DM</a>
+            <a href="#" class="dropdown-item" @click="logoutMember">로그아웃</a>
           </div>
         </div>
       </div>

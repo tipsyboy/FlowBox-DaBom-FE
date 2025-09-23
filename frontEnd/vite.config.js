@@ -10,16 +10,20 @@ export default defineConfig({
     vue(),
     vueDevTools(),
   ],
+  define: {
+    global: 'window',
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
   server: {
+    // host: "0.0.0.0",
     proxy: {
       // API 요청을 백엔드 서버로 프록시
       '/api': {
-        target: 'http://api.daaabom.kro.kr',
+        target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false
       }

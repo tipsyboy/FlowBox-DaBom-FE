@@ -1,53 +1,59 @@
 import community from "@/views/channel/subview/Community.vue"
-import playlist from "@/views/channel/subview/playlist/Playlist.vue"
+import playlists from "@/views/channel/subview/ChannelPlaylists.vue"
 import channel from "@/views/channel/ChannelMainView.vue"
 import about from "@/views/channel/subview/About.vue"
-import mychannel from "@/views/channel/MychannelMainView.vue"
-
 import videos from "@/views/channel/subview/video/Video_Fix.vue"
-
-import community_write from "@/views/channel/subview/community/Community_Write.vue"
-
+import ChannelPost from "@/components/channel/community/ChannelPost.vue"
+import MychannelMainView from "@/views/channel/MychannelMainView.vue"
 
 const channelRoutes = [
     {
-        path: '/channel',
+        path: '/channel/:channelName',
         name: 'channel',
         component: channel,
+        redirect: to => ({ name: 'videos', params: to.params }),
         children: [
             {
-                path: '/channel/videos',
+                path: '',
+                name: 'channelDefault',
+                redirect: to => ({ name: 'videos', params: to.params })
+            },
+            {
+                path: 'videos',
                 name: 'videos',
                 component: videos,
             },
             {
-                path: '/channel/playlists',
-                name: 'playlist',
-                component: playlist,
+                path: 'playlists',
+                name: 'playlists',
+                component: playlists
+            },
+
+            {
+                path: 'community',
+                name: 'community',
+                component: community
             },
             {
-                path: '/channel/community',
-                component: community,
+                path: 'about',
+                name: 'about',
+                component: about
             },
-            {
-                path: '/channel/about',
-                component: about,
-            },
-            {
-                path: '/channel/mychannel',
-                name: 'mychannel',
-                component: mychannel,
-            },
-            {
-                path: '/channel/community_write',
-                component: community_write,
-            },
-            {
-                path: '/channel/community/:id',
-                component: () => import('@/components/channel/ChannelPost.vue')
-            }
+
         ],
     },
+    {
+        path: '/post/:id',
+        name: 'post',
+        component: ChannelPost
+    },
+
+    // 내 채널 (별도 경로)
+    {
+        path: '/mychannel',
+        name: 'mychannel',
+        component: MychannelMainView,
+    }
 ]
 
 export default channelRoutes

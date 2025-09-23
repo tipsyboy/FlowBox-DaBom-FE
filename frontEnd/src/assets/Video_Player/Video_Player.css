@@ -255,9 +255,21 @@
     transform: scale(1.1);
 }
 
+/* 선택된 별점 상태 - 클릭 후 고정 표시 */
+.star-rating-interactive i.selected {
+    color: var(--star-color);
+    transform: scale(1.1);
+}
+
+/* 선택된 별에서 호버 효과 제거 (선택 상태 우선) */
+.star-rating-interactive i.selected:hover {
+    transform: scale(1.1); /* 크기는 유지하되 추가 효과 없음 */
+}
+
 .current-rating {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
+    color: var(--text-primary); /* --text-secondary 대신 --text-primary 사용 */
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
 /* Video Info Section */
@@ -480,7 +492,8 @@
 
 .btn-cancel {
     background-color: transparent;
-    color: var(--text-secondary);
+    color: white;
+    /*color: var(--text-secondary);*/
     border: 1px solid var(--border-color);
 }
 
@@ -850,13 +863,8 @@
     font-size: 0.95rem;
 }
 
-.star-rating-interactive {
-    display: flex;
-    gap: 0.25rem;
-}
-
 .btn-message {
-    background-color: var(aaaaaa);
+    background-color: var(--primary-color);
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;

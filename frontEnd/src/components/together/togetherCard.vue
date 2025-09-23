@@ -1,8 +1,11 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { reactive, onMounted } from 'vue';
+import { reactive, onMounted, ref } from 'vue'
+import Modal from '@/components/main/Modal.vue'
+import api from '@/api/together/'
 
 const router = useRouter()
+const showErrorModal = ref(false)
 const props = defineProps(['together']);
 const together = reactive({
   together_id: 0,
@@ -14,23 +17,35 @@ const together = reactive({
   total_play_time: "",
   created: ""
 })
+const errorTitle = 'Together 에러'
+const errorMessage = ref('')
+
+const closeErrorModal = () => {
+  showErrorModal.value = false
+}
 
 const getTogether = () => {
   const data = props.together
   
-  together.together_id = data.together_id
+  together.together_id = data.togetherIdx
   together.title = data.title
-  together.host_name = data.host_name
+  together.host_name = data.master.name
   together.thumb_nail = data.thumb_nail
-  together.max_join_people = data.max_join_people
-  together.join_people = data.join_people
+  together.max_join_people = data.maxMemberNum
+  together.join_people = data.joinMemberNumber
   together.total_play_time = data.total_play_time
   together.created = data.created
 }
 
-const joinRoom = () => {
+const joinRoom = async () => {
   if (together.together_id !== 0) {
-    router.push({ name: 'togetherRoom', params: {id: together.together_id}})
+    let res = await api.joinOpenTogether(together.together_id);
+    if(res.code === 200) {
+      await router.push({ name: 'togetherRoom', params: {id: together.together_id}})
+    } else {
+      errorMessage.value = res.message
+      showErrorModal.value = true
+    }
   } else {
     console.log('URL이 제공되지 않았습니다.')
   }
@@ -42,7 +57,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="room-card" @click="joinRoom">
+  <div class="room-card">
     <div class="room-thumbnail">
       <img :src="together.thumb_nail" alt="동영상 썸네일" />
       <div class="room-status">
@@ -79,6 +94,7 @@ onMounted(() => {
       </button>
     </div>
   </div>
+  <Modal v-if="showErrorModal" @confirm="closeErrorModal" :title="errorTitle" :message="errorMessage"  />
 </template>
 
 <style scoped>

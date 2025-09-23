@@ -1,7 +1,6 @@
 <script setup>
 
 import { ref, computed } from 'vue'
-import { defineProps, defineEmits } from 'vue'
 import ChatListHeader from './ChatListHeader.vue'
 import ChatListSearch from './ChatListSearch.vue'
 import ChatItem from './ChatItem.vue'

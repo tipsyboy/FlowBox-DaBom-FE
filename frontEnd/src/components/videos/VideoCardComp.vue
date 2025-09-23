@@ -7,12 +7,19 @@ const router = useRouter()
 const playVideo = () => {
     router.push({ name: 'videoPlayer', params: { id: props.video.videoId } })
 }
+
+const goToChannel = () => {
+    // channel 정보가 있을 때만 이동하도록 수정
+    if (props.video.channel && props.video.channel.name) {
+        router.push(`/channel/${props.video.channel.name}`);
+    }
+}
 </script>
 
 <template>
     <div class="video-card">
         <div class="video-thumbnail">
-            <img src="@/assets/images/dabom2.png" alt="썸네일" />
+            <img :src="video.videoImage || '@/assets/images/dabom2.png'"  alt="썸네일" />
             <div class="video-duration">{{ props.video.duration }}</div>
             <div class="video-overlay">
                 <button class="video-overlay__play-btn" @click="playVideo">
@@ -26,12 +33,16 @@ const playVideo = () => {
 
         <!-- 비디오 정보 -->
         <div class="video-info">
-            <div class="channel-avatar">
-                <img src="@/assets/images/dabom2.png" alt="채널이미지" />
+            <div class="channel-avatar" @click="goToChannel">
+                <img 
+                    :src="props.video.channel?.profileImg || '@/assets/images/dabom2.png'" 
+                    alt="채널이미지" 
+                />
             </div>
             <div class="video-details">
                 <h4 class="video-title">{{ props.video.title }}</h4>
-                <p class="channel-name">{{ props.video.channel.name }}</p>
+                <!-- Optional Chaining (?.)을 사용해서 안전하게 접근하도록 수정 -->
+                <p class="channel-name">{{ props.video.channel?.name || '채널 정보 없음' }}</p>
                 <div class="video-meta">
                     <div class="star-rating">
 
@@ -40,10 +51,10 @@ const playVideo = () => {
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="far fa-star"></i>
-                        <span class="rating-score">{{ props.video.rating }}</span>
+                        <span class="rating-score">{{ props.video.rating || 0}}</span>
                     </div>
-                    <span class="view-count">{{ props.video.views }}</span>
-                    <span class="upload-time">{{ props.video.uploadedAt }}일 전</span>
+                    <span class="view-count">{{ props.video.views || 0 }}</span>
+                    <span class="upload-time">{{ props.video.uploadedAt || 0}}일 전</span>
                 </div>
             </div>
         </div>
@@ -111,6 +122,15 @@ const playVideo = () => {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+.channel-avatar {
+    cursor: pointer; /* 마우스 올리면 포인터로 변경 */
+    transition: transform 0.2s ease;
+}
+
+.channel-avatar:hover {
+    transform: scale(1.05); /* 살짝 확대 효과 */
 }
 
 .video-details {

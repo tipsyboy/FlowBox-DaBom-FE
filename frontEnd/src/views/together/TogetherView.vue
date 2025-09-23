@@ -1,5 +1,5 @@
 <script setup>
-import togetherHeader from '@/components/together/TogetherHeader.vue'
+import TogetherHeader from '@/components/together/TogetherHeader.vue'
 import quickButton from '@/components/together/TogetherQuickButton.vue'
 import CreateTogetherModal from '@/components/together/CreateTogetherModal.vue'
 
@@ -19,7 +19,7 @@ const closeModal = () => {
 <template>
   <main class="main-content">
     <div class="together-container">
-      <togetherHeader />
+      <TogetherHeader />
       <router-view></router-view>
       <span @click="openCreateRoomModal"><quickButton /></span>
       <CreateTogetherModal 

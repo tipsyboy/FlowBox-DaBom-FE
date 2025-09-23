@@ -1,61 +1,197 @@
 <script setup>
-import Video_Main_Info from '../components/Video_Player/Video_Main_Info.vue'
-import Video_Tag_Explain from '../components/Video_Player/Video_Tag_Explain.vue'
-import Video_Recommend from '../components/Video_Player/Video_Recommend.vue'
-import Video_Comment from '../components/Video_Player/Video_Comment.vue'
-import { useRoute } from 'vue-router'
-import { onMounted } from 'vue'
-import { reactive, ref } from 'vue'
+import Video_Main_Info from '@/components/video-player/Video_Main_Info.vue'
+import Video_Tag_Explain from '@/components/video-player/Video_Tag_Explain.vue'
+import Video_Comment from '@/components/video-player/Video_Comment.vue'
+import {useRoute} from 'vue-router'
+import {onMounted, reactive, ref, onUnmounted} from 'vue'
+import Hls from 'hls.js'
 import api from '@/api/video_player'
-import VideoInfo from '@/entity/video/VideoInfo.js'
+import useMemberStore from '@/stores/useMemberStore' 
+import channelApi from "@/api/channel" 
 
-const route = useRoute();
+const route = useRoute()
 const videoId = route.params.id
-const data = ref()
+const videoPlayer = ref(null)
+const memberStore = useMemberStore() 
+let hls = null
 
-const state = reactive({
-    videoInfo: new VideoInfo()
+const videoInfo = reactive({
+  idx: '',
+  title: '',
+  description: '',
+  savedPath: '',
+  isSubscribed: '',
+  channelName: '',
+  viewCount: 0,
+  videoScore: 0,
+  subscribeCount: 0
 })
 
-const getData = async () => {
-    data.value = await api.getVideo(videoId);
-    state.videoInfo = data.value
+const currentUserProfile = ref({
+  profileImg: 'https://via.placeholder.com/40',
+  name: '사용자'
+})
+
+const loadCurrentUserProfile = async () => {
+  try {
+    const myChannelName = memberStore.getChannelNameWithEncrypt()
+    if (myChannelName) {
+      const channelInfoResponse = await channelApi.getChannelInfoByChannelName(myChannelName)
+      if (channelInfoResponse) {
+        currentUserProfile.value = {
+          profileImg: channelInfoResponse.profileImg || 'https://via.placeholder.com/40',
+          name: channelInfoResponse.name || '사용자'
+        }
+      }
+    }
+  } catch (error) {
+  }
 }
 
-onMounted(() => {
-    getData();
-    console.log(state.videoInfo)
-    console.log(state.videoInfo.videoUrl)
-});
+const getData = async () => {
+  const result = await api.getVideoById(videoId)
+  Object.assign(videoInfo, result.data)
+  console.log(result.data)
+  if (videoInfo.savedPath) {
+    initHlsPlayer()
+  }
+}
 
+const initHlsPlayer = () => {
+  if (!videoPlayer.value || !videoInfo.savedPath) return
 
-console.log(state.videoInfo)
+  const video = videoPlayer.value
+  const videoUrl = videoInfo.savedPath
 
+  if (hls) {
+    hls.destroy()
+  }
 
+  if (Hls.isSupported()) {
+    hls = new Hls()
+    hls.loadSource(videoUrl)
+    hls.attachMedia(video)
+
+    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+      console.log("load hls..")
+    })
+
+    hls.on(Hls.Events.ERROR, (event, data) => {
+      console.error('HLS 에러:', data)
+    })
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = videoUrl
+  }
+}
+
+onMounted(async () => {
+  // 데이터 로드를 병렬로 실행
+  await Promise.all([
+    getData(),
+    loadCurrentUserProfile()
+  ])
+})
+
+onUnmounted(() => {
+  if (hls) {
+    hls.destroy()
+    hls = null
+  }
+})
 </script>
 
 <template>
-    <div class="video-container">
-        <div class="video-player-section">
-            <!-- Left Column -->
-            <div class="main-content-column">
-                <div class="video-player-wrapper">
-                    <!-- 실제 비디오 플레이어 -->
-                    <video id="mainVideoPlayer" class="video-player" :src="state.videoInfo.videoUrl" controls>
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <Video_Main_Info :videoInfo="state.videoInfo"></Video_Main_Info>
-                <Video_Tag_Explain :videoInfo="state.videoInfo"></Video_Tag_Explain>
-                <Video_Comment ></Video_Comment>
-            </div>
-            <!-- Right Sidebar -->
-            <div class="recommended-sidebar">
-                <Video_Recommend></Video_Recommend>
-            </div>
-        </div>
+  <div class="video-page-container">
+    <!-- 고정된 비디오 플레이어 섹션 -->
+    <div class="video-player-section">
+      <div class="video-player-wrapper">
+        <video
+            ref="videoPlayer"
+            class="video-player"
+            controls
+            muted
+            autoplay
+        >
+          지원하지 않는 비디오 플레이어 입니다.
+        </video>
+      </div>
     </div>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <div class="main-content-area">
+      <!-- 좌측 컨텐츠 -->
+      <div class="content-column">
+        <div class="video-title-section">
+          <h1 class="video-title">{{ videoInfo.title }}</h1>
+        </div>
+        <Video_Tag_Explain :videoInfo="videoInfo"/>
+        <Video_Main_Info :videoInfo="videoInfo"/>
+        <!-- 현재 사용자 프로필 정보를 댓글 컴포넌트에 전달 -->
+        <Video_Comment :current-user-profile="currentUserProfile"/>
+      </div>
+    </div>
+  </div>
 </template>
+
 <style scoped>
-@import url(../assets/Video_Player/Video_Player.css);
+/* 전체 페이지 컨테이너 */
+.video-page-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--background-color, #1a1a1a);
+}
+
+/* 고정된 비디오 플레이어 섹션 */
+.video-player-section {
+  width: 100vw;
+  height: 75vh;
+  padding: 0;
+  background-color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-player-wrapper {
+  width: 100vw;
+  height: 75vh;
+  max-width: none;
+  background-color: #000;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+  display: block;
+}
+
+/* 메인 컨텐츠 영역 */
+.main-content-area {
+  width: 85vw;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.content-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+.video-title {
+  color: var(--text-primary, #ffffff);
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+  word-wrap: break-word;
+}
 </style>

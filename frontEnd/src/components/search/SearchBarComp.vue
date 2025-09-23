@@ -1,13 +1,36 @@
 <script setup>
 import SearchQueryForm from '@/entity/SearchQueryForm';
 import { reactive } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+
+const router = useRouter();
+const route = useRoute();
 
 const state = reactive({
     searchQueryForm: new SearchQueryForm()
 })
 
+// 현재 URL의 키워드로 초기화
+if (route.query.keyword) {
+    state.searchQueryForm.query = route.query.keyword;
+}
+
 const onSubmit = () => {
-    console.log("검색어")
+    const keyword = state.searchQueryForm.query.trim();
+    
+    // 메인 페이지로 이동하면서 검색어를 쿼리 파라미터로 전달
+    router.push({
+        name: 'main', // 또는 메인 페이지의 라우트 이름
+        query: { 
+            keyword: keyword || undefined // 빈 문자열이면 undefined로 설정
+        }
+    });
+}
+
+const onInputKeydown = (event) => {
+    if (event.key === 'Enter') {
+        onSubmit();
+    }
 }
 </script>
 
@@ -15,8 +38,13 @@ const onSubmit = () => {
     <div class="search-container">
         <form class="search-form" @submit.prevent="onSubmit">
             <div class="search-input-wrapper">
-                <input type="text" v-model="state.searchQueryForm.query" placeholder="검색어를 입력하세요..."
-                    class="search-input" />
+                <input 
+                    type="text" 
+                    v-model="state.searchQueryForm.query" 
+                    @keydown="onInputKeydown"
+                    placeholder="검색어를 입력하세요..."
+                    class="search-input" 
+                />
                 <button type="submit" class="search-btn">
                     <i class="fas fa-search"></i>
                 </button>

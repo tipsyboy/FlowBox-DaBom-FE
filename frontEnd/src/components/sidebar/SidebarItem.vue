@@ -1,5 +1,14 @@
 <template>
-    <a href="#" class="sidebar-item" :class="{ active: props.item.active }">
+    <router-link v-if="props.item.path" :to="props.item.path" class="sidebar-item" :class="{ active: props.item.active }">
+        <template v-if="props.isChannel">
+            <img :src="props.item.img" alt="채널" class="channel-icon" />
+        </template>
+        <template v-else>
+            <i :class="props.item.icon"></i>
+        </template>
+        {{ props.item.label }}
+    </router-link>
+    <a v-else href="#" class="sidebar-item" :class="{ active: props.item.active }">
         <template v-if="props.isChannel">
             <img :src="props.item.img" alt="채널" class="channel-icon" />
         </template>
@@ -11,6 +20,7 @@
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router';
 const props = defineProps(['item', 'isChannel'])
 </script>
 

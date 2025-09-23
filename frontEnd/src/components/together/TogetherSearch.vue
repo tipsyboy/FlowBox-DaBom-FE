@@ -16,7 +16,8 @@ const search = async () => {
     return
   }
 
-  router.push({name: 'togetherSearch', query: { q: searchContext.value }})
+  await router.push({ name: 'togetherSearch', query: { q: searchContext.value } })
+  window.location.reload()
 }
 
 onMounted(() => { 

@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue'
 import OnlineStatus from './OnlineStatus.vue'
 
 const props = defineProps({

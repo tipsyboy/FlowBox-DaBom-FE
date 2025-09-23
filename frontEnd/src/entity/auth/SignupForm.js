@@ -4,6 +4,7 @@ export default class SignupForm {
         this.channelName = '';
         this.password = '';
         this.password2 = '';
+        this.memberRole = 'USER';
         this.isEmailChecked = null;
         this.isChannelChecked = null;
     }

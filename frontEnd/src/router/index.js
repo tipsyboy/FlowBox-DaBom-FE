@@ -5,6 +5,7 @@ import videoPlayerRoutes from '@/router/videoPlayerRouter.js'
 import channelRoutes from '@/router/channelRouter.js'
 import togetherRoutes from '@/router/togetherRouter.js'
 import messageRoutes from '@/router/messageRoutes.js'
+import playlistRoutes from '@/router/playlistRouter.js' // 새로 추가
 
 
 const routes = [
@@ -17,7 +18,8 @@ const routes = [
   ...videoPlayerRoutes,
   ...channelRoutes,
   ...togetherRoutes,
-  ...messageRoutes
+  ...messageRoutes,
+  ...playlistRoutes // 새로 추가
 ]
 
 const router = createRouter({

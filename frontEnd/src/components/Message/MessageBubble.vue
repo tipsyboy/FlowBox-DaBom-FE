@@ -13,6 +13,13 @@ const props = defineProps({
 });
 
 const avatarUrl = computed(() => props.chatAvatar.replace('50x50', '32x32'));
+
+const formattedTime = computed(() => {
+  const timeParts = props.message.time.split(':');
+  return timeParts.length >= 2 ? `${timeParts[0]}:${timeParts[1]}` : props.message.time;
+});
+
+
 </script>
 
 <template>
@@ -22,10 +29,9 @@ const avatarUrl = computed(() => props.chatAvatar.replace('50x50', '32x32'));
     </div>
     <div class="message-content-wrapper">
       <div class="message-content">{{ message.content }}</div>
-      <div class="message-time">{{ message.time }}</div>
+      <div class="message-time">{{ formattedTime }}</div>
     </div>
     <div v-if="message.sent" class="message-avatar">
-      <img src="https://via.placeholder.com/32x32/ff4757/ffffff?text=U" :alt="message.sender">
     </div>
   </div>
 </template>
