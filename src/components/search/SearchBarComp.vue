@@ -42,7 +42,7 @@ const onInputKeydown = (event) => {
                     type="text" 
                     v-model="state.searchQueryForm.query" 
                     @keydown="onInputKeydown"
-                    placeholder="검색어를 입력해주세요..."
+                    placeholder="검색어를 입력해보세요..."
                     class="search-input" 
                 />
                 <button type="submit" class="search-btn">
