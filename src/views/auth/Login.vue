@@ -125,9 +125,9 @@ const openPopup = async (options, url) => {
           <button class="social-icon-btn google" title="google" @click="showSocialLoginPopup(socialLogin.google)">
             <i class="fab fa-google"></i>
           </button>
-          <button class="social-icon-btn apple" title="apple">
-            <i class="fab fa-apple"></i>
-          </button>
+<!--          <button class="social-icon-btn apple" title="apple">-->
+<!--            <i class="fab fa-apple"></i>-->
+<!--          </button>-->
         </div>
 
         <div class="signup-link">

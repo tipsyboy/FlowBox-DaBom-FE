@@ -163,7 +163,7 @@ const signUp = async () => {
   <div class="singup-container">
     <div class="signup-form-wrapper">
       <div class="signup-header">
-        <h1>회원가입 V8</h1>
+        <h1>회원가입</h1>
         <p>DaBom 커뮤니티의 새로운 멤버가 되어보세요</p>
       </div>
 
