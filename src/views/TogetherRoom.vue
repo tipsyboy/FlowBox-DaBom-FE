@@ -62,14 +62,19 @@ const loadTogetherInfo = (data) => {
     togetherInfo.videoUrl = 'https://s3.ap-northeast-2.amazonaws.com/raccoon.aws.s3/encoder/sample/playlist.m3u8'
   }
 }
+
 const connectWebSocket = async () => {
-  const ws = new SockJS('http://localhost:8080/chat', null,
-      {
-        transportOptions: {
-          xhr: { withCredentials: true },
-          xhrStreaming: { withCredentials: true }
-        }
-      })
+  const backendUrl = window.location.hostname === 'localhost'
+    ? 'http://localhost:8080/chat'
+    : 'https://www.dabom-together.kro.kr/chat';
+
+  const ws = new SockJS(backendUrl, null, {
+    transportOptions: {
+      xhr: { withCredentials: true },
+      xhrStreaming: { withCredentials: true }
+    }
+  });
+
   const client = Stomp.over(ws)
   socket.value = client
   socket.value.connect(
