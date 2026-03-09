@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaBom Refactor Proposal - Main Explore Sample</title>
+    <link rel="stylesheet" href="./main-page-sample.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="top-left">
+          <div class="brand">
+            <img src="../../src/assets/images/dabom2.png" alt="DaBom logo" />
+          </div>
+          <nav class="top-nav">
+            <a class="active" href="#">홈</a>
+            <a href="../5-together/">투게더</a>
+          </nav>
+        </div>
+
+        <div class="top-center">
+          <div class="search-wrap">
+            <input type="text" placeholder="검색어를 입력하세요" />
+            <button>검색</button>
+          </div>
+        </div>
+
+        <div class="top-right">
+          <a href="../1-auth/login-sample.html" class="auth-btn">로그인</a>
+          <a href="../1-auth/signup-sample.html" class="auth-btn">회원가입</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="main-banner">
+      <div class="banner-frame">
+        <img src="../../src/assets/images/banner.png" alt="Dabom banner" class="banner-image" />
+      </div>
+    </section>
+
+    <div class="main-content">
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h3>홈</h3>
+          <ul class="sidebar-menu">
+            <li><a class="sidebar-item active" href="#"><span>●</span>홈</a></li>
+            <li><a class="sidebar-item" href="../7-playlist/"><span>●</span>재생목록</a></li>
+            <li><a class="sidebar-item" href="../5-together/"><span>●</span>Together</a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-section">
+          <h3>구독</h3>
+          <ul class="sidebar-menu">
+            <li><a class="sidebar-item" href="../3-channel-visit-community/"><img src="../../src/assets/images/dabom2.png" alt="" />FlowBox Studio</a></li>
+            <li><a class="sidebar-item" href="../3-channel-visit-community/"><img src="../../src/assets/images/dabom2.png" alt="" />Dabom Clips</a></li>
+            <li><a class="sidebar-item" href="../3-channel-visit-community/"><img src="../../src/assets/images/dabom2.png" alt="" />Together Live</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="video-content">
+        <section class="video-section">
+          <div class="section-header">
+            <h3 class="section-title">인기영상</h3>
+          </div>
+
+          <div class="video-grid">
+            <article class="video-card">
+              <div class="video-thumbnail">
+                <img src="../../src/assets/images/banner.png" alt="썸네일" />
+                <div class="video-duration">14:10</div>
+              </div>
+              <div class="video-info">
+                <div class="channel-avatar">
+                  <img src="../../src/assets/images/dabom2.png" alt="채널" />
+                </div>
+                <div class="video-details">
+                  <h4 class="video-title">Vue 프로젝트 구조 리팩토링</h4>
+                  <p class="channel-name">FlowBox Studio</p>
+                  <div class="video-meta">
+                    <span>평점 4.2</span>
+                    <span>조회수 12K</span>
+                    <span>2일 전</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="video-card">
+              <div class="video-thumbnail">
+                <img src="../../src/assets/images/banner.png" alt="썸네일" />
+                <div class="video-duration">09:34</div>
+              </div>
+              <div class="video-info">
+                <div class="channel-avatar">
+                  <img src="../../src/assets/images/dabom2.png" alt="채널" />
+                </div>
+                <div class="video-details">
+                  <h4 class="video-title">Pinia 상태 관리 정리 패턴</h4>
+                  <p class="channel-name">Dabom Dev</p>
+                  <div class="video-meta">
+                    <span>평점 4.6</span>
+                    <span>조회수 8.1K</span>
+                    <span>5일 전</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="video-card">
+              <div class="video-thumbnail">
+                <img src="../../src/assets/images/banner.png" alt="썸네일" />
+                <div class="video-duration">20:07</div>
+              </div>
+              <div class="video-info">
+                <div class="channel-avatar">
+                  <img src="../../src/assets/images/dabom2.png" alt="채널" />
+                </div>
+                <div class="video-details">
+                  <h4 class="video-title">컴포넌트 공통화 기준 만들기</h4>
+                  <p class="channel-name">Frontend Notes</p>
+                  <div class="video-meta">
+                    <span>평점 4.1</span>
+                    <span>조회수 6.4K</span>
+                    <span>1주 전</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="video-card">
+              <div class="video-thumbnail">
+                <img src="../../src/assets/images/banner.png" alt="썸네일" />
+                <div class="video-duration">16:44</div>
+              </div>
+              <div class="video-info">
+                <div class="channel-avatar">
+                  <img src="../../src/assets/images/dabom2.png" alt="채널" />
+                </div>
+                <div class="video-details">
+                  <h4 class="video-title">공통 CSS 토큰화 실습</h4>
+                  <p class="channel-name">FlowBox Studio</p>
+                  <div class="video-meta">
+                    <span>평점 4.8</span>
+                    <span>조회수 9.3K</span>
+                    <span>3일 전</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="loading-container">
+            <div class="loading-spinner">추가 영상을 불러오는 중...</div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

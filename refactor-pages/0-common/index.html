@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaBom Refactor Proposal - Component Sample</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="brand">
+          <div class="brand-mark">D</div>
+          <div class="brand-text">
+            <strong>DaBom</strong>
+            <span>Refactor Proposal</span>
+          </div>
+        </div>
+        <div class="header-search">
+          <input type="text" placeholder="검색어를 입력하세요" />
+          <button>검색</button>
+        </div>
+        <button class="ghost-btn">내 채널</button>
+      </header>
+
+      <div class="app-body">
+        <aside class="left-nav card">
+          <h3>네비게이션</h3>
+          <nav>
+            <a class="active" href="#">홈</a>
+            <a href="#">재생목록</a>
+            <a href="#">투게더</a>
+            <a href="#">메시지</a>
+          </nav>
+
+          <h4>구독 채널</h4>
+          <ul class="channel-list">
+            <li><span class="avatar"></span> FlowBox Studio</li>
+            <li><span class="avatar"></span> Dabom Clips</li>
+            <li><span class="avatar"></span> Together Lab</li>
+          </ul>
+        </aside>
+
+        <main class="content-area">
+          <section class="card">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">공통 컴포넌트</p>
+                <h2>SectionHeader + ActionBar</h2>
+              </div>
+              <div class="action-row">
+                <button class="ghost-btn">필터</button>
+                <button class="primary-btn">새 항목 추가</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="section-head">
+              <h2>VideoCard Grid</h2>
+              <a href="#">전체보기</a>
+            </div>
+            <div class="video-grid">
+              <article class="video-card">
+                <div class="thumb">16:24</div>
+                <h3>Vue 컴포넌트 구조 개선하기</h3>
+                <p>FlowBox Studio · 조회수 12.4K</p>
+              </article>
+              <article class="video-card">
+                <div class="thumb">08:10</div>
+                <h3>Pinia 스토어 분리 전략</h3>
+                <p>Dabom Dev · 조회수 8.9K</p>
+              </article>
+              <article class="video-card">
+                <div class="thumb">21:41</div>
+                <h3>라우트 단위 데이터 로딩 패턴</h3>
+                <p>FlowBox Studio · 조회수 6.1K</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="card split">
+            <div>
+              <div class="section-head">
+                <h2>PlaylistTable</h2>
+              </div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>플레이리스트</th>
+                    <th>영상 수</th>
+                    <th>수정일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>리팩토링 학습 모음</td>
+                    <td>18</td>
+                    <td>2026-03-09</td>
+                  </tr>
+                  <tr>
+                    <td>팀 프로젝트 회고</td>
+                    <td>6</td>
+                    <td>2026-03-03</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <div class="section-head">
+                <h2>PostList</h2>
+              </div>
+              <div class="post-list">
+                <article class="post-item">
+                  <h3>컴포넌트 공통화 우선순위 논의</h3>
+                  <p>좋아요 14 · 댓글 9 · 2시간 전</p>
+                </article>
+                <article class="post-item">
+                  <h3>스타일 토큰 정리 제안</h3>
+                  <p>좋아요 21 · 댓글 13 · 1일 전</p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="section-head">
+              <h2>EmptyState + Loading</h2>
+            </div>
+            <div class="state-row">
+              <div class="empty-state">
+                <strong>데이터가 없습니다</strong>
+                <p>필터를 조정하거나 새 항목을 추가해 보세요.</p>
+              </div>
+              <div class="loading-state">
+                <span class="spinner"></span>
+                <p>데이터를 불러오는 중...</p>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+  </body>
+</html>

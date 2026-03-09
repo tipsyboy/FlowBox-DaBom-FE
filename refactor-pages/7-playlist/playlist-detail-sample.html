@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playlist Detail Sample</title>
+    <link rel="stylesheet" href="./playlist-sample.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../2-main-explore/main-page-sample.html"><img src="../../src/assets/images/dabom2.png" alt="DaBom" /></a>
+        <div class="search-wrap"><input type="text" placeholder="플레이리스트 내 검색" /><button>검색</button></div>
+        <div class="auth-links"><a href="../1-auth/login-sample.html">로그인</a><a href="../1-auth/signup-sample.html">회원가입</a></div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="layout">
+        <aside class="panel">
+          <h2>리팩토링 모음</h2>
+          <p class="muted">24개 영상 · 공개</p>
+          <p class="muted">프로젝트 구조 개선에 필요한 강의/실습 영상 모음입니다.</p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap">
+            <button class="btn btn-primary">전체 재생</button>
+            <button class="btn">편집</button>
+            <a class="btn" href="./my-playlists-sample.html">목록</a>
+          </div>
+        </aside>
+
+        <section class="panel">
+          <h2>영상 목록</h2>
+          <div class="video-list">
+            <article class="video-item">
+              <img src="../../src/assets/images/banner.png" alt="thumb" />
+              <div><h4>컴포넌트 경계 설계하기</h4><p>조회수 8.2K · 3일 전</p></div>
+              <a class="btn" href="../2-main-explore/video-player-sample.html">재생</a>
+            </article>
+            <article class="video-item">
+              <img src="../../src/assets/images/banner.png" alt="thumb" />
+              <div><h4>공통 CSS 토큰 적용</h4><p>조회수 6.4K · 5일 전</p></div>
+              <a class="btn" href="../2-main-explore/video-player-sample.html">재생</a>
+            </article>
+            <article class="video-item">
+              <img src="../../src/assets/images/banner.png" alt="thumb" />
+              <div><h4>페이지별 마이그레이션 전략</h4><p>조회수 5.3K · 1주 전</p></div>
+              <a class="btn" href="../2-main-explore/video-player-sample.html">재생</a>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

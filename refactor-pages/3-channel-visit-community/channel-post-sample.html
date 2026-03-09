@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaBom - Channel Post Sample</title>
+    <link rel="stylesheet" href="./channel-main-sample.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../2-main-explore/main-page-sample.html">
+          <img src="../../src/assets/images/dabom2.png" alt="DaBom logo" />
+        </a>
+        <div class="search-wrap">
+          <input type="text" placeholder="채널/영상 검색" />
+          <button>검색</button>
+        </div>
+        <div class="auth-links">
+          <a href="../1-auth/login-sample.html">로그인</a>
+          <a href="../1-auth/signup-sample.html">회원가입</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="channel-header">
+      <img src="../../src/assets/images/banner.png" alt="채널 배너" class="channel-banner" />
+      <div class="channel-info">
+        <div class="profile-section">
+          <img src="../../src/assets/images/dabom2.png" alt="채널 프로필" class="channel-profile-img" />
+          <div class="channel-details">
+            <h1 class="channel-name">FlowBox Studio</h1>
+            <p class="channel-handle">@flowbox_studio</p>
+            <div class="channel-meta">
+              <span>구독자 12,483명</span>
+              <span>동영상 137개</span>
+              <span>누적 조회수 1,230,998회</span>
+            </div>
+          </div>
+        </div>
+        <div class="channel-actions">
+          <button class="subscribe-btn" id="subscribeBtn"><i class="fas fa-bell"></i> 구독</button>
+          <button class="message-btn"><i class="fas fa-envelope"></i> 메시지</button>
+        </div>
+      </div>
+    </section>
+
+    <nav class="channel-nav">
+      <a class="nav-item" href="./channel-main-sample.html">동영상</a>
+      <a class="nav-item" href="./channel-playlists-sample.html">재생목록</a>
+      <a class="nav-item active" href="./channel-community-sample.html">커뮤니티</a>
+      <a class="nav-item" href="./channel-about-sample.html">정보</a>
+    </nav>
+
+    <main class="channel-content">
+      <a class="back-link" href="./channel-community-sample.html"><i class="fas fa-arrow-left"></i> 커뮤니티로 돌아가기</a>
+
+      <article class="post-detail-card">
+        <div class="community-top">
+          <img src="../../src/assets/images/dabom2.png" alt="채널" />
+          <div>
+            <strong>FlowBox Studio</strong>
+            <p>2시간 전 · 조회수 1,204회</p>
+          </div>
+        </div>
+        <h2>이번 주 업로드 일정 공유</h2>
+        <p class="community-text">
+          금요일 저녁 8시에 채널 리팩토링 라이브를 진행합니다.<br />
+          실시간으로 질문 받아서 구조 분리와 공통 컴포넌트 적용 과정을 보여드릴 예정입니다.
+        </p>
+        <div class="post-actions">
+          <button><i class="far fa-thumbs-up"></i> 좋아요 132</button>
+          <button><i class="far fa-bookmark"></i> 저장</button>
+          <button><i class="fas fa-share"></i> 공유</button>
+        </div>
+      </article>
+
+      <section class="comments-panel">
+        <div class="comments-panel-head">
+          <h3>댓글 3개</h3>
+          <select>
+            <option>최신순</option>
+            <option>인기순</option>
+            <option>오래된순</option>
+          </select>
+        </div>
+
+        <div class="comment-write-row">
+          <img src="../../src/assets/images/dabom2.png" alt="내 프로필" />
+          <div class="comment-write-body">
+            <textarea placeholder="댓글을 입력하세요"></textarea>
+            <div class="comment-write-actions">
+              <button class="message-btn">취소</button>
+              <button class="subscribe-btn">댓글 게시</button>
+            </div>
+          </div>
+        </div>
+
+        <ul class="comment-thread">
+          <li class="comment-node">
+            <img src="../../src/assets/images/dabom2.png" alt="프로필" />
+            <div class="comment-node-body">
+              <div class="comment-node-head">
+                <strong>dabom_user</strong>
+                <span>58분 전</span>
+              </div>
+              <p>라이브 일정 좋아요. 질문 정리해서 가져가겠습니다.</p>
+              <div class="comment-node-actions">
+                <button><i class="far fa-thumbs-up"></i> 14</button>
+                <button>답글</button>
+              </div>
+            </div>
+          </li>
+
+          <li class="comment-node">
+            <img src="../../src/assets/images/dabom2.png" alt="프로필" />
+            <div class="comment-node-body">
+              <div class="comment-node-head">
+                <strong>frontend_note</strong>
+                <span>32분 전</span>
+              </div>
+              <p>공통 CSS 토큰부터 시작하는 순서가 궁금합니다.</p>
+              <div class="comment-node-actions">
+                <button><i class="far fa-thumbs-up"></i> 8</button>
+                <button>답글</button>
+              </div>
+            </div>
+          </li>
+
+          <li class="comment-node">
+            <img src="../../src/assets/images/dabom2.png" alt="프로필" />
+            <div class="comment-node-body">
+              <div class="comment-node-head">
+                <strong>flowbox_admin</strong>
+                <span>18분 전</span>
+              </div>
+              <p>우선순위는 페이지 레이아웃 공통화 → 카드 컴포넌트 분리 순서로 진행할 예정입니다.</p>
+              <div class="comment-node-actions">
+                <button><i class="far fa-thumbs-up"></i> 22</button>
+                <button>답글</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <script>
+      const subscribeBtn = document.getElementById('subscribeBtn');
+      subscribeBtn.addEventListener('click', () => {
+        const on = subscribeBtn.classList.toggle('is-subscribed');
+        subscribeBtn.innerHTML = on ? '<i class="fas fa-bell"></i> 구독 중' : '<i class="fas fa-bell"></i> 구독';
+      });
+    </script>
+  </body>
+</html>

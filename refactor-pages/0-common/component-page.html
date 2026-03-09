@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaBom Refactor Proposal - Component Page</title>
+    <link rel="stylesheet" href="./component-page.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="top-left">
+          <div class="brand">
+            <img src="../src/assets/images/dabom2.png" alt="DaBom logo" />
+          </div>
+          <nav class="top-nav">
+            <a class="active" href="#">홈</a>
+            <a href="#">투게더</a>
+          </nav>
+        </div>
+
+        <div class="top-center">
+          <div class="search-wrap">
+            <input type="text" placeholder="검색어를 입력하세요" />
+            <button>검색</button>
+          </div>
+        </div>
+
+        <div class="top-right">
+          <a href="#" class="auth-btn">로그인</a>
+          <a href="#" class="auth-btn">회원가입</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="main-banner">
+      <div class="banner-frame">
+        <img src="../src/assets/images/banner.png" alt="Dabom banner" class="banner-image" />
+      </div>
+    </section>
+
+    <main class="component-layout">
+      <aside class="component-sidebar">
+        <h3>Components</h3>
+        <a href="#header-search">Header + Search</a>
+        <a href="#buttons">Buttons</a>
+        <a href="#sidebar-item">Sidebar Item</a>
+        <a href="#section-header">Section Header</a>
+        <a href="#video-card">Video Card</a>
+        <a href="#playlist-row">Playlist Row</a>
+        <a href="#post-item">Post Item</a>
+        <a href="#states">Empty / Loading</a>
+      </aside>
+
+      <section class="component-content">
+        <article class="component-block" id="header-search">
+          <div class="block-head">
+            <h2>Header + Search</h2>
+            <button class="copy-btn" data-copy-target="code-header">코드 복사</button>
+          </div>
+          <div class="preview preview-header">
+            <div class="search-wrap mini">
+              <input type="text" placeholder="검색어를 입력하세요" />
+              <button>검색</button>
+            </div>
+            <div class="auth-row">
+              <a href="#" class="auth-btn">로그인</a>
+              <a href="#" class="auth-btn">회원가입</a>
+            </div>
+          </div>
+          <pre id="code-header"><code>&lt;div class="search-wrap"&gt;
+  &lt;input type="text" placeholder="검색어를 입력하세요" /&gt;
+  &lt;button&gt;검색&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;a href="#" class="auth-btn"&gt;로그인&lt;/a&gt;
+&lt;a href="#" class="auth-btn"&gt;회원가입&lt;/a&gt;</code></pre>
+        </article>
+
+        <article class="component-block" id="buttons">
+          <div class="block-head">
+            <h2>Buttons</h2>
+            <button class="copy-btn" data-copy-target="code-buttons">코드 복사</button>
+          </div>
+          <div class="preview">
+            <button class="btn-primary">주요 액션</button>
+            <button class="btn-ghost">보조 액션</button>
+            <button class="btn-danger">삭제</button>
+          </div>
+          <pre id="code-buttons"><code>&lt;button class="btn-primary"&gt;주요 액션&lt;/button&gt;
+&lt;button class="btn-ghost"&gt;보조 액션&lt;/button&gt;
+&lt;button class="btn-danger"&gt;삭제&lt;/button&gt;</code></pre>
+        </article>
+
+        <article class="component-block" id="sidebar-item">
+          <div class="block-head">
+            <h2>Sidebar Item</h2>
+            <button class="copy-btn" data-copy-target="code-sidebar">코드 복사</button>
+          </div>
+          <div class="preview column">
+            <a class="sidebar-item active" href="#"><span>●</span>홈</a>
+            <a class="sidebar-item" href="#"><span>●</span>재생목록</a>
+            <a class="sidebar-item" href="#"><span>●</span>Together</a>
+          </div>
+          <pre id="code-sidebar"><code>&lt;a class="sidebar-item active" href="#"&gt;&lt;span&gt;●&lt;/span&gt;홈&lt;/a&gt;
+&lt;a class="sidebar-item" href="#"&gt;&lt;span&gt;●&lt;/span&gt;재생목록&lt;/a&gt;</code></pre>
+        </article>
+
+        <article class="component-block" id="section-header">
+          <div class="block-head">
+            <h2>Section Header</h2>
+            <button class="copy-btn" data-copy-target="code-section">코드 복사</button>
+          </div>
+          <div class="preview">
+            <div class="section-header-row">
+              <h3 class="section-title">인기영상</h3>
+              <a href="#">전체보기</a>
+            </div>
+          </div>
+          <pre id="code-section"><code>&lt;div class="section-header-row"&gt;
+  &lt;h3 class="section-title"&gt;인기영상&lt;/h3&gt;
+  &lt;a href="#"&gt;전체보기&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+        </article>
+
+        <article class="component-block" id="video-card">
+          <div class="block-head">
+            <h2>Video Card</h2>
+            <button class="copy-btn" data-copy-target="code-video">코드 복사</button>
+          </div>
+          <div class="preview">
+            <article class="video-card">
+              <div class="video-thumbnail">
+                <img src="../src/assets/images/banner.png" alt="썸네일" />
+                <div class="video-duration">14:10</div>
+              </div>
+              <div class="video-info">
+                <div class="channel-avatar">
+                  <img src="../src/assets/images/dabom2.png" alt="채널" />
+                </div>
+                <div class="video-details">
+                  <h4 class="video-title">Vue 프로젝트 구조 리팩토링</h4>
+                  <p class="channel-name">FlowBox Studio</p>
+                  <div class="video-meta">
+                    <span>평점 4.2</span>
+                    <span>조회수 12K</span>
+                    <span>2일 전</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+          <pre id="code-video"><code>&lt;article class="video-card"&gt;
+  &lt;div class="video-thumbnail"&gt;
+    &lt;img src="..." alt="썸네일" /&gt;
+    &lt;div class="video-duration"&gt;14:10&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="video-info"&gt;
+    &lt;div class="channel-avatar"&gt;&lt;img src="..." alt="채널" /&gt;&lt;/div&gt;
+    &lt;div class="video-details"&gt;
+      &lt;h4 class="video-title"&gt;제목&lt;/h4&gt;
+      &lt;p class="channel-name"&gt;채널명&lt;/p&gt;
+      &lt;div class="video-meta"&gt;&lt;span&gt;평점 4.2&lt;/span&gt;&lt;span&gt;조회수 12K&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+        </article>
+
+        <article class="component-block" id="playlist-row">
+          <div class="block-head">
+            <h2>Playlist Row</h2>
+            <button class="copy-btn" data-copy-target="code-playlist">코드 복사</button>
+          </div>
+          <div class="preview">
+            <table class="playlist-table">
+              <tr>
+                <td>UI 리팩토링 모음</td>
+                <td>8개 영상</td>
+                <td><button class="btn-ghost small">수정</button></td>
+              </tr>
+            </table>
+          </div>
+          <pre id="code-playlist"><code>&lt;table class="playlist-table"&gt;
+  &lt;tr&gt;
+    &lt;td&gt;UI 리팩토링 모음&lt;/td&gt;
+    &lt;td&gt;8개 영상&lt;/td&gt;
+    &lt;td&gt;&lt;button class="btn-ghost small"&gt;수정&lt;/button&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+        </article>
+
+        <article class="component-block" id="post-item">
+          <div class="block-head">
+            <h2>Post Item</h2>
+            <button class="copy-btn" data-copy-target="code-post">코드 복사</button>
+          </div>
+          <div class="preview">
+            <article class="post-item">
+              <h3>컴포넌트 분리 순서 의견 받습니다</h3>
+              <p>댓글 14 · 좋아요 21</p>
+            </article>
+          </div>
+          <pre id="code-post"><code>&lt;article class="post-item"&gt;
+  &lt;h3&gt;컴포넌트 분리 순서 의견 받습니다&lt;/h3&gt;
+  &lt;p&gt;댓글 14 · 좋아요 21&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+        </article>
+
+        <article class="component-block" id="states">
+          <div class="block-head">
+            <h2>Empty / Loading</h2>
+            <button class="copy-btn" data-copy-target="code-states">코드 복사</button>
+          </div>
+          <div class="preview states-grid">
+            <div class="empty-state">데이터가 없습니다.</div>
+            <div class="loading-state"><span class="dot"></span>불러오는 중...</div>
+          </div>
+          <pre id="code-states"><code>&lt;div class="empty-state"&gt;데이터가 없습니다.&lt;/div&gt;
+&lt;div class="loading-state"&gt;&lt;span class="dot"&gt;&lt;/span&gt;불러오는 중...&lt;/div&gt;</code></pre>
+        </article>
+      </section>
+    </main>
+
+    <div class="toast" id="toast">코드를 복사했습니다.</div>
+
+    <script>
+      const copyButtons = document.querySelectorAll('.copy-btn');
+      const toast = document.getElementById('toast');
+
+      copyButtons.forEach((button) => {
+        button.addEventListener('click', async () => {
+          const targetId = button.getAttribute('data-copy-target');
+          const code = document.querySelector('#' + targetId + ' code').innerText;
+          await navigator.clipboard.writeText(code);
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 1200);
+        });
+      });
+    </script>
+  </body>
+</html>
