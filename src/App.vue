@@ -1,21 +1,19 @@
 <script setup>
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
-import HeaderComp from '@/components/main/HeaderComp.vue';
-import FooterComp from '@/components/main/FooterComp.vue';
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { Footer, Header } from '@/components/global/index.js'
 
-const route = useRoute();
+const route = useRoute()
 
 const showFooter = computed(() => {
-  return route.name !== 'message';
-});
-
+  return route.name !== 'message'
+})
 </script>
 
 <template>
-  <HeaderComp />
+  <Header />
   <RouterView />
-  <FooterComp v-if="showFooter" />
+  <Footer v-if="showFooter" />
 </template>
 
 <style scoped></style>

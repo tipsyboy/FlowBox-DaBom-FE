@@ -89,7 +89,7 @@
 ## 8) 공통 부분
 ### 공통 CSS
 - [ ] 공통 토큰(색상/간격/타이포/라운드/그림자) 단일 파일 정의
-- [ ] `src/assets/main/main.css`와 `src/CSS/main.css` 통합
+- [ ] `src/assets/main/main.css`와 `src/css/main.css` 통합
 - [ ] 페이지별 CSS에서 공통 유틸/레이아웃 클래스 정리
 - [ ] 반응형 브레이크포인트 기준 통일
 

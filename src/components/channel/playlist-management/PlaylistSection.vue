@@ -104,7 +104,7 @@ const handleCreate = async () => {
 </template>
 
 <style scoped>
-@import url(@/CSS/main.css);
+@import url(@/css/main.css);
 @import url(@/assets/channel/mychannel.css);
 
 /* Add some styles for the input field to make it look better */

@@ -2,7 +2,7 @@
 import { onMounted, reactive, ref } from 'vue';
 import api from '@/api/playlist/index.js';
 import { useRouter } from 'vue-router';
-import '@/CSS/playList.css';
+import '@/css/playList.css';
 
 const router = useRouter();
 const playlists = reactive([]);

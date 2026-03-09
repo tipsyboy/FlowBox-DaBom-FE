@@ -31,7 +31,7 @@
 ### 2-3. 기존 공통 CSS와 충돌 정리
 - 대상:
   - `src/assets/main/main.css`
-  - `src/CSS/main.css`
+  - `src/css/main.css`
 - 전략:
   1. 토큰 변수 중복 제거
   2. 동일 역할 클래스(`topbar`, `card`, `btn*`)를 `g-*` 네임스페이스 우선으로 교체

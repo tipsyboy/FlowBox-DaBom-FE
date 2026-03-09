@@ -173,7 +173,7 @@ function handleSendMessage(messageText) {
 
 <style scoped>
 /* @import url(../assets/main/main.css); */
-@import url(../assets/Message/MessageContainer.css);
+@import url(../assets/message/MessageContainer.css);
 </style>
 
 <style>

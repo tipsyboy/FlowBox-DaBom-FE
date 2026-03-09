@@ -236,7 +236,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-@import url(../../assets/Video_Player/Video_Player.css);
+@import url(../../assets/video_player/Video_Player.css);
 
 .delete-btn {
   color: #ff4d4f;
