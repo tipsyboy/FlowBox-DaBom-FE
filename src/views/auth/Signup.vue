@@ -302,10 +302,11 @@ const signUp = async () => {
 
 /* ##### signup container ##### */
 .signup-container {
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  padding: 30px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 78px);
+  padding: 12px 16px 28px;
   background-color: var(--background-color);
 }
 
@@ -598,7 +599,7 @@ const signUp = async () => {
 
 @media (max-width: 780px) {
   .signup-container {
-    padding: 20px 12px;
+    padding: 10px 12px 22px;
   }
 
   .signup-form {

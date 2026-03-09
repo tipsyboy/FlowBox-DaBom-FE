@@ -1,4 +1,4 @@
-import api from "@/plugins/axiosinterceptor.js";
+import api from '@/plugins/axiosinterceptor.js';
 
 export const getComments = async (videoId, params = {}) => {
     try {

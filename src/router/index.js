@@ -3,10 +3,10 @@ import MainView from '@/views/MainView.vue'
 import authRoutes from '@/router/authRouter.js'
 import videoPlayerRoutes from '@/router/videoPlayerRouter.js'
 import channelRoutes from '@/router/channelRouter.js'
+import studioRoutes from '@/router/studioRouter.js'
 import togetherRoutes from '@/router/togetherRouter.js'
 import messageRoutes from '@/router/messageRoutes.js'
-import playlistRoutes from '@/router/playlistRouter.js' // 새로 추가
-
+import playlistRoutes from '@/router/playlistRouter.js'
 
 const routes = [
   {
@@ -17,9 +17,10 @@ const routes = [
   ...authRoutes,
   ...videoPlayerRoutes,
   ...channelRoutes,
+  ...studioRoutes,
   ...togetherRoutes,
   ...messageRoutes,
-  ...playlistRoutes // 새로 추가
+  ...playlistRoutes
 ]
 
 const router = createRouter({

@@ -1,6 +1,6 @@
 // video.index js
 
-import api from "@/plugins/axiosinterceptor.js";
+import api from '@/plugins/axiosinterceptor.js';
 
 export const getVideoList = async (page = 0, size = 10, keyword = '', channelName = '') => {
     let url = `/api/search/videos?page=${page}&size=${size}`;
@@ -127,6 +127,5 @@ export default {
     toggleVideoVisibility,
     cleanupS3TempVideo
 }
-
 
 

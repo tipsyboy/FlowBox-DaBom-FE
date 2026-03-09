@@ -1,6 +1,6 @@
 // video-player index.js
 
-import api from "@/plugins/axiosinterceptor.js";
+import api from '@/plugins/axiosinterceptor.js';
 
 const getVideoById = async (videoId) => {
     let data = {};

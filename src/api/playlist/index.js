@@ -1,4 +1,4 @@
-import api from "@/plugins/axiosinterceptor.js";
+import api from '@/plugins/axiosinterceptor.js';
 
 // 내 모든 플레이리스트 조회
 export const getMyPlaylists = async () => {

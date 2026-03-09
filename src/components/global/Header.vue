@@ -28,6 +28,11 @@ const toDM = async () => {
   await router.push('/message');
 };
 
+const toMyChannelStudio = async () => {
+  state.isDropdownOpen = false;
+  await router.push('/mychannel');
+};
+
 const logoutMember = async () => {
   await api.logout();
   memberStore.removeWithEncrypt();
@@ -62,7 +67,7 @@ onUnmounted(() => {
       <div class="nav-left">
         <nav class="nav-menu">
           <RouterLink :to="{ name: 'main' }" class="nav-item">홈</RouterLink>
-          <RouterLink :to="{ name: 'togetherMain' }" class="nav-item">투게더</RouterLink>
+          <RouterLink to="/together" class="nav-item">투게더</RouterLink>
         </nav>
       </div>
     </div>
@@ -82,6 +87,7 @@ onUnmounted(() => {
           </div>
           <div class="profile-dropdown" v-if="state.isDropdownOpen">
             <a @click.prevent="toMyChannel" class="dropdown-item" href="#">내 채널</a>
+            <a @click.prevent="toMyChannelStudio" class="dropdown-item" href="#">채널 관리</a>
             <a @click.prevent="toDM" class="dropdown-item" href="#">DM</a>
             <a href="#" class="dropdown-item" @click.prevent="logoutMember">로그아웃</a>
           </div>

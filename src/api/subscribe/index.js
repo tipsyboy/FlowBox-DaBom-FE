@@ -1,4 +1,4 @@
-import api from "@/plugins/axiosinterceptor.js";
+import api from '@/plugins/axiosinterceptor.js';
 
 // 구독 목록을 가져오는 함수 (백엔드: GET /api/member/subscriptions)
 export const getSubscribe = async () => { // subscribeId 파라미터는 필요 없을 수 있습니다.

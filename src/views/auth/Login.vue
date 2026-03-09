@@ -149,9 +149,9 @@ const openPopup = async (options, url) => {
 .auth-main {
   min-height: calc(100vh - 78px);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 30px 16px;
+  padding: 12px 16px 28px;
 }
 
 .login-form-wrapper {
@@ -404,7 +404,7 @@ const openPopup = async (options, url) => {
 
 @media (max-width: 768px) {
   .auth-main {
-    padding: 18px 14px 28px;
+    padding: 10px 14px 22px;
   }
 
   .login-form-container {

@@ -9,6 +9,7 @@ import api from '@/api/video_player/index.js'
 import useMemberStore from '@/stores/useMemberStore.js'
 import channelApi from "@/api/channel/index.js"
 import bannerImg from '@/assets/images/banner.png'
+import { withImageCacheBust } from '@/utils/image.js'
 
 const route = useRoute()
 const videoId = route.params.id
@@ -46,7 +47,7 @@ const loadCurrentUserProfile = async () => {
       const channelInfoResponse = await channelApi.getChannelInfoByChannelName(myChannelName)
       if (channelInfoResponse) {
         currentUserProfile.value = {
-          profileImg: channelInfoResponse.profileImg || 'https://via.placeholder.com/40',
+          profileImg: withImageCacheBust(channelInfoResponse.profileImg || '', Date.now()) || 'https://via.placeholder.com/40',
           name: channelInfoResponse.name || '사용자'
         }
       }
