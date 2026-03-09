@@ -1,8 +1,8 @@
 <script setup>
 import {reactive, ref} from 'vue';
-import LoginForm from '@/entity/auth/LoginForm.js';
-import Modal from '@/components/main/Modal.vue'
-import ButtonBasic from '@/components/global/ButtonBasic.vue';
+import LoginForm from '@/forms/auth/loginForm.js';
+import Modal from '@/components/ui/Modal.vue'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue';
 import api from '@/api/auth/index.js'
 import useMemberStore from '@/stores/useMemberStore.js';
 

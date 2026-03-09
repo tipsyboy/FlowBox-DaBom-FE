@@ -1,11 +1,11 @@
 <script setup>
-import Video_Main_Info from '@/components/video-player/Video_Main_Info.vue'
-import Video_Tag_Explain from '@/components/video-player/Video_Tag_Explain.vue'
-import Video_Comment from '@/components/video-player/Video_Comment.vue'
+import Video_Main_Info from '@/components/video/player/VideoMainInfo.vue'
+import Video_Tag_Explain from '@/components/video/player/VideoTagExplain.vue'
+import Video_Comment from '@/components/video/player/VideoComment.vue'
 import {useRoute} from 'vue-router'
 import {onMounted, reactive, ref, onUnmounted} from 'vue'
 import Hls from 'hls.js'
-import api from '@/api/video_player/index.js'
+import api from '@/api/video-player/index.js'
 import useMemberStore from '@/stores/useMemberStore.js'
 import channelApi from "@/api/channel/index.js"
 import bannerImg from '@/assets/images/banner.png'

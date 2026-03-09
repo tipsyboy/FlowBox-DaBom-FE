@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { Footer, Header } from '@/components/global/index.js'
+import { Footer, Header } from '@/components/app/index.js'
 
 const route = useRoute()
 

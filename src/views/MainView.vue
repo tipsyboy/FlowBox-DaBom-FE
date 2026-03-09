@@ -1,7 +1,7 @@
 <script setup>
-import BannerComp from '@/components/banner/BannerComp.vue';
-import SidebarContainer from '@/components/sidebar/SidebarContainer.vue';
-import VideoSectionComp from '@/components/videos/VideoSectionComp.vue';
+import BannerComp from '@/components/home/BannerComp.vue';
+import SidebarContainer from '@/components/app/SidebarContainer.vue';
+import VideoSectionComp from '@/components/video/list/VideoSectionComp.vue';
 import { onMounted, onUnmounted, reactive, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import api from '@/api/video/index.js'

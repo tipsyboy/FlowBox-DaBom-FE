@@ -134,5 +134,5 @@ const joinByCode = () => {
 </template>
 
 <style scoped>
-@import '@/assets/together/together-page.css';
+@import '@/assets/together/togetherPage.css';
 </style>

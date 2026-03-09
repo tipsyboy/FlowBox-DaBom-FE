@@ -1,7 +1,7 @@
 <script setup>
 import {nextTick, reactive, ref} from 'vue'
 import {useRouter} from "vue-router";
-import Modal from '@/components/main/Modal.vue'
+import Modal from '@/components/ui/Modal.vue'
 import api from '@/api/together/index.js'
 
 const router = useRouter()
@@ -153,5 +153,5 @@ const sendApi = async () => {
 </template>
 
 <style scoped>
-@import url(@/assets/together/CreateTogetherModal.css);
+@import url(@/assets/together/createTogetherModal.css);
 </style>

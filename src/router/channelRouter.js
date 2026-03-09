@@ -1,8 +1,8 @@
-import community from '@/views/channel/subview/Community.vue'
-import playlists from '@/views/channel/subview/ChannelPlaylists.vue'
+import community from '@/views/channel/tabs/Community.vue'
+import playlists from '@/views/channel/tabs/ChannelPlaylists.vue'
 import channel from '@/views/channel/ChannelMainView.vue'
-import about from '@/views/channel/subview/About.vue'
-import videos from '@/views/channel/subview/video/Video_Fix.vue'
+import about from '@/views/channel/tabs/About.vue'
+import videos from '@/views/channel/tabs/VideoFix.vue'
 import ChannelPost from '@/components/channel/community/ChannelPost.vue'
 
 const channelRoutes = [

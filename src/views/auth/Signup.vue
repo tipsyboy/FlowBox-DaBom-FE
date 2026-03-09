@@ -1,10 +1,10 @@
 <script setup>
 import {reactive} from 'vue';
 import api from "@/api/auth/index.js"
-import SignupForm from '@/entity/auth/SignupForm.js';
-import SignupFormErrors from '@/entity/auth/SignupFormErrors.js';
+import SignupForm from '@/forms/auth/signupForm.js';
+import SignupFormErrors from '@/forms/auth/signupFormErrors.js';
 import {useRouter} from 'vue-router';
-import Modal from '@/components/main/Modal.vue';
+import Modal from '@/components/ui/Modal.vue';
 
 
 const router = useRouter()
