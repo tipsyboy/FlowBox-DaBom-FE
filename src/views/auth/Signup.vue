@@ -160,15 +160,16 @@ const signUp = async () => {
 <template>
   <Modal v-if="state.signupSuccess" title="회원가입 완료" message="성공적으로 회원가입이 완료되었습니다. 로그인 페이지로 이동합니다."
          @confirm="handleModalConfirm"/>
-  <div class="singup-container">
+  <div class="signup-container">
     <div class="signup-form-wrapper">
       <div class="signup-header">
+        <img src="@/assets/images/dabom2.png" alt="DaBom" class="auth-logo">
         <h1>회원가입</h1>
         <p>DaBom 커뮤니티의 새로운 멤버가 되어보세요</p>
       </div>
 
       <!-- signup form -->
-      <form action="#" class="signup-form" id="signupForm" @submit.prevent="onSubmit()">
+      <form action="#" class="signup-form" id="signupForm" @submit.prevent="signUp">
         <div class="form-step active" id="step1">
           <div class="form-group">
             <label for="email">이메일 *</label>
@@ -277,8 +278,14 @@ const signUp = async () => {
               <span class="timer" id="verificationTimer">03:00</span>
           </div> -->
 
+          <div class="terms-box">
+            <label><input type="checkbox" required> [필수] 서비스 이용약관 동의</label>
+            <label><input type="checkbox" required> [필수] 개인정보 처리방침 동의</label>
+            <label><input type="checkbox" required> [필수] 만 14세 이상 확인</label>
+          </div>
+
           <div class="form-navigation">
-            <button type="submit" class="btn-signup" id="submitSignup" @click="signUp()">회원가입</button>
+            <button type="submit" class="btn-signup" id="submitSignup">회원가입</button>
           </div>
         </div>
       </form>
@@ -295,8 +302,11 @@ const signUp = async () => {
 
 /* ##### signup container ##### */
 .signup-container {
-  display: flex;
+  display: grid;
+  place-items: center;
   min-height: 100vh;
+  padding: 30px 16px;
+  background-color: var(--background-color);
 }
 
 
@@ -304,34 +314,33 @@ const signUp = async () => {
 .signup-form-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  background-color: var(--background-color);
-  padding: 0.7rem;
+  width: min(620px, 100%);
   /* border: 1px solid var(--border-color); */
   /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); */
   color: var(--text-primary);
 }
 
 /* ##### signusignup guide ##### */
-.singup-header {
-  display: flex;
+.signup-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+
+.auth-logo {
+  width: 72px;
+  margin-bottom: 8px;
 }
 
 .signup-header h1 {
-  text-align: center;
-  color: var(--text-primary);
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin: 0 0 8px;
+  font-size: 34px;
+  line-height: 1.2;
 }
 
 .signup-header p {
+  margin: 0;
   color: var(--text-secondary);
-  font-size: 1rem;
-  margin-bottom: 20px;
+  font-size: 15px;
 }
 
 
@@ -358,12 +367,11 @@ const signUp = async () => {
 /* ##### signup form ##### */
 .signup-form {
   width: 100%;
-  max-width: 650px;
   background-color: var(--card-bg);
-  padding: 2rem;
-  border-radius: 20px;
+  padding: 20px 24px 22px;
+  border-radius: 14px;
   border: 1px solid var(--border-color);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
   position: relative;
 }
 
@@ -405,20 +413,20 @@ const signUp = async () => {
 }
 
 .btn-check {
-  padding: 1rem 1.5rem;
-  background-color: var(--primary-color);
+  padding: 0 16px;
+  background: #3a3a3a;
   border: none;
   border-radius: 10px;
   color: white;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
   white-space: nowrap;
 }
 
 .btn-check:hover {
-  background-color: #ff3838;
+  background: #4a4a4a;
 }
 
 /* password */
@@ -518,6 +526,31 @@ const signUp = async () => {
   display: block;
 }
 
+.terms-box {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #262626;
+  display: grid;
+  gap: 8px;
+}
+
+.terms-box label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.terms-box input[type='checkbox'] {
+  width: auto;
+  margin: 0;
+  flex-shrink: 0;
+}
+
 .btn-view-terms {
   background: none;
   border: 1px solid var(--border-color);
@@ -544,11 +577,11 @@ const signUp = async () => {
 
 .btn-signup {
   flex: 1;
-  padding: 1rem;
+  padding: 14px 16px;
   border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 600;
+  border-radius: 11px;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition);
   display: flex;
@@ -560,7 +593,20 @@ const signUp = async () => {
 
 .btn-signup:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
   box-shadow: 0 8px 25px rgba(46, 213, 115, 0.4);
+}
+
+@media (max-width: 780px) {
+  .signup-container {
+    padding: 20px 12px;
+  }
+
+  .signup-form {
+    padding: 18px 14px 18px;
+  }
+
+  .input-with-button {
+    flex-direction: column;
+  }
 }
 </style>
