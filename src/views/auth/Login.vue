@@ -202,6 +202,10 @@ const openPopup = async (options, url) => {
   margin-bottom: 0.5rem;
 }
 
+.login-form-container .g-input {
+  padding: 0.9rem 0.95rem;
+}
+
 .password-input {
   position: relative;
 }

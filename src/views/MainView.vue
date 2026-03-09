@@ -140,16 +140,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <!-- 상단 배너 -->
-  <BannerComp />
+  <div class="main-view">
+    <BannerComp />
 
-  <!-- 메인 컨텐츠 -->
-  <div class="main-content">
-    <!-- 왼쪽 사이드바 -->
-    <SidebarContainer />
+    <div class="main-content">
+      <SidebarContainer />
 
-    <!-- 오른쪽 비디오 섹션 -->
-    <div class="video-content">
+      <div class="video-content">
       <VideoSectionComp
           :title="sectionTitle"
           :icon="sectionIcon"
@@ -192,20 +189,28 @@ onUnmounted(() => {
       <div v-if="!state.hasNext && state.popularVideos.length > 0" class="end-message">
         <span>모든 영상을 불러왔습니다</span>
       </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.main-view {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 12px;
+}
+
 .main-content {
   display: flex;
-  margin-top: 1rem;
+  margin-top: 0.2rem;
   gap: 1rem;
 }
 
 .video-content {
   flex: 1;
-  padding: 1rem;
+  min-width: 0;
+  padding: 1rem 0.6rem 1rem 0.2rem;
 }
 
 /* 로딩 인디케이터 */
@@ -264,17 +269,18 @@ onUnmounted(() => {
 
 .retry-btn {
   padding: 0.5rem 1rem;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 4px;
+  background-color: #3a3a3a;
+  color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: background-color 0.3s ease;
+  transition: var(--transition);
 }
 
 .retry-btn:hover {
-  background-color: #ff3838;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 /* 끝 메시지 */
@@ -290,12 +296,16 @@ onUnmounted(() => {
 
 /* 반응형 */
 @media (max-width: 768px) {
+  .main-view {
+    padding: 0 8px;
+  }
+
   .main-content {
     flex-direction: column;
   }
 
   .video-content {
-    padding: 0.5rem;
+    padding: 0.4rem;
   }
 }
 </style>

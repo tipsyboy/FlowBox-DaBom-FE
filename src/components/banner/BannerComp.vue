@@ -8,25 +8,29 @@ import SearchBarComp from '@/components/search/SearchBarComp.vue'
 
 <template>
   <section class="main-banner">
-    <img src="../../assets/images/banner.png" alt="Dabom banner" class="banner-image"/>
-<!--    <h1 class="main-banner_title">Welcome Dabom</h1>-->
-<!--    <p class="main-banner_subtitle">혼자 보는 영상에서 함께하는 경험으로</p>-->
+    <div class="banner-frame">
+      <img src="../../assets/images/banner.png" alt="Dabom banner" class="banner-image" />
+    </div>
   </section>
 </template>
 
 <style scoped>
 .main-banner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-height: 15rem;
-  margin-bottom: 3rem;
-  overflow: hidden; /* 추가 */
+  margin: 1rem 0 1.5rem;
+}
+
+.banner-frame {
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  background: #171717;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
 }
 
 .banner-image {
   width: 100%;
-  height: 15rem; /* max-height 대신 고정 height */
+  height: 11.5rem;
+  display: block;
   object-fit: cover;
 }
 </style>

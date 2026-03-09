@@ -48,7 +48,7 @@ onMounted(() => {
   padding: var(--spacing-md);
   height: calc(100vh - 70px);
   overflow-y: auto;
-  position: relative;
-  top: 70px;
+  position: sticky;
+  top: 74px;
 }
 </style>

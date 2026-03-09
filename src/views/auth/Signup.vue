@@ -278,11 +278,11 @@ const signUp = async () => {
               <span class="timer" id="verificationTimer">03:00</span>
           </div> -->
 
-          <div class="terms-box">
-            <label><input type="checkbox" required> [필수] 서비스 이용약관 동의</label>
-            <label><input type="checkbox" required> [필수] 개인정보 처리방침 동의</label>
-            <label><input type="checkbox" required> [필수] 만 14세 이상 확인</label>
-          </div>
+<!--          <div class="terms-box">-->
+<!--            <label><input type="checkbox" required> [필수] 서비스 이용약관 동의</label>-->
+<!--            <label><input type="checkbox" required> [필수] 개인정보 처리방침 동의</label>-->
+<!--            <label><input type="checkbox" required> [필수] 만 14세 이상 확인</label>-->
+<!--          </div>-->
 
           <div class="form-navigation">
             <button type="submit" class="btn-signup" id="submitSignup">회원가입</button>
@@ -388,9 +388,9 @@ const signUp = async () => {
 
 .form-group input {
   width: 100%;
-  padding: 1rem;
+  padding: 0.85rem 0.95rem;
   background-color: var(--hover-color);
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   color: var(--text-primary);
   font-size: 1rem;

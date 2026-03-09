@@ -28,41 +28,37 @@ const likingComments = ref(new Set())
 
 const loadComments = async (reset = false) => {
   if (!videoId.value) return
-  
+
   if (reset) {
     page.value = 0
     comments.value = []
     hasMore.value = true
   }
-  
+
   try {
     let sortParam = ''
-    if (sortOrder.value === 'newest') {
-      sortParam = 'createdAt,desc'
-    } else if (sortOrder.value === 'oldest') {
-      sortParam = 'createdAt,asc'
-    } else if (sortOrder.value === 'popular') {
-      sortParam = 'likes,desc'
-    }
+    if (sortOrder.value === 'newest') sortParam = 'createdAt,desc'
+    if (sortOrder.value === 'oldest') sortParam = 'createdAt,asc'
+    if (sortOrder.value === 'popular') sortParam = 'likes,desc'
 
     const response = await getComments(videoId.value, {
       page: page.value,
       size: pageSize,
       sort: sortParam
     })
-    
+
     if (response && response.data && response.data.content) {
-        const commentsWithLikes = response.data.content.map(comment => ({
-            ...comment,
-            isLikes: comment.isLikes || false,
-            likesCount: comment.likesCount || 0
-        }))
-        
-        comments.value = reset ? commentsWithLikes : [...comments.value, ...commentsWithLikes]
-        hasMore.value = !response.data.last
+      const commentsWithLikes = response.data.content.map((comment) => ({
+        ...comment,
+        isLikes: comment.isLikes || false,
+        likesCount: comment.likesCount || 0
+      }))
+
+      comments.value = reset ? commentsWithLikes : [...comments.value, ...commentsWithLikes]
+      hasMore.value = !response.data.last
     } else {
-        comments.value = []
-        hasMore.value = false
+      comments.value = []
+      hasMore.value = false
     }
   } catch (error) {
     comments.value = []
@@ -76,12 +72,12 @@ const submitComment = async () => {
     alert('비디오 ID가 없습니다.')
     return
   }
-  
+
   if (!commentText.value.trim()) {
     alert('댓글을 입력해주세요.')
     return
   }
-  
+
   try {
     await postComment(videoId.value, { content: commentText.value })
     commentText.value = ''
@@ -93,7 +89,7 @@ const submitComment = async () => {
 
 const handleDeleteComment = async (commentId) => {
   if (!confirm('이 댓글을 삭제하시겠습니까?')) return
-  
+
   try {
     await deleteComment(commentId)
     loadComments(true)
@@ -104,14 +100,13 @@ const handleDeleteComment = async (commentId) => {
 
 const handleCommentLike = async (comment) => {
   if (likingComments.value.has(comment.idx)) return
-  
+
   try {
     likingComments.value.add(comment.idx)
     const response = await videoCommentLikes(comment.idx)
-    
+
     if (response === true || (response && response.data === true) || (response && response.code === 200)) {
       comment.isLikes = !comment.isLikes
-      
       if (comment.isLikes) {
         comment.likesCount = (comment.likesCount || 0) + 1
       } else {
@@ -150,160 +145,215 @@ onMounted(() => {
 
 <template>
   <div class="comments-section">
-    <div class="comments-header">
-      <h3>댓글 <span class="comment-count">{{ comments.length }}개</span></h3>
-      <div class="comment-sort">
-        <select class="sort-select" v-model="sortOrder" @change="changeSortOrder">
-          <option value="newest">최신순</option>
-          <option value="popular">인기순</option>
-          <option value="oldest">오래된순</option>
-        </select>
-      </div>
+    <div class="comments-head">
+      <h2>댓글 {{ comments.length }}개</h2>
+      <select v-model="sortOrder" @change="changeSortOrder">
+        <option value="newest">최신순</option>
+        <option value="popular">인기순</option>
+        <option value="oldest">오래된순</option>
+      </select>
     </div>
 
     <div class="comment-write">
-      <div class="comment-avatar">
-        <img :src="props.currentUserProfile.profileImg" :alt="props.currentUserProfile.name + ' 프로필'" />
-      </div>
-      <div class="comment-input-area">
+      <img class="comment-avatar" :src="props.currentUserProfile.profileImg" :alt="props.currentUserProfile.name + ' 프로필'" />
+      <div class="comment-input-wrap">
         <textarea
-            class="comment-textarea"
-            placeholder="댓글을 입력해주세요..."
-            v-model="commentText"
+          v-model="commentText"
+          placeholder="댓글을 입력해주세요..."
         ></textarea>
-        <div class="comment-actions">
-          <button class="action-btn btn-cancel" @click="commentText = ''">취소</button>
-          <button class="action-btn btn-message" @click="submitComment">댓글 달기</button>
+        <div class="comment-write-actions">
+          <button class="btn btn-ghost" @click="commentText = ''">취소</button>
+          <button class="btn btn-primary" @click="submitComment">댓글 달기</button>
         </div>
       </div>
     </div>
 
-    <div class="comments-list">
-      <div
-          class="comment-item"
-          v-for="comment in comments"
-          :key="comment.idx"
-      >
-        <div class="comment-avatar">
-          <img
-              :src="comment.profileImg || 'https://via.placeholder.com/40'"
-              alt="사용자"
-          />
-        </div>
-        <div class="comment-content">
-          <div class="comment-header">
-            <span class="commenter-name">{{ comment.username }}</span>
-            <span class="comment-time">{{ comment.createdAt }}</span>
+    <ul class="comment-list">
+      <li class="comment-item" v-for="comment in comments" :key="comment.idx">
+        <img class="comment-avatar" :src="comment.profileImg || 'https://via.placeholder.com/40'" alt="사용자" />
+        <div class="comment-body">
+          <div class="comment-top">
+            <strong>{{ comment.username }}</strong>
+            <span>{{ comment.createdAt }}</span>
           </div>
-          <p class="comment-text">{{ comment.content }}</p>
-          
-          <!-- 좋아요 버튼을 댓글 내용 바로 밑으로 분리 -->
-          <div class="comment-like-section">
-            <button 
-              class="comment-action-btn like-btn"
-              :class="{ 
-                'liked': comment.isLikes,
-                'processing': likingComments.has(comment.idx)
-              }"
+          <p>{{ comment.content }}</p>
+
+          <div class="comment-actions-row">
+            <button
+              class="like-btn"
+              :class="{ liked: comment.isLikes }"
               :disabled="likingComments.has(comment.idx)"
               @click="handleCommentLike(comment)"
             >
-              <i 
-                class="fas fa-thumbs-up" 
-                :style="{ color: comment.isLikes ? '#ff3040' : '#888' }"
-              ></i>
-              <span>{{ comment.likesCount || 0 }}</span>
+              <i class="fas fa-thumbs-up"></i> {{ comment.likesCount || 0 }}
             </button>
-          </div>
-          
-          <!-- 삭제 버튼은 별도 영역에 유지 -->
-          <div class="comment-actions" v-if="currentUser && currentUser.id === comment.memberIdx">
+
             <button
-                class="comment-btn delete-btn"
-                @click="handleDeleteComment(comment.idx)"
+              v-if="currentUser && currentUser.id === comment.memberIdx"
+              class="delete-btn"
+              @click="handleDeleteComment(comment.idx)"
             >
               삭제
             </button>
           </div>
         </div>
-      </div>
-    </div>
+      </li>
+    </ul>
 
     <div class="load-more" v-if="hasMore">
-      <button class="action-btn btn-load-more" @click="loadMoreComments">더 보기</button>
+      <button class="btn btn-primary" @click="loadMoreComments">더 보기</button>
     </div>
   </div>
 </template>
 
 <style scoped>
-@import url(../../assets/video_player/Video_Player.css);
-
-.delete-btn {
-  color: #ff4d4f;
-  margin-left: 8px;
-}
-
-.btn-load-more {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
+.comments-section {
   border: none;
-  cursor: pointer;
+  border-radius: 15px;
+  background: var(--card-bg);
+  padding: 22px;
+  display: grid;
+  gap: 16px;
 }
 
-.btn-load-more:hover {
-  background-color: #0056b3;
+.comments-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* 댓글 좋아요 섹션 - 댓글 내용 바로 밑에 위치 */
-.comment-like-section {
+.comments-head h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.comments-head select {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #303030;
+  color: var(--text-primary);
+  padding: 8px 10px;
+}
+
+.comment-write {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 10px;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.comment-input-wrap textarea {
+  width: 100%;
+  min-height: 92px;
+  resize: vertical;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--hover-color);
+  color: var(--text-primary);
+  padding: 12px;
+  font-size: 14px;
+}
+
+.comment-write-actions {
   margin-top: 8px;
-  margin-bottom: 8px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
-.comment-action-btn {
+.comment-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 16px;
+}
+
+.comment-item {
+  display: flex;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.comment-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.comment-body {
+  flex: 1;
+}
+
+.comment-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.comment-top span {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.comment-body p {
+  margin: 0;
+  color: #dedede;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.comment-actions-row {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.like-btn,
+.delete-btn {
+  border: 1px solid var(--border-color);
   background: transparent;
-  border: none;
-  color: #888;
+  color: var(--text-secondary);
+  border-radius: 14px;
+  padding: 4px 10px;
   cursor: pointer;
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  transition: all 0.2s;
+  font-size: 12px;
+}
+
+.like-btn.liked {
+  color: var(--primary-color);
+  border-color: rgba(250, 85, 0, 0.5);
+}
+
+.btn {
+  border: 1px solid var(--border-color);
+  background: #383838;
+  color: var(--text-primary);
+  border-radius: 22px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn-ghost {
+  background: transparent;
+}
+
+.load-more {
   display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.comment-action-btn:hover:not(:disabled) {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.comment-action-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.comment-action-btn.liked {
-  color: #ff3040;
-}
-
-.comment-action-btn.processing {
-  opacity: 0.7;
-}
-
-.comment-action-btn i {
-  font-size: 0.75rem;
-  transition: color 0.3s ease;
-}
-
-/* 댓글 액션 버튼들 (삭제 등) */
-.comment-actions {
-  display: flex;
-  align-items: center;
-  margin-top: 0.5rem;
+  justify-content: center;
 }
 </style>

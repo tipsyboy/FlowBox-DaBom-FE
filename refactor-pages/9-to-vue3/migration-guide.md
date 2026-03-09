@@ -67,7 +67,7 @@
 
 2. 메인 탐색/시청
 - `/` → `src/views/MainView.vue`
-- `/video-player/:id` → `src/views/Video_Player.vue`
+- `/video-player/:id` → `src/views/VideoPlayer.vue`
 
 3. 채널 방문/커뮤니티
 - `/channel/:channelName/*`
