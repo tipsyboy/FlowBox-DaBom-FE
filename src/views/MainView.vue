@@ -2,6 +2,7 @@
 import BannerComp from '@/components/home/BannerComp.vue';
 import SidebarContainer from '@/components/app/SidebarContainer.vue';
 import VideoSectionComp from '@/components/video/list/VideoSectionComp.vue';
+import ButtonBasic from '@/components/ui/ButtonBasic.vue';
 import { onMounted, onUnmounted, reactive, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import api from '@/api/video/index.js'
@@ -175,13 +176,14 @@ onUnmounted(() => {
           <i class="fas fa-exclamation-triangle" v-if="!searchKeyword"></i>
           <i class="fas fa-search" v-else></i>
           <span>{{ state.error }}</span>
-          <button
-              v-if="!searchKeyword"
-              @click="performNewSearch(state.currentKeyword)"
-              class="retry-btn"
+          <ButtonBasic
+            v-if="!searchKeyword"
+            @click="performNewSearch(state.currentKeyword)"
+            class="retry-btn"
+            variant="primary"
           >
             다시 시도
-          </button>
+          </ButtonBasic>
         </div>
       </div>
 

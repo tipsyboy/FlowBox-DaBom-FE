@@ -6,6 +6,7 @@ import subscribeApi from '@/api/subscribe/index.js'
 import bannerFallback from '@/assets/images/banner.png'
 import profileFallback from '@/assets/images/dabom2.png'
 import { withImageCacheBust } from '@/utils/image.js'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const route = useRoute()
 
@@ -101,12 +102,12 @@ watch(
       </div>
 
       <div class="channel-actions">
-        <button class="subscribe-btn" :class="{ 'is-subscribed': isSubscribe }" @click="toggleSubscribe">
+        <ButtonBasic class="subscribe-btn" :class="{ 'is-subscribed': isSubscribe }" @click="toggleSubscribe">
           <i class="fas fa-bell"></i>
           {{ isSubscribe ? '구독 중' : '구독' }}
-        </button>
-        <button class="message-btn"><i class="fas fa-envelope"></i> 메시지</button>
-        <RouterLink to="/mychannel" class="manage-btn"><i class="fas fa-gear"></i> 내 채널 관리</RouterLink>
+        </ButtonBasic>
+        <ButtonBasic class="message-btn"><i class="fas fa-envelope"></i> 메시지</ButtonBasic>
+        <ButtonBasic as="router-link" to="/mychannel" class="manage-btn"><i class="fas fa-gear"></i> 내 채널 관리</ButtonBasic>
       </div>
     </div>
   </section>

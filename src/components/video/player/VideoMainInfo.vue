@@ -10,6 +10,7 @@ import useMemberStore from '@/stores/useMemberStore.js'
 import Modal from '@/components/ui/Modal.vue'
 import CreateTogetherModal from '@/components/together/CreateTogetherModal.vue'
 import { useRoute, useRouter } from 'vue-router'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const route = useRoute()
 const videoId = route.params.id
@@ -102,11 +103,11 @@ onMounted(async () => {
     </div>
 
     <div class="channel-actions">
-      <button class="btn btn-primary" @click="trySubscribe">{{ subscribeState ? '구독중' : '구독' }}</button>
-      <button class="btn" @click="createChatRoom"><i class="fa-solid fa-envelope"></i> 메시지</button>
-      <button class="btn" @click="showTogetherModal"><i class="fas fa-users"></i> 투게더</button>
-      <button class="btn" @click="copyVideo"><i class="fas fa-share"></i> 공유</button>
-      <button class="btn" @click="showPlaylistModal = true"><i class="fas fa-plus"></i> 저장</button>
+      <ButtonBasic class="btn" variant="primary" @click="trySubscribe">{{ subscribeState ? '구독중' : '구독' }}</ButtonBasic>
+      <ButtonBasic class="btn" @click="createChatRoom"><i class="fa-solid fa-envelope"></i> 메시지</ButtonBasic>
+      <ButtonBasic class="btn" @click="showTogetherModal"><i class="fas fa-users"></i> 투게더</ButtonBasic>
+      <ButtonBasic class="btn" @click="copyVideo"><i class="fas fa-share"></i> 공유</ButtonBasic>
+      <ButtonBasic class="btn" @click="showPlaylistModal = true"><i class="fas fa-plus"></i> 저장</ButtonBasic>
     </div>
   </div>
 

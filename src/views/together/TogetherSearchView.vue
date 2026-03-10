@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -35,7 +36,7 @@ const moveToRoom = (id) => {
         <h1>Together 검색 (참고용)</h1>
         <p>현재는 메인 페이지에 검색 결과를 통합한 상태</p>
       </div>
-      <button class="btn" type="button" @click="moveToMain">메인으로</button>
+      <ButtonBasic @click="moveToMain">메인으로</ButtonBasic>
     </section>
 
     <section class="grid">
@@ -43,7 +44,7 @@ const moveToRoom = (id) => {
         <h3>{{ room.title }}</h3>
         <p class="muted">호스트: {{ room.host }} · 참여자 {{ room.members }}명</p>
         <div class="row">
-          <button class="btn btn-primary" type="button" @click="moveToRoom(room.id)">입장</button>
+          <ButtonBasic variant="primary" @click="moveToRoom(room.id)">입장</ButtonBasic>
         </div>
       </article>
     </section>

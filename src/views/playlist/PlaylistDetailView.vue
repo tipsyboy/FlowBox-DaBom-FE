@@ -14,9 +14,9 @@
         <p class="muted">{{ playlist.videos.length }}개 영상 · 공개</p>
         <p class="muted">{{ playlist.description || '저장한 영상들을 한 곳에서 이어서 볼 수 있는 플레이리스트입니다.' }}</p>
         <div class="action-row">
-          <button class="primary-btn" type="button" disabled>전체 재생</button>
-          <button class="ghost-btn" type="button" disabled>편집</button>
-          <RouterLink class="ghost-btn" :to="{ name: 'my-playlists' }">목록</RouterLink>
+          <ButtonBasic variant="primary" :disabled="true">전체 재생</ButtonBasic>
+          <ButtonBasic variant="ghost" :disabled="true">편집</ButtonBasic>
+          <ButtonBasic as="router-link" variant="ghost" :to="{ name: 'my-playlists' }">목록</ButtonBasic>
         </div>
       </aside>
 
@@ -35,7 +35,7 @@
               <h4>{{ video.title || '제목 없음' }}</h4>
               <p>{{ video.views || 0 }} views · {{ video.uploadedAt || '-' }}</p>
             </div>
-            <RouterLink class="ghost-btn" :to="{ name: 'videoPlayer', params: { id: video.videoId } }">재생</RouterLink>
+            <ButtonBasic as="router-link" variant="ghost" :to="{ name: 'videoPlayer', params: { id: video.videoId } }">재생</ButtonBasic>
           </article>
         </div>
       </section>
@@ -48,6 +48,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import api from '@/api/playlist/index.js'
 import bannerFallback from '@/assets/images/banner.png'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const route = useRoute()
 const playlist = ref(null)
@@ -120,24 +121,6 @@ const videoListForComponent = computed(() => {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-}
-
-.primary-btn,
-.ghost-btn {
-  border: 1px solid var(--border-color);
-  background: #373737;
-  color: var(--text-primary);
-  border-radius: 10px;
-  padding: 9px 12px;
-  font-size: 13px;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.primary-btn {
-  background: var(--primary-color);
-  border-color: var(--primary-color);
-  color: #fff;
 }
 
 .section-head {

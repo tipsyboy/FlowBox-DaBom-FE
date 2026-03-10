@@ -5,7 +5,7 @@
         <h1>내 플레이리스트</h1>
         <p>총 {{ playlists.length }}개</p>
       </div>
-      <button class="primary-btn" type="button" disabled>새 플레이리스트</button>
+      <ButtonBasic variant="primary" :disabled="true">새 플레이리스트</ButtonBasic>
     </section>
 
     <div v-if="loading" class="state-panel">
@@ -31,6 +31,7 @@
 import { onMounted, ref } from 'vue'
 import api from '@/api/playlist/index.js'
 import PlaylistCard from '@/components/playlist/PlaylistCard.vue'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const playlists = ref([])
 const loading = ref(true)
@@ -75,19 +76,6 @@ onMounted(async () => {
 .page-head p {
   margin: 4px 0 0;
   color: var(--text-secondary);
-}
-
-.primary-btn {
-  border: 1px solid var(--primary-color);
-  background: var(--primary-color);
-  color: #fff;
-  border-radius: 10px;
-  padding: 9px 12px;
-  font-size: 13px;
-}
-
-.primary-btn:disabled {
-  opacity: 0.75;
 }
 
 .playlist-grid {

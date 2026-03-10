@@ -97,10 +97,22 @@
   color: #fff;
 }
 
+.g-btn--ghost {
+  background: #373737;
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
 .g-btn--danger {
   background: rgba(182, 79, 79, 0.2);
   border-color: rgba(182, 79, 79, 0.5);
   color: #f0baba;
+}
+
+.g-btn[disabled],
+.g-btn[aria-disabled='true'] {
+  opacity: 0.75;
+  pointer-events: none;
 }
 
 .g-btn--sm {

@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import videoApi from '@/api/video/index.js'
 import StudioVideoUploadModal from '@/components/studio/StudioVideoUploadModal.vue'
 import bannerFallback from '@/assets/images/banner.png'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const videos = ref([])
 const isLoading = ref(false)
@@ -53,7 +54,7 @@ onMounted(() => {
 
     <div class="head-row">
       <h2>동영상 관리</h2>
-      <button class="upload-btn" type="button" @click="openUploadModal">동영상 업로드</button>
+      <ButtonBasic class="upload-btn" type="button" variant="primary" @click="openUploadModal">동영상 업로드</ButtonBasic>
     </div>
     <p class="subtext">총 {{ videos.length }}개 동영상 (내 채널 기준)</p>
 
@@ -88,7 +89,7 @@ onMounted(() => {
               <span class="status" :class="{ off: !item.publicVideo }">{{ item.publicVideo ? '공개' : '비공개' }}</span>
             </td>
             <td>{{ formatDate(item.uploadedAt) }}</td>
-            <td><button class="edit-btn" type="button">수정</button></td>
+            <td><ButtonBasic class="edit-btn" type="button" variant="ghost" size="sm">수정</ButtonBasic></td>
           </tr>
         </tbody>
       </table>
@@ -98,7 +99,7 @@ onMounted(() => {
       <i class="fas fa-file-video"></i>
       <h3>업로드된 동영상이 없습니다</h3>
       <p>첫 번째 동영상을 업로드해보세요.</p>
-      <button class="upload-btn" type="button" @click="openUploadModal">동영상 업로드</button>
+      <ButtonBasic class="upload-btn" type="button" variant="primary" @click="openUploadModal">동영상 업로드</ButtonBasic>
     </div>
   </section>
 </template>
@@ -139,13 +140,8 @@ onMounted(() => {
 
 .upload-btn,
 .edit-btn {
-  border: 1px solid rgba(250, 85, 0, 0.5);
   border-radius: 10px;
-  background: rgba(250, 85, 0, 0.15);
-  color: #ffc3a1;
   font-weight: 700;
-  padding: 8px 12px;
-  cursor: pointer;
 }
 
 .table-wrap {

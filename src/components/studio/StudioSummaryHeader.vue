@@ -38,7 +38,7 @@ onMounted(() => {
         <img :src="avatarImg" alt="채널 프로필" class="avatar" />
         <div class="identity">
           <h1>{{ channelName }}</h1>
-          <p>{{ channelHandle }} · 채널 운영</p>
+          <p>{{ channelHandle }}</p>
         </div>
       </div>
 

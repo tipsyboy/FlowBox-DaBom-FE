@@ -7,6 +7,7 @@ import {
   getChannelBoardListPaged,
   updateChannelBoard
 } from '@/api/channel/index.js'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const memberStore = useMemberStore()
 
@@ -155,7 +156,7 @@ onMounted(() => {
           <option value="latest">최신순</option>
           <option value="oldest">오래된순</option>
         </select>
-        <button class="primary-btn" type="button" @click="openCreateModal">새 게시글 작성</button>
+        <ButtonBasic class="primary-btn" type="button" variant="primary" @click="openCreateModal">새 게시글 작성</ButtonBasic>
       </div>
     </div>
 
@@ -167,7 +168,7 @@ onMounted(() => {
       <i class="fas fa-inbox"></i>
       <h3>게시글이 없습니다</h3>
       <p>채널 커뮤니티의 첫 글을 작성해보세요.</p>
-      <button class="primary-btn" type="button" @click="openCreateModal">새 게시글 작성</button>
+      <ButtonBasic class="primary-btn" type="button" variant="primary" @click="openCreateModal">새 게시글 작성</ButtonBasic>
     </div>
 
     <div v-else class="post-list">
@@ -178,8 +179,8 @@ onMounted(() => {
             <p>{{ formatDate(post.createdAt || post.updatedAt) }}</p>
           </div>
           <div class="tools" v-if="editingId !== post.idx">
-            <button type="button" @click="startEdit(post)">수정</button>
-            <button type="button" class="danger" @click="removePost(post.idx)">삭제</button>
+            <ButtonBasic type="button" variant="ghost" size="sm" @click="startEdit(post)">수정</ButtonBasic>
+            <ButtonBasic type="button" variant="danger" size="sm" class="danger" @click="removePost(post.idx)">삭제</ButtonBasic>
           </div>
         </header>
 
@@ -187,8 +188,8 @@ onMounted(() => {
           <input v-model="editForm.title" type="text" maxlength="100" placeholder="제목" />
           <textarea v-model="editForm.contents" rows="5" maxlength="500" placeholder="내용"></textarea>
           <div class="edit-actions">
-            <button type="button" @click="cancelEdit">취소</button>
-            <button type="button" class="primary-btn" :disabled="isSubmitting" @click="submitEdit(post.idx)">저장</button>
+            <ButtonBasic type="button" variant="ghost" @click="cancelEdit">취소</ButtonBasic>
+            <ButtonBasic type="button" class="primary-btn" variant="primary" :disabled="isSubmitting" @click="submitEdit(post.idx)">저장</ButtonBasic>
           </div>
         </div>
         <p v-else class="post-body">{{ post.contents || '내용이 없습니다.' }}</p>
@@ -213,15 +214,16 @@ onMounted(() => {
             </label>
           </div>
           <footer class="modal-footer">
-            <button type="button" @click="closeCreateModal">취소</button>
-            <button
+            <ButtonBasic type="button" variant="ghost" @click="closeCreateModal">취소</ButtonBasic>
+            <ButtonBasic
               type="button"
               class="primary-btn"
+              variant="primary"
               :disabled="isSubmitting || !createForm.title.trim() || !createForm.contents.trim()"
               @click="submitCreate"
             >
               작성
-            </button>
+            </ButtonBasic>
           </footer>
         </div>
       </div>
@@ -274,18 +276,11 @@ onMounted(() => {
 .tools button,
 .edit-actions button,
 .modal-footer button {
-  border: 1px solid var(--border-color);
   border-radius: 8px;
-  background: #2c2e33;
-  color: var(--text-primary);
   padding: 8px 12px;
-  cursor: pointer;
 }
 
 .primary-btn {
-  border-color: rgba(250, 85, 0, 0.5);
-  background: rgba(250, 85, 0, 0.15);
-  color: #ffc3a1;
   font-weight: 700;
 }
 

@@ -1,5 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const route = useRoute()
 
@@ -23,7 +24,7 @@ const isActive = (itemPath) => route.path === itemPath
     >
       {{ item.label }}
     </RouterLink>
-    <button class="sidebar-link danger" type="button">회원 탈퇴</button>
+    <ButtonBasic class="sidebar-link danger" type="button" variant="danger">회원 탈퇴</ButtonBasic>
   </aside>
 </template>
 
@@ -40,7 +41,6 @@ const isActive = (itemPath) => route.path === itemPath
 }
 
 .sidebar-link {
-  border: 1px solid var(--border-color);
   border-radius: 10px;
   background: #141518;
   color: var(--text-primary);
@@ -49,7 +49,6 @@ const isActive = (itemPath) => route.path === itemPath
   font-weight: 600;
   padding: 11px 12px;
   text-align: left;
-  cursor: pointer;
 }
 
 .sidebar-link.is-active {

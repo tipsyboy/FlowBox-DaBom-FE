@@ -7,6 +7,7 @@ import imageApi from '@/api/image/index.js'
 import avatarFallback from '@/assets/images/dabom2.png'
 import bannerFallback from '@/assets/images/banner.png'
 import useStudioChannelStore from '@/stores/useStudioChannelStore.js'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const isSaving = ref(false)
 const errorMessage = ref('')
@@ -148,9 +149,9 @@ onMounted(() => {
         <h2>채널 정보 수정</h2>
         <p>채널 소개와 이미지를 최신 상태로 관리하세요.</p>
       </div>
-      <button class="save-btn" type="button" :disabled="isSaving" @click="saveInfo">
+      <ButtonBasic class="save-btn" type="button" variant="primary" :disabled="isSaving" @click="saveInfo">
         {{ isSaving ? '저장 중...' : '저장' }}
-      </button>
+      </ButtonBasic>
     </div>
 
     <p v-if="isLoading" class="subtext">채널 정보를 불러오는 중입니다...</p>
@@ -219,18 +220,13 @@ onMounted(() => {
 }
 
 .save-btn {
-  border: 1px solid rgba(250, 85, 0, 0.5);
   border-radius: 10px;
-  background: rgba(250, 85, 0, 0.15);
-  color: #ffc3a1;
   font-weight: 700;
   padding: 8px 14px;
-  cursor: pointer;
 }
 
 .save-btn:disabled {
   opacity: 0.5;
-  cursor: not-allowed;
 }
 
 .form {

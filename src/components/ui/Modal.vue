@@ -3,12 +3,14 @@
         <div class="modal-card">
             <h2 class="modal-title">{{ props.title }}</h2>
             <p class="modal-message">{{ props.message }}</p>
-            <button class="modal-button" @click="emit('confirm')">확인</button>
+            <ButtonBasic class="modal-button" variant="secondary" @click="emit('confirm')">확인</ButtonBasic>
         </div>
     </div>
 </template>
 
 <script setup>
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
+
 const props = defineProps(['title', 'message'])
 const emit = defineEmits(['confirm'])
 </script>
@@ -54,17 +56,8 @@ const emit = defineEmits(['confirm'])
 
 .modal-button {
     padding: 0.8rem 1.5rem;
-    background: linear-gradient(135deg, var(--secondary-color), #27ae60);
-    border: none;
     border-radius: 10px;
-    color: white;
     font-weight: 600;
     font-size: 1rem;
-    cursor: pointer;
-    /* transition: background 0.3s ease; */
-}
-
-.modal-button:hover {
-    background: #2ecc71;
 }
 </style>

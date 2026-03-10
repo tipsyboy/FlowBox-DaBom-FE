@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import SearchBar from '@/components/app/SearchBar.vue'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 import bannerImg from '@/assets/images/banner.png'
 
 const router = useRouter()
@@ -74,7 +75,7 @@ const joinByCode = () => {
         <div class="option-icon"><i class="fas fa-plus"></i></div>
         <h3>방 만들기</h3>
         <p>새로운 함께보기 방을 만들고 링크를 공유하세요.</p>
-        <button class="btn btn-primary" type="button">생성하기</button>
+        <ButtonBasic variant="primary">생성하기</ButtonBasic>
       </article>
       <article class="option-card">
         <div class="option-icon"><i class="fas fa-key"></i></div>
@@ -82,7 +83,7 @@ const joinByCode = () => {
         <p>초대 코드를 입력해 비공개 방에 바로 입장합니다.</p>
         <div class="join-row">
           <input v-model="inviteCode" type="text" placeholder="초대 코드 입력" />
-          <button class="btn" type="button" @click="joinByCode">입장</button>
+          <ButtonBasic @click="joinByCode">입장</ButtonBasic>
         </div>
       </article>
     </section>
@@ -98,8 +99,8 @@ const joinByCode = () => {
             <p>{{ room.people }}</p>
           </div>
           <div class="room-actions">
-            <button class="btn" type="button">관리</button>
-            <button class="btn btn-primary" type="button" @click="moveToRoom(room.id)">입장</button>
+            <ButtonBasic>관리</ButtonBasic>
+            <ButtonBasic variant="primary" @click="moveToRoom(room.id)">입장</ButtonBasic>
           </div>
         </article>
       </div>
@@ -116,7 +117,7 @@ const joinByCode = () => {
             <p>{{ room.people }}</p>
           </div>
           <div class="room-actions">
-            <button class="btn btn-primary" type="button" @click="moveToRoom(room.id)">입장</button>
+            <ButtonBasic variant="primary" @click="moveToRoom(room.id)">입장</ButtonBasic>
           </div>
         </article>
       </div>
@@ -125,7 +126,7 @@ const joinByCode = () => {
     <section class="section-block">
       <div class="section-header">
         <h2><i class="fas fa-fire"></i> 활성 Together 방</h2>
-        <button class="btn" type="button" @click="moveToSearchPage">검색 결과 보기</button>
+        <ButtonBasic @click="moveToSearchPage">검색 결과 보기</ButtonBasic>
       </div>
 
       <div class="rooms-grid">
@@ -133,7 +134,7 @@ const joinByCode = () => {
           <img class="room-thumb" :src="room.thumbnail" alt="room" />
           <h3>{{ room.title }}</h3>
           <p class="muted">호스트 {{ room.host }} · 참여자 {{ room.members }}명</p>
-          <button class="btn btn-primary" type="button" @click="moveToRoom(room.id)">입장</button>
+          <ButtonBasic variant="primary" @click="moveToRoom(room.id)">입장</ButtonBasic>
         </article>
       </div>
     </section>

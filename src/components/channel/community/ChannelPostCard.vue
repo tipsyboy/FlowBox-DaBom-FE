@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router'
 import { reactive, ref } from 'vue'
 import api from '@/api/channel/index.js'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const props = defineProps({
   postData: {
@@ -61,11 +62,11 @@ const clickPost = () => {
         <i class="fas fa-heart" :style="{ color: localPost.isLikes ? '#ff3040' : '#8e8e8e' }"></i>
         {{ localPost.likesCount || 0 }}
       </button>
-      <button @click="clickPost">
+      <ButtonBasic size="sm" @click="clickPost">
         <i class="fas fa-comment"></i>
         {{ localPost.commentCount || 0 }}
-      </button>
-      <a href="#" @click.prevent="clickPost">자세히 보기</a>
+      </ButtonBasic>
+      <ButtonBasic as="button" variant="ghost" size="sm" @click="clickPost">자세히 보기</ButtonBasic>
     </div>
   </article>
 </template>
@@ -134,5 +135,9 @@ const clickPost = () => {
   color: var(--primary-color);
   text-decoration: none;
   font-size: 13px;
+}
+
+.community-actions-row .g-btn:last-child {
+  margin-left: auto;
 }
 </style>

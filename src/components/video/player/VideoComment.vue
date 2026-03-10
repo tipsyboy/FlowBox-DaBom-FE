@@ -2,6 +2,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { getComments, postComment, deleteComment, videoCommentLikes } from '@/api/video-comment/index.js'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const route = useRoute()
 const videoId = ref(route.params.id)
@@ -162,8 +163,8 @@ onMounted(() => {
           placeholder="댓글을 입력해주세요..."
         ></textarea>
         <div class="comment-write-actions">
-          <button class="btn btn-ghost" @click="commentText = ''">취소</button>
-          <button class="btn btn-primary" @click="submitComment">댓글 달기</button>
+          <ButtonBasic variant="ghost" @click="commentText = ''">취소</ButtonBasic>
+          <ButtonBasic variant="primary" @click="submitComment">댓글 달기</ButtonBasic>
         </div>
       </div>
     </div>
@@ -188,20 +189,22 @@ onMounted(() => {
               <i class="fas fa-thumbs-up"></i> {{ comment.likesCount || 0 }}
             </button>
 
-            <button
+            <ButtonBasic
               v-if="currentUser && currentUser.id === comment.memberIdx"
               class="delete-btn"
+              variant="ghost"
+              size="sm"
               @click="handleDeleteComment(comment.idx)"
             >
               삭제
-            </button>
+            </ButtonBasic>
           </div>
         </div>
       </li>
     </ul>
 
     <div class="load-more" v-if="hasMore">
-      <button class="btn btn-primary" @click="loadMoreComments">더 보기</button>
+      <ButtonBasic variant="primary" @click="loadMoreComments">더 보기</ButtonBasic>
     </div>
   </div>
 </template>
@@ -329,27 +332,6 @@ onMounted(() => {
 .like-btn.liked {
   color: var(--primary-color);
   border-color: rgba(250, 85, 0, 0.5);
-}
-
-.btn {
-  border: 1px solid var(--border-color);
-  background: #383838;
-  color: var(--text-primary);
-  border-radius: 22px;
-  padding: 10px 16px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background: var(--primary-color);
-  border-color: var(--primary-color);
-  color: #fff;
-  font-weight: 700;
-}
-
-.btn-ghost {
-  background: transparent;
 }
 
 .load-more {

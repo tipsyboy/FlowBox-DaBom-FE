@@ -1,22 +1,22 @@
 <script setup>
-import {reactive, ref} from 'vue';
-import LoginForm from '@/forms/auth/loginForm.js';
+import { reactive, ref } from 'vue'
+import LoginForm from '@/forms/auth/loginForm.js'
 import Modal from '@/components/ui/Modal.vue'
-import ButtonBasic from '@/components/ui/ButtonBasic.vue';
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 import api from '@/api/auth/index.js'
-import useMemberStore from '@/stores/useMemberStore.js';
+import useMemberStore from '@/stores/useMemberStore.js'
 
-const memberStore = useMemberStore();
+const memberStore = useMemberStore()
 const form = reactive({
-  loginForm: new LoginForm()
+  loginForm: new LoginForm(),
 })
 const showErrorModal = ref(false)
 const errorMessage = ref('')
 const errorTitle = 'Together 생성 에러'
 const socialLogin = reactive({
-  "google": "/oauth2/authorization/google",
-  "kakao": "/oauth2/authorization/kakao",
-  "naver": "/oauth2/authorization/naver"
+  google: '/oauth2/authorization/google',
+  kakao: '/oauth2/authorization/kakao',
+  naver: '/oauth2/authorization/naver',
 })
 
 const closeErrorModal = () => {
@@ -24,49 +24,49 @@ const closeErrorModal = () => {
 }
 
 const state = reactive({
-  showPassword: false
+  showPassword: false,
 })
 
 const togglePassword = () => {
-  state.showPassword = !state.showPassword;
+  state.showPassword = !state.showPassword
 }
 
 const login = async () => {
   const data = await api.login(form.loginForm)
-  const channelName = data.data;
+  const channelName = data.data
   if (data.code !== 200) {
-    showErrorModal.value = true;
-    errorMessage.value = "로그인을 다시 시도해주세요."
-    return;
+    showErrorModal.value = true
+    errorMessage.value = '로그인을 다시 시도해주세요.'
+    return
   }
   memberStore.setWithEncrypt(channelName)
   window.location.href = '/'
 }
 
 const showSocialLoginPopup = (url) => {
-  const popupHeight = 500;
-  const popupWidth = 500;
-  const left = (window.screen.width - popupWidth) / 2;
-  const top = (window.screen.height - popupHeight) / 2;
+  const popupHeight = 500
+  const popupWidth = 500
+  const left = (window.screen.width - popupWidth) / 2
+  const top = (window.screen.height - popupHeight) / 2
 
-  const popupOptions = `height=${popupHeight},width=${popupWidth},left=${left},top=${top},scrollbars=yes,resizable=yes`;
+  const popupOptions = `height=${popupHeight},width=${popupWidth},left=${left},top=${top},scrollbars=yes,resizable=yes`
 
-  openPopup(popupOptions, url);
-};
+  openPopup(popupOptions, url)
+}
 
 const openPopup = async (options, url) => {
-  const popup = window.open(url, "_blank", options);
-  window.addEventListener("message", async (event) => {
+  const popup = window.open(url, '_blank', options)
+  window.addEventListener('message', async (event) => {
     if (event.data === 'true') {
-      let res = await api.getCurrentMemberInfo();
-      window.location.href = '/';
+      let res = await api.getCurrentMemberInfo()
+      window.location.href = '/'
       return memberStore.setWithEncrypt(res.data.name)
     }
-    popup.close();
-    showErrorModal.value = true;
-    errorMessage.value = "소셜 로그인을 다시 시도해주세요."
+    popup.close()
+    showErrorModal.value = true
+    errorMessage.value = '소셜 로그인을 다시 시도해주세요.'
   })
-};
+}
 </script>
 
 <template>
@@ -82,16 +82,35 @@ const openPopup = async (options, url) => {
           <form class="login-form" id="loginForm" @submit.prevent="login()">
             <div class="form-group">
               <label for="email">이메일</label>
-              <input class="g-input" type="email" id="email" name="email" required placeholder="이메일을 입력하세요"
-                     v-model="form.loginForm.email">
+              <input
+                class="g-input"
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="이메일을 입력하세요"
+                v-model="form.loginForm.email"
+              />
             </div>
 
             <div class="form-group">
               <label for="password">비밀번호</label>
               <div class="password-input">
-                <input class="g-input" :type="state.showPassword ? 'text' : 'password'" id="password" name="password"
-                       v-model="form.loginForm.password" required placeholder="비밀번호를 입력하세요">
-                <button type="button" class="toggle-password" id="togglePassword" @click="togglePassword">
+                <input
+                  class="g-input"
+                  :type="state.showPassword ? 'text' : 'password'"
+                  id="password"
+                  name="password"
+                  v-model="form.loginForm.password"
+                  required
+                  placeholder="비밀번호를 입력하세요"
+                />
+                <button
+                  type="button"
+                  class="toggle-password"
+                  id="togglePassword"
+                  @click="togglePassword"
+                >
                   <i :class="state.showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
                 </button>
               </div>
@@ -99,7 +118,7 @@ const openPopup = async (options, url) => {
 
             <div class="form-options">
               <label class="remember-me">
-                <input type="checkbox" id="rememberMe">
+                <input type="checkbox" id="rememberMe" />
                 <span class="checkmark"></span>
                 로그인 상태 유지
               </label>
@@ -117,19 +136,32 @@ const openPopup = async (options, url) => {
           </div>
 
           <div class="social-login-container">
-            <button class="social-icon-btn kakao" title="kakao" @click="showSocialLoginPopup(socialLogin.kakao)">
+            <button
+              class="social-icon-btn kakao"
+              title="kakao"
+              @click="showSocialLoginPopup(socialLogin.kakao)"
+            >
               <i class="fas fa-comment"></i>
             </button>
-            <button class="social-icon-btn naver" title="naver" @click="showSocialLoginPopup(socialLogin.naver)">
+            <button
+              class="social-icon-btn naver"
+              title="naver"
+              @click="showSocialLoginPopup(socialLogin.naver)"
+            >
               <span>N</span>
             </button>
-            <button class="social-icon-btn google" title="google" @click="showSocialLoginPopup(socialLogin.google)">
+            <button
+              class="social-icon-btn google"
+              title="google"
+              @click="showSocialLoginPopup(socialLogin.google)"
+            >
               <i class="fab fa-google"></i>
             </button>
           </div>
 
           <div class="signup-link">
-            <p>계정이 없으신가요?
+            <p>
+              계정이 없으신가요?
               <RouterLink :to="{ name: 'signup' }">회원가입</RouterLink>
             </p>
           </div>
@@ -137,7 +169,12 @@ const openPopup = async (options, url) => {
       </div>
     </main>
   </div>
-  <Modal v-if="showErrorModal" @confirm="closeErrorModal" :title="errorTitle" :message="errorMessage"/>
+  <Modal
+    v-if="showErrorModal"
+    @confirm="closeErrorModal"
+    :title="errorTitle"
+    :message="errorMessage"
+  />
 </template>
 
 <style scoped>
@@ -171,12 +208,13 @@ const openPopup = async (options, url) => {
 
 .auth-logo {
   width: 72px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .login-header h1 {
-  margin: 0;
-  font-size: 30px;
+  margin: 0 0 8px;
+  font-size: 34px;
+  line-height: 1.2;
 }
 
 .login-header p {
@@ -244,7 +282,7 @@ const openPopup = async (options, url) => {
   font-size: 0.875rem;
 }
 
-.remember-me input[type="checkbox"] {
+.remember-me input[type='checkbox'] {
   display: none;
 }
 
@@ -357,12 +395,12 @@ const openPopup = async (options, url) => {
 
 /* 플랫폼별 색상 */
 .social-icon-btn.kakao {
-  background-color: #FEE500;
+  background-color: #fee500;
   color: #000;
 }
 
 .social-icon-btn.naver {
-  background-color: #03C75A;
+  background-color: #03c75a;
   color: white;
   font-weight: bold;
   font-size: 1rem;
@@ -370,7 +408,7 @@ const openPopup = async (options, url) => {
 
 .social-icon-btn.google {
   background-color: white;
-  color: #4285F4;
+  color: #4285f4;
   border: 1px solid #ddd;
 }
 
@@ -378,7 +416,6 @@ const openPopup = async (options, url) => {
   background-color: #000;
   color: white;
 }
-
 
 .signup-link {
   text-align: center;

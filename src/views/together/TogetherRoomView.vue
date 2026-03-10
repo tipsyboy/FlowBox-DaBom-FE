@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 import bannerImg from '@/assets/images/banner.png'
 
 const route = useRoute()
@@ -38,8 +39,8 @@ const sendMessage = () => {
         <p>프론트엔드 코드리뷰 같이보기 · 참여자 8명</p>
       </div>
       <div class="row">
-        <button class="btn" type="button" @click="goToList">방 목록</button>
-        <button class="btn btn-primary" type="button">초대 링크 복사</button>
+        <ButtonBasic @click="goToList">방 목록</ButtonBasic>
+        <ButtonBasic variant="primary">초대 링크 복사</ButtonBasic>
       </div>
     </section>
 
@@ -47,9 +48,9 @@ const sendMessage = () => {
       <article class="card">
         <video class="player" controls :poster="bannerImg"></video>
         <div class="row" style="margin-top: 10px">
-          <button class="btn" type="button">재생/일시정지 동기화</button>
-          <button class="btn" type="button">5초 되감기</button>
-          <button class="btn" type="button">5초 앞으로</button>
+          <ButtonBasic>재생/일시정지 동기화</ButtonBasic>
+          <ButtonBasic>5초 되감기</ButtonBasic>
+          <ButtonBasic>5초 앞으로</ButtonBasic>
         </div>
       </article>
 
@@ -61,7 +62,7 @@ const sendMessage = () => {
           </div>
         </div>
         <input v-model="draft" class="chat-input" placeholder="메시지를 입력하세요" @keyup.enter="sendMessage" />
-        <button class="btn btn-primary" type="button" @click="sendMessage">전송</button>
+        <ButtonBasic variant="primary" @click="sendMessage">전송</ButtonBasic>
       </aside>
     </section>
   </main>

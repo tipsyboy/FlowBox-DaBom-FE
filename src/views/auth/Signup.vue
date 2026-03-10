@@ -1,16 +1,16 @@
 <script setup>
-import {reactive} from 'vue';
-import api from "@/api/auth/index.js"
-import SignupForm from '@/forms/auth/signupForm.js';
-import SignupFormErrors from '@/forms/auth/signupFormErrors.js';
-import {useRouter} from 'vue-router';
-import Modal from '@/components/ui/Modal.vue';
-
+import { reactive } from 'vue'
+import api from '@/api/auth/index.js'
+import SignupForm from '@/forms/auth/signupForm.js'
+import SignupFormErrors from '@/forms/auth/signupFormErrors.js'
+import { useRouter } from 'vue-router'
+import Modal from '@/components/ui/Modal.vue'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const router = useRouter()
 const form = reactive({
   signupForm: new SignupForm(),
-  signupFormErrors: new SignupFormErrors()
+  signupFormErrors: new SignupFormErrors(),
 })
 
 const state = reactive({
@@ -21,33 +21,33 @@ const state = reactive({
   signupSuccess: false,
   signupRedirectTimeoutId: null,
   duplicatedEmail: true,
-  duplicatedChannelName:true
+  duplicatedChannelName: true,
 })
 
 const checkEmail = reactive({
-  email: ''
+  email: '',
 })
 
 const checkChannelName = reactive({
-  channelName: ''
+  channelName: '',
 })
 
 const togglePassword = () => {
-  state.showPassword = !state.showPassword;
+  state.showPassword = !state.showPassword
 }
 
 const toggleConfirmPassword = () => {
-  state.confirmPassword = !state.confirmPassword;
+  state.confirmPassword = !state.confirmPassword
 }
 
 const checkEmailExists = async (email) => {
   if (email === '') {
-    alert("이메일을 입력해주세요.");
+    alert('이메일을 입력해주세요.')
     return
   }
 
   if (!validateEmail()) {
-    form.signupForm.isEmailChecked = null;
+    form.signupForm.isEmailChecked = null
     return
   }
   checkEmail.email = email
@@ -58,12 +58,12 @@ const checkEmailExists = async (email) => {
 
 const checkChannelNameExists = async (channelName) => {
   if (channelName === '') {
-    alert("채널명을 입력해주세요.");
+    alert('채널명을 입력해주세요.')
     return
   }
 
   if (!validateChannelName()) {
-    form.signupForm.isChannelChecked = null;
+    form.signupForm.isChannelChecked = null
     return
   }
   checkChannelName.channelName = channelName
@@ -85,7 +85,8 @@ const validateEmail = () => {
 const validateChannelName = () => {
   const channelNameRegex = /^[a-zA-Z0-9_]{3,20}$/
   if (!form.signupForm.channelName || !channelNameRegex.test(form.signupForm.channelName)) {
-    form.signupFormErrors.channelName = '사용자명은 3-20자의 영문, 숫자, 언더스코어만 사용할 수 있습니다.'
+    form.signupFormErrors.channelName =
+      '사용자명은 3-20자의 영문, 숫자, 언더스코어만 사용할 수 있습니다.'
     return false
   }
   form.signupFormErrors.channelName = ''
@@ -109,34 +110,43 @@ const validateConfirmPassword = () => {
 }
 
 const validateSignupForm = () => {
-  Object.keys(form.signupFormErrors).forEach(errorField => form.signupFormErrors[errorField] = '') // 에러 필드 초기화
+  Object.keys(form.signupFormErrors).forEach(
+    (errorField) => (form.signupFormErrors[errorField] = ''),
+  ) // 에러 필드 초기화
   console.log(form.signupForm)
   const emailValid = validateEmail()
   const channelValid = validateChannelName()
   const passwordValid = validatePassword()
   const confirmPasswordValid = validateConfirmPassword()
   // null && true && true && ... = null (falsy)
-  return emailValid && channelValid && passwordValid && confirmPasswordValid && form.signupForm.isEmailChecked && form.signupForm.isChannelChecked
+  return (
+    emailValid &&
+    channelValid &&
+    passwordValid &&
+    confirmPasswordValid &&
+    form.signupForm.isEmailChecked &&
+    form.signupForm.isChannelChecked
+  )
 }
 
 const updatePasswordStrength = () => {
-  let strength = 0;
+  let strength = 0
 
-  if (form.signupForm.password.length >= 8) strength++;
-  if (/[a-z]/.test(form.signupForm.password)) strength++;
-  if (/[A-Z]/.test(form.signupForm.password)) strength++;
-  if (/[0-9]/.test(form.signupForm.password)) strength++;
-  if (/[^a-zA-Z0-9]/.test(form.signupForm.password)) strength++;
+  if (form.signupForm.password.length >= 8) strength++
+  if (/[a-z]/.test(form.signupForm.password)) strength++
+  if (/[A-Z]/.test(form.signupForm.password)) strength++
+  if (/[0-9]/.test(form.signupForm.password)) strength++
+  if (/[^a-zA-Z0-9]/.test(form.signupForm.password)) strength++
 
   if (strength <= 2) {
     state.passwordStrengthClass = 'weak'
-    state.passwordStrengthLabel = '약함';
+    state.passwordStrengthLabel = '약함'
   } else if (strength <= 3) {
     state.passwordStrengthClass = 'medium'
-    state.passwordStrengthLabel = '보통';
+    state.passwordStrengthLabel = '보통'
   } else {
     state.passwordStrengthClass = 'strong'
-    state.passwordStrengthLabel = '강함';
+    state.passwordStrengthLabel = '강함'
   }
 }
 
@@ -144,8 +154,8 @@ const signupSuccessHandler = () => {
   state.signupSuccess = true
 }
 const handleModalConfirm = () => {
-  state.signupSuccess = false;
-  router.push({name: 'login'});
+  state.signupSuccess = false
+  router.push({ name: 'login' })
 }
 
 const signUp = async () => {
@@ -158,12 +168,16 @@ const signUp = async () => {
 </script>
 
 <template>
-  <Modal v-if="state.signupSuccess" title="회원가입 완료" message="성공적으로 회원가입이 완료되었습니다. 로그인 페이지로 이동합니다."
-         @confirm="handleModalConfirm"/>
+  <Modal
+    v-if="state.signupSuccess"
+    title="회원가입 완료"
+    message="성공적으로 회원가입이 완료되었습니다. 로그인 페이지로 이동합니다."
+    @confirm="handleModalConfirm"
+  />
   <div class="signup-container">
     <div class="signup-form-wrapper">
       <div class="signup-header">
-        <img src="@/assets/images/dabom2.png" alt="DaBom" class="auth-logo">
+        <img src="@/assets/images/dabom2.png" alt="DaBom" class="auth-logo" />
         <h1>회원가입</h1>
         <p>DaBom 커뮤니티의 새로운 멤버가 되어보세요</p>
       </div>
@@ -174,63 +188,101 @@ const signUp = async () => {
           <div class="form-group">
             <label for="email">이메일 *</label>
             <div class="input-with-button">
-              <input type="email" id="email" name="email" required v-model="form.signupForm.email"
-                     placeholder="이메일을 입력하세요">
-              <button type="button" class="btn-check" id="checkEmailBtn"
-                      @click="checkEmailExists(form.signupForm.email)">중복확인
-              </button>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                v-model="form.signupForm.email"
+                placeholder="이메일을 입력하세요"
+              />
+              <ButtonBasic
+                type="button"
+                class="btn-check"
+                id="checkEmailBtn"
+                variant="primary"
+                @click="checkEmailExists(form.signupForm.email)"
+                >중복확인
+              </ButtonBasic>
             </div>
-            <span v-if="form.signupForm.isEmailChecked !== null" :class="{
-                            'success-message': form.signupForm.isEmailChecked,
-                            'error-message': !form.signupForm.isEmailChecked
-                        }">
-                            {{ form.signupForm.emailCheckMessage() }}
-                        </span>
+            <span
+              v-if="form.signupForm.isEmailChecked !== null"
+              :class="{
+                'success-message': form.signupForm.isEmailChecked,
+                'error-message': !form.signupForm.isEmailChecked,
+              }"
+            >
+              {{ form.signupForm.emailCheckMessage() }}
+            </span>
             <span class="error-message" v-if="form.signupFormErrors.email">
-                            {{ form.signupFormErrors.email }}
-                        </span>
+              {{ form.signupFormErrors.email }}
+            </span>
           </div>
 
           <div class="form-group">
             <label for="channelName">닉네임(채널명) *</label>
             <div class="input-with-button">
-              <input type="text" id="channelName" name="channelName" required
-                     v-model="form.signupForm.channelName" placeholder="사용자명을 입력하세요">
-              <button type="button" class="btn-check" id="checkChannelNameBtn"
-                      @click="checkChannelNameExists(form.signupForm.channelName)">중복확인
-              </button>
+              <input
+                type="text"
+                id="channelName"
+                name="channelName"
+                required
+                v-model="form.signupForm.channelName"
+                placeholder="사용자명을 입력하세요"
+              />
+              <ButtonBasic
+                type="button"
+                class="btn-check"
+                id="checkChannelNameBtn"
+                variant="primary"
+                @click="checkChannelNameExists(form.signupForm.channelName)"
+                >중복확인
+              </ButtonBasic>
             </div>
-            <span v-if="form.signupForm.isChannelChecked !== null" :class="{
-                            'success-message': form.signupForm.isChannelChecked,
-                            'error-message': !form.signupForm.isChannelChecked
-                        }">
-                            {{ form.signupForm.channelCheckMessage() }}
-                        </span>
+            <span
+              v-if="form.signupForm.isChannelChecked !== null"
+              :class="{
+                'success-message': form.signupForm.isChannelChecked,
+                'error-message': !form.signupForm.isChannelChecked,
+              }"
+            >
+              {{ form.signupForm.channelCheckMessage() }}
+            </span>
             <span class="error-message" v-if="form.signupFormErrors.channelName">
-                            {{ form.signupFormErrors.channelName }}
-                        </span>
+              {{ form.signupFormErrors.channelName }}
+            </span>
             <span class="help-text">영문, 숫자, 언더스코어만 사용 가능 (3-20자)</span>
           </div>
 
           <div class="form-group">
             <label for="password">비밀번호 *</label>
             <div class="password-input">
-              <input :type="state.showPassword ? 'text' : 'password'" id="password" name="password"
-                     required v-model="form.signupForm.password" @input="updatePasswordStrength()"
-                     placeholder="비밀번호를 입력하세요">
-              <button type="button" class="toggle-password" id="togglePassword" @click="togglePassword">
+              <input
+                :type="state.showPassword ? 'text' : 'password'"
+                id="password"
+                name="password"
+                required
+                v-model="form.signupForm.password"
+                @input="updatePasswordStrength()"
+                placeholder="비밀번호를 입력하세요"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                id="togglePassword"
+                @click="togglePassword"
+              >
                 <i :class="state.showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
             <span class="error-message" v-if="form.signupFormErrors.password">
-                            {{ form.signupFormErrors.password }}
-                        </span>
+              {{ form.signupFormErrors.password }}
+            </span>
             <div class="password-strength" id="passwordStrength">
               <div class="strength-bar">
                 <div class="strength-fill" :class="state.passwordStrengthClass"></div>
               </div>
               <span class="strength-text">비밀번호 강도: {{ state.passwordStrengthLabel }}</span>
-
             </div>
             <span class="help-text">영문 소문자, 특수문자 포함 8자 이상</span>
           </div>
@@ -238,17 +290,26 @@ const signUp = async () => {
           <div class="form-group">
             <label for="confirmPassword">비밀번호 확인 *</label>
             <div class="password-input">
-              <input :type="state.confirmPassword ? 'text' : 'password'" id="confirmPassword"
-                     name="confirmPassword" required v-model="form.signupForm.password2"
-                     placeholder="비밀번호를 다시 입력하세요">
-              <button type="button" class="toggle-password" id="toggleConfirmPassword"
-                      @click="toggleConfirmPassword">
+              <input
+                :type="state.confirmPassword ? 'text' : 'password'"
+                id="confirmPassword"
+                name="confirmPassword"
+                required
+                v-model="form.signupForm.password2"
+                placeholder="비밀번호를 다시 입력하세요"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                id="toggleConfirmPassword"
+                @click="toggleConfirmPassword"
+              >
                 <i :class="state.confirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
             <span class="error-message" v-if="form.signupFormErrors.password2">
-                            {{ form.signupFormErrors.password2 }}
-                        </span>
+              {{ form.signupFormErrors.password2 }}
+            </span>
           </div>
 
           <!-- 생년월일 -->
@@ -278,14 +339,21 @@ const signUp = async () => {
               <span class="timer" id="verificationTimer">03:00</span>
           </div> -->
 
-<!--          <div class="terms-box">-->
-<!--            <label><input type="checkbox" required> [필수] 서비스 이용약관 동의</label>-->
-<!--            <label><input type="checkbox" required> [필수] 개인정보 처리방침 동의</label>-->
-<!--            <label><input type="checkbox" required> [필수] 만 14세 이상 확인</label>-->
-<!--          </div>-->
+          <!--          <div class="terms-box">-->
+          <!--            <label><input type="checkbox" required> [필수] 서비스 이용약관 동의</label>-->
+          <!--            <label><input type="checkbox" required> [필수] 개인정보 처리방침 동의</label>-->
+          <!--            <label><input type="checkbox" required> [필수] 만 14세 이상 확인</label>-->
+          <!--          </div>-->
 
           <div class="form-navigation">
-            <button type="submit" class="btn-signup" id="submitSignup">회원가입</button>
+            <ButtonBasic
+              type="submit"
+              variant="primary"
+              size="lg"
+              class="btn-signup"
+              id="submitSignup"
+              >회원가입</ButtonBasic
+            >
           </div>
         </div>
       </form>
@@ -309,7 +377,6 @@ const signUp = async () => {
   padding: 12px 16px 28px;
   background-color: var(--background-color);
 }
-
 
 /* ##### signup wrapper ##### */
 .signup-form-wrapper {
@@ -344,7 +411,6 @@ const signUp = async () => {
   font-size: 15px;
 }
 
-
 /* ##### logo ##### */
 /* .logo {
     display: flex;
@@ -363,7 +429,6 @@ const signUp = async () => {
     color: var(--text-secondary);
     font-size: 0.875rem;
 } */
-
 
 /* ##### signup form ##### */
 .signup-form {
@@ -415,19 +480,15 @@ const signUp = async () => {
 
 .btn-check {
   padding: 0 16px;
-  background: #3a3a3a;
-  border: none;
   border-radius: 10px;
-  color: white;
   font-size: 14px;
   font-weight: 600;
-  cursor: pointer;
   transition: var(--transition);
   white-space: nowrap;
 }
 
 .btn-check:hover {
-  background: #4a4a4a;
+  filter: brightness(1.05);
 }
 
 /* password */
@@ -517,7 +578,6 @@ const signUp = async () => {
 .success-message.show {
     opacity: 1;
 } */
-
 
 /* ##### signup guide ##### */
 .help-text {
