@@ -29,6 +29,10 @@
   transition: var(--transition-fast);
 }
 
+.g-search__button i {
+  font-size: 14px;
+}
+
 .g-search__button:hover {
   background: var(--primary-color);
   border-color: var(--primary-color);

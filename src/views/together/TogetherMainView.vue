@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import SearchBar from '@/components/app/SearchBar.vue'
 import bannerImg from '@/assets/images/banner.png'
 
 const router = useRouter()
@@ -58,8 +59,14 @@ const joinByCode = () => {
     </section>
 
     <section class="together-search">
-      <input v-model="searchQuery" type="text" class="search-input" placeholder="Together 검색..." />
-      <button class="search-btn" type="button" @click="moveToSearchPage"><i class="fas fa-search"></i></button>
+      <SearchBar
+        v-model="searchQuery"
+        placeholder="Together 검색..."
+        button-text="검색"
+        button-icon-class="fas fa-search"
+        :icon-only="true"
+        @search="moveToSearchPage"
+      />
     </section>
 
     <section class="room-options">

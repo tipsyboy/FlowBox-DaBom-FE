@@ -1,13 +1,15 @@
 <script setup>
 import { reactive, ref, onMounted, onUnmounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import useMemberStore from '@/stores/useMemberStore.js';
 import api from '@/api/auth/index.js';
-import SearchBarComp from '@/components/app/SearchBarComp.vue';
+import SearchBar from '@/components/app/SearchBar.vue';
 
 const memberStore = useMemberStore();
 const router = useRouter();
+const route = useRoute();
 const profileWrapperRef = ref(null);
+const searchKeyword = ref(route.query.keyword || '');
 
 const state = reactive({
   isDropdownOpen: false,
@@ -38,6 +40,16 @@ const logoutMember = async () => {
   memberStore.removeWithEncrypt();
   state.isDropdownOpen = false;
   window.location.href = '/';
+};
+
+const handleSearch = async (keyword) => {
+  const trimmedKeyword = keyword.trim();
+  await router.push({
+    name: 'main',
+    query: {
+      keyword: trimmedKeyword || undefined
+    }
+  });
 };
 
 const onClickOutside = (event) => {
@@ -72,7 +84,12 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <SearchBarComp />
+    <SearchBar
+      v-model="searchKeyword"
+      placeholder="검색어를 입력해주세요..."
+      button-text="검색"
+      @search="handleSearch"
+    />
 
     <div class="header-right">
       <div v-if="!memberStore.checkLogin()" class="login-menu">

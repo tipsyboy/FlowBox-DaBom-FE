@@ -1,9 +1,4 @@
 <script setup>
-import SearchQueryForm from '@/forms/searchQueryForm.js'
-import {reactive} from 'vue'
-import SearchBarComp from '@/components/app/SearchBarComp.vue'
-
-
 </script>
 
 <template>

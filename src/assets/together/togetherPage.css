@@ -31,12 +31,16 @@
 }
 
 .together-search {
-  display: flex;
   width: min(980px, 100%);
   margin: 0 auto 34px;
 }
 
-.together-search .search-input {
+.together-search :deep(.g-search) {
+  width: 100%;
+  max-width: none;
+}
+
+.together-search :deep(.g-search__input) {
   flex: 1;
   padding: 12px 14px;
   border: 2px solid var(--border-color);
@@ -46,7 +50,7 @@
   font-size: 16px;
 }
 
-.together-search .search-btn {
+.together-search :deep(.g-search__button) {
   padding: 0 18px;
   border: 2px solid var(--border-color);
   border-left: none;
@@ -56,7 +60,7 @@
   cursor: pointer;
 }
 
-.together-search .search-btn:hover {
+.together-search :deep(.g-search__button:hover) {
   background: var(--primary-color);
   border-color: var(--primary-color);
 }

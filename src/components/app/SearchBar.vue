@@ -5,6 +5,8 @@ const props = defineProps({
   modelValue: { type: String, default: '' },
   placeholder: { type: String, default: '검색어를 입력하세요' },
   buttonText: { type: String, default: '검색' },
+  buttonIconClass: { type: String, default: '' },
+  iconOnly: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['update:modelValue', 'search']);
@@ -31,6 +33,9 @@ const submit = () => {
       :placeholder="placeholder"
       @keyup.enter="submit"
     />
-    <button class="g-search__button" type="button" @click="submit">{{ buttonText }}</button>
+    <button class="g-search__button" type="button" @click="submit">
+      <i v-if="buttonIconClass" :class="buttonIconClass"></i>
+      <span v-if="!iconOnly">{{ buttonText }}</span>
+    </button>
   </div>
 </template>
