@@ -14,6 +14,7 @@ import { withImageCacheBust } from '@/utils/image.js'
 const route = useRoute()
 const videoId = route.params.id
 const videoPlayer = ref(null)
+const isMuted = ref(true)
 const memberStore = useMemberStore() 
 let hls = null
 
@@ -70,6 +71,7 @@ const initHlsPlayer = () => {
 
   const video = videoPlayer.value
   const videoUrl = videoInfo.savedPath
+  isMuted.value = video.muted || video.volume === 0
 
   if (hls) {
     hls.destroy()
@@ -92,6 +94,11 @@ const initHlsPlayer = () => {
   }
 }
 
+const syncMuteState = () => {
+  if (!videoPlayer.value) return
+  isMuted.value = videoPlayer.value.muted || videoPlayer.value.volume === 0
+}
+
 onMounted(async () => {
   // 데이터 로드를 병렬로 실행
   await Promise.all([
@@ -112,9 +119,17 @@ onUnmounted(() => {
   <div class="video-page-container">
     <section class="video-player-section">
       <div class="video-player-wrapper">
-        <video ref="videoPlayer" class="video-player" controls muted autoplay>
+        <video
+          ref="videoPlayer"
+          class="video-player"
+          controls
+          muted
+          autoplay
+          @volumechange="syncMuteState"
+        >
           지원하지 않는 비디오 플레이어 입니다.
         </video>
+        <div v-if="isMuted" class="audio-hint">소리를 들으려면 음소거를 해제하세요</div>
       </div>
     </section>
 
@@ -161,6 +176,7 @@ onUnmounted(() => {
   max-height: 75vh;
   aspect-ratio: 16 / 9;
   background-color: #000;
+  position: relative;
 }
 
 .video-player {
@@ -169,6 +185,19 @@ onUnmounted(() => {
   object-fit: contain;
   background: #000;
   display: block;
+}
+
+.audio-hint {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  pointer-events: none;
 }
 
 .main-content-area {
