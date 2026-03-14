@@ -189,14 +189,15 @@ onUnmounted(() => {
 
 .audio-hint {
   position: absolute;
-  right: 18px;
-  bottom: 18px;
-  padding: 10px 14px;
+  right: 24px;
+  bottom: 96px;
+  padding: 12px 18px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.72);
   color: #fff;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
   pointer-events: none;
 }
 
