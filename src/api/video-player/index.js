@@ -3,34 +3,27 @@
 import api from '@/plugins/axiosinterceptor.js';
 
 const getVideoById = async (videoId) => {
-    let data = {};
     const requestUrl = `/api/videos/${videoId}`;
-    // let url = /api/video${req}.json;
 
-    await api.get(requestUrl)
+    return api.get(requestUrl)
         .then((response) => {
-            data = response.data;
+            return response.data;
         })
         .catch((error) => {
-            data = error.data;
+            return error.response?.data || {};
         });
-
-    return data;
 }
 
 const getRecommendVideo = async (req) => {
-    let data = {};
     let url = '/api/recommend-video.json';
 
-    await api.get(url, req)
+    return api.get(url, req)
         .then((res) => {
-            data = res.data;
+            return res.data;
         })
         .catch((error) => {
-            data = error.data;
+            return error.response?.data || {};
         });
-
-    return data;
 }
 
 export default { getRecommendVideo, getVideoById }
