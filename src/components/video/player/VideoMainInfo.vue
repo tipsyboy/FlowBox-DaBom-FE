@@ -1,19 +1,16 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref, watch } from 'vue'
 import StarRating from '@/components/ui/StarRating.vue'
 import PlaylistAddModal from './PlaylistAddModal.vue'
 import api from '@/api/chat/index.js'
 import subscribeApi from '@/api/subscribe/index.js'
-import videoApi from '@/api/video-player/index.js'
 import channelApi from '@/api/channel/index.js'
 import useMemberStore from '@/stores/useMemberStore.js'
 import Modal from '@/components/ui/Modal.vue'
 import CreateTogetherModal from '@/components/together/CreateTogetherModal.vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
-const route = useRoute()
-const videoId = route.params.id
 const props = defineProps(['videoInfo'])
 const router = useRouter()
 const memberStore = useMemberStore()
@@ -42,15 +39,12 @@ const createChatRoom = async () => {
   }
 }
 
-const getChannelIdx = async () => {
-  const res = await videoApi.getVideoById(videoId)
-  if (res.code === 200) {
-    const response = await channelApi.getChannelInfoByChannelName(res.data.channelName)
-    channelIdx.value = response.id
-  }
-}
+const loadSubscribeState = async (channelName) => {
+  if (!channelName) return
 
-const getSubscribe = async () => {
+  const response = await channelApi.getChannelInfoByChannelName(channelName)
+  channelIdx.value = response.id
+
   const res = await subscribeApi.isSubscribe(channelIdx.value)
   if (res.code === 200) {
     subscribeState.value = res.data.isSubscribe
@@ -86,10 +80,13 @@ const navigateToChatRoom = () => {
   router.push({ name: 'message' })
 }
 
-onMounted(async () => {
-  await getChannelIdx()
-  await getSubscribe()
-})
+watch(
+  () => props.videoInfo.channelName,
+  async (channelName) => {
+    await loadSubscribeState(channelName)
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
