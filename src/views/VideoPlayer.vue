@@ -8,7 +8,6 @@ import Hls from 'hls.js'
 import api from '@/api/video-player/index.js'
 import useMemberStore from '@/stores/useMemberStore.js'
 import channelApi from "@/api/channel/index.js"
-import bannerImg from '@/assets/images/banner.png'
 import { withImageCacheBust } from '@/utils/image.js'
 
 const route = useRoute()
@@ -30,11 +29,7 @@ const videoInfo = reactive({
   subscribeCount: 0
 })
 
-const recommendVideos = [
-  { id: 1, title: 'Pinia 스토어 구조 정리', channel: 'FlowBox Studio', views: '7.3K', thumbnail: bannerImg },
-  { id: 2, title: '공통 CSS 토큰 적용법', channel: 'Dabom Dev', views: '5.1K', thumbnail: bannerImg },
-  { id: 3, title: '모달 컴포넌트 재사용 패턴', channel: 'Frontend Notes', views: '4.7K', thumbnail: bannerImg }
-]
+const recommendVideos = ref([])
 
 const currentUserProfile = ref({
   profileImg: 'https://via.placeholder.com/40',
@@ -143,6 +138,9 @@ onUnmounted(() => {
 
       <aside class="right-column">
         <h3>추천 영상</h3>
+        <div v-if="recommendVideos.length === 0" class="recommend-empty">
+          추천 영상을 준비 중입니다.
+        </div>
         <RouterLink
           v-for="item in recommendVideos"
           :key="item.id"
@@ -258,6 +256,15 @@ onUnmounted(() => {
   height: 100%;
   min-height: 90px;
   object-fit: cover;
+}
+
+.recommend-empty {
+  padding: 18px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: #2c2c2c;
+  color: var(--text-secondary);
+  font-size: 14px;
 }
 
 .recommend-card > div {

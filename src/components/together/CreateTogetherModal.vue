@@ -72,7 +72,7 @@ const sendApi = async () => {
     <div class="modal-overlay" @click="closeModal"></div>
     <div class="modal-content">
       <div class="modal-header">
-        <h3><i class="fas fa-plus"></i> Together 방 만들기</h3>
+        <h3><i class="fas fa-plus"></i> Together 방 생성</h3>
         <button class="modal-close" @click="closeModal">
           <i class="fas fa-times"></i>
         </button>
@@ -153,5 +153,373 @@ const sendApi = async () => {
 </template>
 
 <style scoped>
-@import url(@/assets/together/createTogetherModal.css);
+/* Create Room Modal */
+.createRoomBtn {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.create-room-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  padding: 1rem;
+  box-sizing: border-box;
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow: hidden;
+  border: 2px solid var(--border-color);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modal-header h3 i {
+  color: var(--primary-color);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+.modal-close:hover {
+  background-color: var(--hover-color);
+  color: var(--text-primary);
+}
+
+.create-room-form {
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group > label {
+  display: block;
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.form-group input:not([type='radio']),
+.form-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
+}
+
+.char-count {
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+.help-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  line-height: 1.4;
+}
+
+.radio-group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.radio-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  cursor: pointer;
+  min-height: 112px;
+  padding: 1rem 1rem 1rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+    var(--dark-bg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.radio-group .radio-item {
+  margin-bottom: 0;
+}
+
+.radio-item:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 71, 87, 0.45);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+.radio-item input[type='radio'] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  appearance: none;
+}
+
+.radio-mark {
+  width: 22px;
+  height: 22px;
+  margin-top: 0.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.radio-item input[type='radio']:checked + .radio-mark {
+  border-color: var(--primary-color);
+  background: radial-gradient(circle at center, #ffffff 0 24%, var(--primary-color) 28% 100%);
+  transform: scale(1.04);
+}
+
+.radio-item input[type='radio']:checked + .radio-mark::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.radio-item:has(input[type='radio']:checked) {
+  border-color: rgba(255, 71, 87, 0.7);
+  background:
+    linear-gradient(180deg, rgba(255, 71, 87, 0.12), rgba(255, 71, 87, 0.05)),
+    var(--dark-bg);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.22),
+    inset 0 0 0 1px rgba(255, 71, 87, 0.18);
+}
+
+.radio-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.radio-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.radio-content span {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 640px) {
+  .radio-group {
+    grid-template-columns: 1fr;
+  }
+}
+
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  padding: 0.75rem;
+  border-radius: 8px;
+  transition: var(--transition);
+}
+
+.setting-item:hover {
+  background-color: var(--hover-color);
+}
+
+.setting-item input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  position: relative;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.setting-item input[type='checkbox']:checked + .checkmark {
+  border-color: var(--secondary-color);
+  background-color: var(--secondary-color);
+}
+
+.setting-item input[type='checkbox']:checked + .checkmark::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-cancel,
+.btn-create {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-cancel {
+  background-color: var(--hover-color);
+  color: var(--text-primary);
+}
+
+.btn-cancel:hover {
+  background-color: var(--border-color);
+}
+
+.btn-create {
+  background: linear-gradient(135deg, var(--primary-color), #ff6b7a);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-create:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
+}
+
+@media (max-width: 768px) {
+  .create-room-modal {
+    padding: 0.5rem;
+  }
+
+  .modal-content {
+    max-height: 95vh;
+  }
+
+  .modal-header,
+  .create-room-form,
+  .modal-footer {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .btn-cancel,
+  .btn-create {
+    width: 100%;
+    justify-content: center;
+  }
+}
 </style>
