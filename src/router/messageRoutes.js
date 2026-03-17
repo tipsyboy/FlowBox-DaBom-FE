@@ -1,11 +1,11 @@
-import Message from '../views/MessageContainer.vue'
+import MessageContainer from '@/views/MessageContainer.vue'
 
 const messageRoutes = [
-    {
-        path: '/message',
-        name: 'message',
-        component: Message,
-    },
+  {
+    path: '/message',
+    name: 'message',
+    component: MessageContainer,
+  },
 ]
 
 export default messageRoutes

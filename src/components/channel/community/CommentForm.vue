@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const emit = defineEmits(['comment-submitted'])
 
@@ -50,14 +51,15 @@ const submitComment = async () => {
                 ></textarea>
                 
                 <div v-if="isCommentFocused || newCommentText.trim()" class="comment-actions">
-                    <button class="comment-cancel-btn" @click="cancelComment">취소</button>
-                    <button 
-                        class="comment-submit-btn" 
+                    <ButtonBasic class="comment-cancel-btn" variant="ghost" @click="cancelComment">취소</ButtonBasic>
+                    <ButtonBasic
+                        class="comment-submit-btn"
+                        variant="primary"
                         :disabled="!newCommentText.trim()"
                         @click="submitComment"
                     >
                         댓글
-                    </button>
+                    </ButtonBasic>
                 </div>
             </div>
         </div>
@@ -121,12 +123,9 @@ const submitComment = async () => {
 }
 
 .comment-cancel-btn {
-  background: transparent;
   color: #888;
-  border: none;
   padding: 0.5rem 1rem;
   border-radius: 20px;
-  cursor: pointer;
   font-size: 0.875rem;
   transition: background-color 0.2s;
 }
@@ -136,12 +135,8 @@ const submitComment = async () => {
 }
 
 .comment-submit-btn {
-  background-color: #3b82f6;
-  color: white;
-  border: none;
   padding: 0.5rem 1rem;
   border-radius: 20px;
-  cursor: pointer;
   font-size: 0.875rem;
   transition: all 0.2s;
 }

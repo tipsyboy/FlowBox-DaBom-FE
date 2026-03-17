@@ -3,10 +3,14 @@ import { defineStore } from 'pinia'
 import { EncryptStorage } from 'encrypt-storage'
 
 const LOGIN_KEY = 'IS_LOGIN'
-const CHANNEL_NAME = 'CHANNEL_NAME'
-const EXPIRE_MS = 60 * 60 * 1000 // 한시간
-// const EXPIRE_MS = 1000 // 1초
-const encryptStorage = new EncryptStorage('gdagsdafsdafsadfdsate', { prefix: 'dabom' })
+const CHANNEL_NAME_KEY = 'CHANNEL_NAME'
+const LOGIN_EXPIRE_MS = 60 * 60 * 1000
+const STORAGE_PREFIX = 'dabom'
+const STORAGE_SECRET = import.meta.env.VITE_MEMBER_STORAGE_SECRET || 'gdagsdafsdadkflsjfsadfdsate' // 환경 변수가 없으면 기존 키를 그대로 사용한다.
+
+const encryptStorage = new EncryptStorage(STORAGE_SECRET, {
+  prefix: STORAGE_PREFIX,
+})
 
 const useMemberStore = defineStore('member', () => {
   const isLogin = ref(false)
@@ -18,25 +22,26 @@ const useMemberStore = defineStore('member', () => {
     }
     if (Date.now() > data.expireAt) {
       encryptStorage.removeItem(LOGIN_KEY)
-      encryptStorage.removeItem(CHANNEL_NAME)
+      encryptStorage.removeItem(CHANNEL_NAME_KEY)
       return false
     }
     return data.loggedIn
   }
 
   const setWithEncrypt = (channelName) => {
-    const expireAt = Date.now() + EXPIRE_MS
+    const expireAt = Date.now() + LOGIN_EXPIRE_MS
     encryptStorage.setItem(LOGIN_KEY, { loggedIn: true, expireAt })
-    encryptStorage.setItem(CHANNEL_NAME, { name: channelName, expireAt })
+    encryptStorage.setItem(CHANNEL_NAME_KEY, { name: channelName, expireAt })
   }
 
   const getChannelNameWithEncrypt = () => {
-    return encryptStorage.getItem(CHANNEL_NAME).name
+    const channelData = encryptStorage.getItem(CHANNEL_NAME_KEY)
+    return channelData?.name || ''
   }
 
   const removeWithEncrypt = () => {
     encryptStorage.removeItem(LOGIN_KEY)
-    encryptStorage.removeItem(CHANNEL_NAME)
+    encryptStorage.removeItem(CHANNEL_NAME_KEY)
   }
 
   return { isLogin, checkLogin, setWithEncrypt, removeWithEncrypt, getChannelNameWithEncrypt }

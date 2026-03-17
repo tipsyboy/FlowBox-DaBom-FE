@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaBom - Channel Playlists Sample</title>
+    <link rel="stylesheet" href="./channel-main-sample.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../2-main-explore/main-page-sample.html">
+          <img src="../../src/assets/images/dabom2.png" alt="DaBom logo" />
+        </a>
+        <div class="search-wrap">
+          <input type="text" placeholder="채널/영상 검색" />
+          <button>검색</button>
+        </div>
+        <div class="auth-links">
+          <a href="../1-auth/login-sample.html">로그인</a>
+          <a href="../1-auth/signup-sample.html">회원가입</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="channel-header">
+      <img src="../../src/assets/images/banner.png" alt="채널 배너" class="channel-banner" />
+      <div class="channel-info">
+        <div class="profile-section">
+          <img src="../../src/assets/images/dabom2.png" alt="채널 프로필" class="channel-profile-img" />
+          <div class="channel-details">
+            <h1 class="channel-name">FlowBox Studio</h1>
+            <p class="channel-handle">@flowbox_studio</p>
+            <div class="channel-meta">
+              <span>구독자 12,483명</span>
+              <span>동영상 137개</span>
+              <span>누적 조회수 1,230,998회</span>
+            </div>
+          </div>
+        </div>
+        <div class="channel-actions">
+          <button class="subscribe-btn" id="subscribeBtn"><i class="fas fa-bell"></i> 구독</button>
+          <button class="message-btn"><i class="fas fa-envelope"></i> 메시지</button>
+        </div>
+      </div>
+    </section>
+
+    <nav class="channel-nav">
+      <a class="nav-item" href="./channel-main-sample.html">동영상</a>
+      <a class="nav-item active" href="./channel-playlists-sample.html">재생목록</a>
+      <a class="nav-item" href="./channel-community-sample.html">커뮤니티</a>
+      <a class="nav-item" href="./channel-about-sample.html">정보</a>
+    </nav>
+
+    <main class="channel-content">
+      <section class="tab-header">
+        <h2>재생목록</h2>
+      </section>
+
+      <section class="playlist-grid">
+        <article class="playlist-card">
+          <div class="playlist-cover">
+            <img src="../../src/assets/images/banner.png" alt="재생목록 썸네일" />
+            <span class="playlist-count"><i class="fas fa-list"></i> 24</span>
+          </div>
+          <div class="playlist-body">
+            <h3>리팩토링 전체 과정</h3>
+            <p>FlowBox Studio · 업데이트 2일 전</p>
+          </div>
+        </article>
+
+        <article class="playlist-card">
+          <div class="playlist-cover">
+            <img src="../../src/assets/images/banner.png" alt="재생목록 썸네일" />
+            <span class="playlist-count"><i class="fas fa-list"></i> 12</span>
+          </div>
+          <div class="playlist-body">
+            <h3>Vue3 컴포지션 API 모음</h3>
+            <p>FlowBox Studio · 업데이트 5일 전</p>
+          </div>
+        </article>
+
+        <article class="playlist-card">
+          <div class="playlist-cover">
+            <img src="../../src/assets/images/banner.png" alt="재생목록 썸네일" />
+            <span class="playlist-count"><i class="fas fa-list"></i> 9</span>
+          </div>
+          <div class="playlist-body">
+            <h3>채널 운영 UX 개선</h3>
+            <p>FlowBox Studio · 업데이트 1주 전</p>
+          </div>
+        </article>
+
+        <article class="playlist-card">
+          <div class="playlist-cover">
+            <img src="../../src/assets/images/banner.png" alt="재생목록 썸네일" />
+            <span class="playlist-count"><i class="fas fa-list"></i> 31</span>
+          </div>
+          <div class="playlist-body">
+            <h3>코드 리뷰 / 구조 정리</h3>
+            <p>FlowBox Studio · 업데이트 2주 전</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      const subscribeBtn = document.getElementById('subscribeBtn');
+      subscribeBtn.addEventListener('click', () => {
+        const on = subscribeBtn.classList.toggle('is-subscribed');
+        subscribeBtn.innerHTML = on ? '<i class="fas fa-bell"></i> 구독 중' : '<i class="fas fa-bell"></i> 구독';
+      });
+    </script>
+  </body>
+</html>

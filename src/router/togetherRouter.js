@@ -1,30 +1,23 @@
-import TogetherView from '@/views/together/TogetherView.vue'
-import TogetherMainView from '@/views/together/subview/TogetherMainView.vue'
-import TogetherRoom from '@/views/TogetherRoom.vue'
+import TogetherMainView from '@/views/together/TogetherMainView.vue'
+import TogetherSearchView from '@/views/together/TogetherSearchView.vue'
+import TogetherRoomView from '@/views/together/TogetherRoomView.vue'
 
 const togetherRoutes = [
   {
     path: '/together',
     name: 'together',
-    component: TogetherView,
-    children: [
-      {
-        path: '/together',
-        name: 'togetherMain',
-        component: TogetherMainView,
-      },
-      {
-        path: '/together/search',
-        name: 'togetherSearch',
-        component: () => import('@/views/together/subview/TogetherSearchView.vue'),
-      },
-    ],
+    component: TogetherMainView
+  },
+  {
+    path: '/together/search',
+    name: 'togetherSearch',
+    component: TogetherSearchView
   },
   {
     path: '/together/:id',
     name: 'togetherRoom',
-    component: TogetherRoom,
-  },
+    component: TogetherRoomView
+  }
 ]
 
 export default togetherRoutes

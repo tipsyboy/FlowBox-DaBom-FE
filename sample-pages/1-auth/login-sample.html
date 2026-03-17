@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaBom - Login Renewal Sample</title>
+    <link rel="stylesheet" href="./login-sample.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <header class="sample-topbar">
+      <div class="sample-topbar-inner">
+        <a class="sample-brand" href="../2-main-explore/main-page-sample.html">
+          <img src="../../src/assets/images/dabom2.png" alt="DaBom logo" />
+        </a>
+        <nav class="sample-nav">
+          <a href="../2-main-explore/main-page-sample.html">홈</a>
+          <a href="../4-channel-studio/mychannel.html">마이채널</a>
+        </nav>
+        <div class="sample-auth-links">
+          <a href="./login-sample.html">로그인</a>
+          <a href="./signup-sample.html">회원가입</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="login-main">
+      <section class="login-card">
+        <header class="login-head">
+          <img src="../../src/assets/images/dabom2.png" alt="DaBom" class="logo-mark" />
+          <h1>로그인</h1>
+          <p>DaBom 계정으로 로그인하여 서비스를 이용하세요.</p>
+        </header>
+
+        <form id="loginForm" class="login-form" novalidate>
+          <div class="form-group">
+            <label for="email">이메일</label>
+            <input id="email" type="email" placeholder="이메일을 입력하세요" required />
+          </div>
+
+          <div class="form-group">
+            <label for="password">비밀번호</label>
+            <div class="password-wrap">
+              <input id="password" type="password" placeholder="비밀번호를 입력하세요" required />
+              <button type="button" class="toggle-btn" id="togglePassword">표시</button>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="remember">
+              <input type="checkbox" />
+              로그인 상태 유지
+            </label>
+            <a href="#" class="link">비밀번호 찾기</a>
+          </div>
+
+          <button type="submit" class="btn-login">로그인</button>
+
+          <div class="divider"><span>또는</span></div>
+
+          <div class="social-login">
+            <button type="button" class="social-icon-btn kakao" title="kakao">
+              <i class="fas fa-comment"></i>
+            </button>
+            <button type="button" class="social-icon-btn naver" title="naver">
+              <span>N</span>
+            </button>
+            <button type="button" class="social-icon-btn google" title="google">
+              <i class="fab fa-google"></i>
+            </button>
+          </div>
+        </form>
+
+        <footer class="login-foot">
+          <p>아직 계정이 없나요? <a href="./signup-sample.html">회원가입</a></p>
+        </footer>
+      </section>
+    </main>
+
+    <script>
+      const passwordInput = document.getElementById('password');
+      document.getElementById('togglePassword').addEventListener('click', () => {
+        passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+      });
+
+      document.getElementById('loginForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        alert('샘플 페이지입니다. 실제 로그인 요청은 전송하지 않습니다.');
+      });
+    </script>
+  </body>
+</html>

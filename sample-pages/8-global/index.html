@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8-global Preview</title>
+    <link rel="stylesheet" href="./styles/index.css" />
+  </head>
+  <body>
+    <header class="g-topbar">
+      <div class="g-topbar__inner">
+        <a class="g-brand" href="#"><img src="../../src/assets/images/dabom2.png" alt="DaBom" /></a>
+        <div class="g-search">
+          <input class="g-search__input" placeholder="검색어를 입력하세요" />
+          <button class="g-search__button">검색</button>
+        </div>
+        <div class="g-auth-buttons"><a href="#">로그인</a><a href="#">회원가입</a></div>
+      </div>
+    </header>
+
+    <main class="g-page">
+      <div class="g-section-header">
+        <h2>Global Assets Preview</h2>
+        <div>
+          <button class="g-btn">기본</button>
+          <button class="g-btn g-btn--primary">Primary</button>
+          <button class="g-btn g-btn--secondary">Secondary</button>
+        </div>
+      </div>
+
+      <div class="g-grid-3">
+        <article class="g-video-card">
+          <a class="g-video-card__thumb" href="#">
+            <img src="../../src/assets/images/banner.png" alt="thumb" />
+            <span class="g-video-card__duration">12:34</span>
+          </a>
+          <div class="g-video-card__body">
+            <h3 class="g-video-card__title">VideoCard 공통 컴포넌트 샘플</h3>
+            <p class="g-video-card__meta">조회수 12K · 2일 전</p>
+          </div>
+        </article>
+
+        <article class="g-card" style="padding: 16px">
+          <h3 style="margin: 0 0 10px">Form</h3>
+          <input class="g-input" placeholder="채널명" style="margin-bottom: 8px" />
+          <select class="g-select" style="margin-bottom: 8px"><option>공개</option><option>비공개</option></select>
+          <textarea class="g-textarea" rows="3" placeholder="설명"></textarea>
+        </article>
+
+        <aside class="g-card g-sidebar">
+          <a class="g-sidebar__item is-active" href="#">통합 대시보드</a>
+          <a class="g-sidebar__item" href="#">동영상 관리</a>
+          <a class="g-sidebar__item" href="#">커뮤니티 관리</a>
+          <a class="g-sidebar__item is-danger" href="#">회원 탈퇴</a>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="g-footer">
+      <div class="g-footer__inner">
+        <strong>DaBom</strong>
+        <span>Global layer preview</span>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Together Main Sample</title>
+    <link rel="stylesheet" href="./together-sample.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../2-main-explore/main-page-sample.html"><img src="../../src/assets/images/dabom2.png" alt="DaBom" /></a>
+        <div class="search-wrap"><input type="text" placeholder="검색어를 입력해주세요" /><button>검색</button></div>
+        <div class="auth-links"><a href="../1-auth/login-sample.html">로그인</a><a href="../1-auth/signup-sample.html">회원가입</a></div>
+      </div>
+    </header>
+
+    <main class="page-wrap together-page">
+      <section class="together-header">
+        <h1><i class="fas fa-users"></i> Together</h1>
+        <p>친구들과 함께 동영상을 시청하고 실시간으로 소통하세요</p>
+      </section>
+
+      <section class="together-search">
+        <input type="text" class="search-input" placeholder="Together 검색..." />
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+      </section>
+
+      <section class="room-options">
+        <article class="option-card">
+          <div class="option-icon"><i class="fas fa-plus"></i></div>
+          <h3>방 만들기</h3>
+          <p>새로운 함께보기 방을 만들고 링크를 공유하세요.</p>
+          <button class="btn btn-primary">생성하기</button>
+        </article>
+        <article class="option-card">
+          <div class="option-icon"><i class="fas fa-key"></i></div>
+          <h3>코드로 입장</h3>
+          <p>초대 코드를 입력해 비공개 방에 바로 입장합니다.</p>
+          <div class="join-row">
+            <input type="text" placeholder="초대 코드 입력" />
+            <button class="btn">입장</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="my-rooms">
+        <div class="section-header">
+          <h2><i class="fas fa-user"></i> 내가 만든 방</h2>
+        </div>
+        <div class="my-rooms-list">
+          <article class="my-room-item">
+            <div class="room-info"><h4>프론트엔드 코드리뷰 같이보기</h4><p>참여자 8 / 15 · 공개방</p></div>
+            <div class="room-actions"><button class="btn">관리</button><a class="btn btn-primary" href="./together-room-sample.html">입장</a></div>
+          </article>
+          <article class="my-room-item">
+            <div class="room-info"><h4>리팩토링 라이브 Q&A</h4><p>참여자 15 / 30 · 공개방</p></div>
+            <div class="room-actions"><button class="btn">관리</button><a class="btn btn-primary" href="./together-room-sample.html">입장</a></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="my-rooms">
+        <div class="section-header">
+          <h2><i class="fas fa-user"></i> 내가 참여하고 있는 방</h2>
+        </div>
+        <div class="my-rooms-list">
+          <article class="my-room-item">
+            <div class="room-info"><h4>Vue3 구조개선 스터디</h4><p>참여자 11 / 20 · 공개방</p></div>
+            <div class="room-actions"><a class="btn btn-primary" href="./together-room-sample.html">입장</a></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="active-rooms">
+        <div class="section-header">
+          <h2><i class="fas fa-fire"></i> 활성 Together 방</h2>
+          <a class="btn" href="./together-search-sample.html">검색 결과 보기</a>
+        </div>
+        <div class="rooms-grid">
+          <article class="room-card">
+            <img class="room-thumb" src="../../src/assets/images/banner.png" alt="room" />
+            <h3>리팩토링 스터디 공개방 A</h3>
+            <p class="muted">호스트 flowbox_admin · 참여자 12명</p>
+            <a class="btn btn-primary" href="./together-room-sample.html">입장</a>
+          </article>
+          <article class="room-card">
+            <img class="room-thumb" src="../../src/assets/images/banner.png" alt="room" />
+            <h3>리팩토링 스터디 공개방 B</h3>
+            <p class="muted">호스트 dabom_user · 참여자 7명</p>
+            <a class="btn btn-primary" href="./together-room-sample.html">입장</a>
+          </article>
+          <article class="room-card">
+            <img class="room-thumb" src="../../src/assets/images/banner.png" alt="room" />
+            <h3>컴포넌트 설계 리뷰룸</h3>
+            <p class="muted">호스트 frontend_note · 참여자 9명</p>
+            <a class="btn btn-primary" href="./together-room-sample.html">입장</a>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

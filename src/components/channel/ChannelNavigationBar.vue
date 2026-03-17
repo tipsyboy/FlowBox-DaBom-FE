@@ -1,6 +1,3 @@
-<script setup lang="ts">
-</script>
-
 <template>
   <nav class="channel-nav">
     <RouterLink to="videos" class="nav-item" active-class="active">동영상</RouterLink>
@@ -12,17 +9,18 @@
 
 <style scoped>
 .channel-nav {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  padding: 1rem 2rem;
+  max-width: 1400px;
+  margin: 18px auto 0;
+  padding: 0 16px;
   border-bottom: 1px solid var(--border-color);
+  display: flex;
+  gap: 18px;
 }
 
 .nav-item {
-  color: var(--text-secondary);
   text-decoration: none;
-  padding: 0.5rem 0;
+  color: var(--text-secondary);
+  padding: 14px 2px;
   border-bottom: 2px solid transparent;
 }
 
@@ -30,7 +28,8 @@
   color: var(--text-primary);
 }
 
-.nav-item.active {
+.nav-item.active,
+.nav-item.router-link-active {
   color: var(--primary-color);
   border-bottom-color: var(--primary-color);
 }
