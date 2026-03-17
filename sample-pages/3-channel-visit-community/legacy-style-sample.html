@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaBom Refactor Proposal - Legacy Tone Sample</title>
+    <link rel="stylesheet" href="./legacy-style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-left">
+        <div class="logo-wrap">DaBom</div>
+        <nav class="nav-menu">
+          <a class="nav-item active" href="#">홈</a>
+          <a class="nav-item" href="#">투게더</a>
+          <a class="nav-item" href="#">내 채널</a>
+        </nav>
+      </div>
+      <div class="header-center">
+        <input type="text" placeholder="영상/채널 검색" />
+        <button class="btn-search">검색</button>
+      </div>
+      <div class="header-right">
+        <button class="btn-pill">DM</button>
+      </div>
+    </header>
+
+    <div class="main-content">
+      <aside class="sidebar">
+        <h3>메뉴</h3>
+        <a class="side-item active" href="#">대시보드</a>
+        <a class="side-item" href="#">동영상 관리</a>
+        <a class="side-item" href="#">플레이리스트 관리</a>
+        <a class="side-item" href="#">커뮤니티 관리</a>
+        <a class="side-item" href="#">채널 정보 수정</a>
+      </aside>
+
+      <main class="content-container">
+        <section class="panel">
+          <div class="section-header">
+            <h2 class="section-title">채널 관리 샘플 (기존 결)</h2>
+            <button class="btn-primary">새 글 작성</button>
+          </div>
+
+          <div class="stats-row">
+            <article class="stat-card">
+              <p>총 영상</p>
+              <strong>42</strong>
+            </article>
+            <article class="stat-card">
+              <p>총 구독자</p>
+              <strong>12,840</strong>
+            </article>
+            <article class="stat-card">
+              <p>이번 주 조회수</p>
+              <strong>98,410</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-header">
+            <h2 class="section-title">동영상 카드</h2>
+            <a class="section-link" href="#">전체보기</a>
+          </div>
+
+          <div class="video-grid">
+            <article class="video-card">
+              <div class="thumb">11:04</div>
+              <h3>Vue 구조 리팩토링 실전</h3>
+              <p>조회수 14.2K · 2일 전</p>
+            </article>
+            <article class="video-card">
+              <div class="thumb">07:29</div>
+              <h3>컴포넌트 공통화 기준 잡기</h3>
+              <p>조회수 9.7K · 5일 전</p>
+            </article>
+            <article class="video-card">
+              <div class="thumb">18:55</div>
+              <h3>Pinia 스토어 정리 패턴</h3>
+              <p>조회수 6.4K · 1주 전</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel two-col">
+          <div>
+            <div class="section-header compact">
+              <h2 class="section-title">플레이리스트 관리</h2>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>이름</th>
+                  <th>영상 수</th>
+                  <th>관리</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>백엔드 연동 테스트</td>
+                  <td>12</td>
+                  <td><button class="btn-icon">수정</button></td>
+                </tr>
+                <tr>
+                  <td>UI 리팩토링 모음</td>
+                  <td>8</td>
+                  <td><button class="btn-icon">수정</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <div class="section-header compact">
+              <h2 class="section-title">커뮤니티 게시글</h2>
+            </div>
+            <div class="post-list">
+              <article class="post-item">
+                <h3>컴포넌트 분리 순서 의견 받습니다</h3>
+                <p>댓글 14 · 좋아요 21</p>
+              </article>
+              <article class="post-item">
+                <h3>공통 CSS 토큰화 초안 공유</h3>
+                <p>댓글 9 · 좋아요 13</p>
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

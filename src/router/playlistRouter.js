@@ -1,17 +1,17 @@
-import MyPlaylistsView from '@/views/playlist/MyPlaylistsView.vue';
-import PlaylistDetailView from '@/views/playlist/PlaylistDetailView.vue';
+import MyPlaylistsView from '@/views/playlist/MyPlaylistsView.vue'
+import PlaylistDetailView from '@/views/playlist/PlaylistDetailView.vue'
 
 const playlistRoutes = [
   {
     path: '/my-playlists',
     name: 'my-playlists',
-    component: MyPlaylistsView
+    component: MyPlaylistsView,
   },
   {
     path: '/playlist/:id',
     name: 'playlist-detail',
-    component: PlaylistDetailView
-  }
-];
+    component: PlaylistDetailView,
+  },
+]
 
-export default playlistRoutes;
+export default playlistRoutes

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaBom - Mychannel Video Management</title>
+    <link rel="stylesheet" href="./mychannel.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="top-left">
+          <div class="brand"><img src="../../src/assets/images/dabom2.png" alt="DaBom logo" /></div>
+          <nav class="top-nav">
+            <a href="../2-main-explore/main-page-sample.html">홈</a>
+            <a href="../5-together/together-main-sample.html">투게더</a>
+            <a class="active" href="./mychannel.html">내 채널</a>
+          </nav>
+        </div>
+        <div class="top-center">
+          <div class="search-wrap">
+            <input type="text" placeholder="검색어를 입력해주세요..." />
+            <button>검색</button>
+          </div>
+        </div>
+        <div class="top-right">
+          <a href="../1-auth/login-sample.html" class="auth-btn">로그인</a>
+          <a href="../1-auth/signup-sample.html" class="auth-btn">회원가입</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="main-banner">
+      <div class="banner-frame">
+        <img src="../../src/assets/images/banner.png" alt="channel banner" class="banner-image" />
+      </div>
+    </section>
+
+    <section class="channel-summary">
+      <div class="channel-summary-card card">
+        <div class="channel-profile">
+          <img src="../../src/assets/images/dabom2.png" alt="channel profile" class="channel-avatar-lg" />
+          <div class="channel-identity">
+            <h1>FlowBox Studio</h1>
+            <p>@flowbox_studio · 개발/프로덕트</p>
+          </div>
+        </div>
+        <div class="channel-metrics">
+          <div class="metric-item"><span class="metric-label">구독자</span><strong class="metric-value">12.8만</strong></div>
+          <div class="metric-item"><span class="metric-label">동영상</span><strong class="metric-value">142개</strong></div>
+          <div class="metric-item"><span class="metric-label">누적 조회수</span><strong class="metric-value">4,982,110</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="channel-dashboard">
+      <aside class="dashboard-sidebar card">
+        <a class="sidebar-btn" href="./mychannel.html">통합 대시보드</a>
+        <a class="sidebar-btn active" href="./video-management-sample.html">동영상 관리</a>
+        <a class="sidebar-btn" href="./community-management-sample.html">커뮤니티 관리</a>
+        <a class="sidebar-btn" href="./channel-info-edit-sample.html">채널 정보 수정</a>
+        <button class="sidebar-btn danger" type="button">회원 탈퇴</button>
+      </aside>
+
+      <main class="dashboard-main">
+        <section class="dashboard-section card active">
+          <div class="section-header">
+            <h2>동영상 관리</h2>
+            <button class="upload-btn">동영상 업로드</button>
+          </div>
+          <p class="posts-count">총 3개 동영상 (최신순)</p>
+
+          <table class="video-table">
+            <thead>
+              <tr>
+                <th>동영상</th>
+                <th>제목</th>
+                <th>조회수</th>
+                <th>평점</th>
+                <th>상태</th>
+                <th>업로드날짜</th>
+                <th>관리</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="video-row">
+                <td class="video-cell"><div class="video-wrapper"><img src="../../src/assets/images/banner.png" alt="thumb" /><div class="play-overlay">▶</div></div></td>
+                <td class="title-cell"><div class="title-wrapper"><h4>Vue 프로젝트 구조 리팩토링</h4><p class="description">공통 컴포넌트로 분리하는 샘플입니다.</p></div></td>
+                <td class="views-cell">12,043</td>
+                <td class="rating-cell"><span class="rating">★ 4.2</span></td>
+                <td class="status-cell"><button class="action-btn status">공개</button></td>
+                <td class="date-cell">2026.03.09</td>
+                <td class="actions-cell"><button class="action-btn upload">수정</button></td>
+              </tr>
+              <tr class="video-row">
+                <td class="video-cell"><div class="video-wrapper"><img src="../../src/assets/images/banner.png" alt="thumb" /><div class="play-overlay">▶</div></div></td>
+                <td class="title-cell"><div class="title-wrapper"><h4>Pinia 상태 관리 정리 패턴</h4><p class="description">상태 단일 출처로 메시지/채널 상태를 정리합니다.</p></div></td>
+                <td class="views-cell">8,109</td>
+                <td class="rating-cell"><span class="rating">★ 4.6</span></td>
+                <td class="status-cell"><button class="action-btn status off">비공개</button></td>
+                <td class="date-cell">2026.03.05</td>
+                <td class="actions-cell"><button class="action-btn upload">수정</button></td>
+              </tr>
+              <tr class="video-row">
+                <td class="video-cell"><div class="video-wrapper"><img src="../../src/assets/images/banner.png" alt="thumb" /><div class="play-overlay">▶</div></div></td>
+                <td class="title-cell"><div class="title-wrapper"><h4>대규모 CSS 분리 전략</h4><p class="description">파일 분리 기준과 네이밍 규칙을 정리합니다.</p></div></td>
+                <td class="views-cell">5,441</td>
+                <td class="rating-cell"><span class="rating">★ 4.1</span></td>
+                <td class="status-cell"><button class="action-btn status">공개</button></td>
+                <td class="date-cell">2026.03.01</td>
+                <td class="actions-cell"><button class="action-btn upload">수정</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

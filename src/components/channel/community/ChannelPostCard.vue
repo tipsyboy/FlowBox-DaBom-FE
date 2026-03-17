@@ -1,116 +1,143 @@
 <script setup>
-import { useRouter } from 'vue-router';
-import { reactive, ref } from 'vue';
-import api from '@/api/channel/index.js';
+import { useRouter } from 'vue-router'
+import { reactive, ref } from 'vue'
+import api from '@/api/channel/index.js'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const props = defineProps({
-    postData: {
-        type: Object,
-        required: true
-    }
-});
+  postData: {
+    type: Object,
+    required: true
+  }
+})
 
-const router = useRouter();
-const isProcessing = ref(false);
+const router = useRouter()
+const isProcessing = ref(false)
 
 const localPost = reactive({
-    ...props.postData
-});
+  ...props.postData
+})
 
 const clickLikeBtn = async (idx) => {
-    if (isProcessing.value) return;
-    
-    try {
-        isProcessing.value = true;
-        
-        
-        if (typeof api.ChannelBoardLikes === 'function') {
-            const data = await api.ChannelBoardLikes(idx);
-            
-            if (data) {
-                localPost.isLikes = !localPost.isLikes;
-                if (localPost.isLikes) {
-                    localPost.likesCount++;
-                } else {
-                    localPost.likesCount = Math.max(0, localPost.likesCount - 1);
-                }
-            }
+  if (isProcessing.value) return
+
+  try {
+    isProcessing.value = true
+    if (typeof api.ChannelBoardLikes === 'function') {
+      const data = await api.ChannelBoardLikes(idx)
+      if (data) {
+        localPost.isLikes = !localPost.isLikes
+        if (localPost.isLikes) {
+          localPost.likesCount = (localPost.likesCount || 0) + 1
         } else {
+          localPost.likesCount = Math.max(0, (localPost.likesCount || 0) - 1)
         }
-    } catch (error) {
-        console.error('좋아요 처리 오류:', error);
-    } finally {
-        isProcessing.value = false;
+      }
     }
-};
+  } finally {
+    isProcessing.value = false
+  }
+}
 
 const clickPost = () => {
-    router.push(`/post/${localPost.idx}`);
-};
+  router.push(`/post/${localPost.idx}`)
+}
 </script>
 
 <template>
-<div class="community-post">
-    <div class="posts"> 
-        <div class="post-header">
-            <div class="post-author">
-                <!-- <img src="https://via.placeholder.com/40" alt="채널" class="author-avatar"> -->
-                <div class="author-info">
-                    <span class="author-name">크리에이티브 채널</span>
-                    <span class="post-time">{{ localPost.createdAt || localPost.createAt }}</span>
-                </div>
-            </div>
-            <div class="post-title">
-                <span class="title">{{ localPost.title }}</span>
-            </div>
-        </div>
-        <div class="post-content">
-            <p>{{ localPost.contents }}</p>
-            <!-- 이미지가 있다면 표시 -->
-            <div class="post-image" v-if="localPost.imageUrl">
-                <img :src="localPost.imageUrl" alt="게시물 이미지">
-            </div>
-        </div>
+  <article class="community-card">
+    <div class="community-top">
+      <img src="@/assets/images/dabom2.png" alt="채널" />
+      <div>
+        <strong>{{ localPost.name || '크리에이터' }}</strong>
+        <p>{{ localPost.createdAt || localPost.createAt }}</p>
+      </div>
     </div>
-    <div class="post-actions">
-        <button 
-            class="post-action-btn like-btn" 
-            :class="{ 'liked': localPost.isLikes }"
-            :disabled="isProcessing"
-            @click="clickLikeBtn(localPost.idx)"
-        >   
-            <i 
-                class="fas fa-heart" 
-                :style="{ color: localPost.isLikes ? '#ff3040' : '#8e8e8e' }"
-            ></i>
-            {{ localPost.likesCount }}
-        </button>
-        <button class="post-action-btn comment-btn" @click="clickPost">
-            <i class="fas fa-comment"></i>
-            {{ localPost.commentCount }} 
-        </button>
+
+    <h3>{{ localPost.title }}</h3>
+    <p class="community-text">{{ localPost.contents }}</p>
+
+    <div class="community-actions-row">
+      <button @click="clickLikeBtn(localPost.idx)" :disabled="isProcessing">
+        <i class="fas fa-heart" :style="{ color: localPost.isLikes ? '#ff3040' : '#8e8e8e' }"></i>
+        {{ localPost.likesCount || 0 }}
+      </button>
+      <ButtonBasic size="sm" @click="clickPost">
+        <i class="fas fa-comment"></i>
+        {{ localPost.commentCount || 0 }}
+      </ButtonBasic>
+      <ButtonBasic as="button" variant="ghost" size="sm" @click="clickPost">자세히 보기</ButtonBasic>
     </div>
-</div>
+  </article>
 </template>
 
 <style scoped>
-    @import url('@/assets/channel/ChannelPostCard.css');
-    
-    /* 좋아요 버튼 추가 스타일 */
-    .like-btn.liked {
-        color: #ff3040;
-    }
-    
-    .like-btn:hover:not(:disabled) {
-        opacity: 0.8;
-    }
-    
-    .like-btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
-    
-    .like-btn i {
-        transition: color 0.3s ease;
-    }
+.community-card {
+  background: #2a2a2a;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.community-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.community-top img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+}
+
+.community-top strong {
+  font-size: 14px;
+}
+
+.community-top p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.community-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.community-text {
+  margin: 0;
+  color: #d5d5d5;
+  line-height: 1.6;
+}
+
+.community-actions-row {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.community-actions-row button {
+  border: 1px solid #4a4a4a;
+  background: #343434;
+  color: var(--text-secondary);
+  border-radius: 16px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.community-actions-row a {
+  margin-left: auto;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.community-actions-row .g-btn:last-child {
+  margin-left: auto;
+}
 </style>

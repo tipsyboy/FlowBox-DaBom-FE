@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { BoardCommentLikes } from '@/api/channel/index.js'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const props = defineProps({
     comment: {
@@ -75,7 +76,7 @@ const handleCommentLike = async (commentIdx) => {
                     <span v-if="comment.likesCount > 0">{{ comment.likesCount }}</span>
                 </button>
                 
-                <button class="comment-action-btn">답글</button>
+                <ButtonBasic class="comment-action-btn" variant="ghost" size="sm">답글</ButtonBasic>
             </div>
         </div>
     </div>
@@ -157,10 +158,7 @@ const handleCommentLike = async (commentIdx) => {
 }
 
 .comment-action-btn {
-  background: transparent;
-  border: none;
   color: #888;
-  cursor: pointer;
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;

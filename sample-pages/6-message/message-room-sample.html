@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Message Room Sample</title>
+    <link rel="stylesheet" href="./message-sample.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../2-main-explore/main-page-sample.html"><img src="../../src/assets/images/dabom2.png" alt="DaBom" /></a>
+        <div class="topbar-title">메시지</div>
+        <div class="auth-links"><a href="../1-auth/login-sample.html">로그인</a><a href="../1-auth/signup-sample.html">회원가입</a></div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="messages-container">
+        <aside class="chat-list">
+          <div class="chat-list-header"><h2>메시지</h2></div>
+          <div class="chat-search"><input class="chat-search-input" placeholder="대화 검색" /></div>
+          <div class="chat-list-content">
+            <article class="chat-item">
+              <img class="chat-avatar" src="../../src/assets/images/dabom2.png" alt="avatar" />
+              <div class="chat-item-main">
+                <div class="chat-item-top"><strong class="chat-item-name">FlowBox Studio</strong><span class="chat-item-time">어제</span></div>
+                <p class="chat-item-last">다음 주 일정 조율해요.</p>
+              </div>
+            </article>
+          </div>
+        </aside>
+
+        <section class="chat-window">
+          <div class="chat-header">
+            <div class="chat-header-info">
+              <img class="chat-header-avatar" src="../../src/assets/images/dabom2.png" alt="avatar" />
+              <div class="chat-header-details">
+                <h3>새 대화</h3>
+                <span class="chat-header-status">대상을 선택해 시작하세요</span>
+              </div>
+            </div>
+          </div>
+          <div class="empty">
+            <div style="text-align: center">
+              <p style="margin: 0 0 10px">아직 메시지가 없습니다.</p>
+              <button class="app-btn app-btn--primary app-btn--md">첫 메시지 보내기</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

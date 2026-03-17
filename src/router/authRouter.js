@@ -1,5 +1,5 @@
 
-import SidebarContainer from "@/components/sidebar/SidebarContainer.vue"
+import SidebarContainer from "@/components/app/SidebarContainer.vue"
 import Login from "@/views/auth/Login.vue"
 import Signup from "@/views/auth/Signup.vue"
 

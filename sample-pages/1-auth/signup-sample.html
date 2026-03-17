@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaBom - Signup Renewal Sample</title>
+    <link rel="stylesheet" href="./signup-sample.css" />
+  </head>
+  <body>
+    <header class="sample-topbar">
+      <div class="sample-topbar-inner">
+        <a class="sample-brand" href="../2-main-explore/main-page-sample.html">
+          <img src="../../src/assets/images/dabom2.png" alt="DaBom logo" />
+        </a>
+        <nav class="sample-nav">
+          <a href="../2-main-explore/main-page-sample.html">홈</a>
+          <a href="../4-channel-studio/mychannel.html">마이채널</a>
+        </nav>
+        <div class="sample-auth-links">
+          <a href="./login-sample.html">로그인</a>
+          <a href="./signup-sample.html">회원가입</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="signup-main">
+      <section class="signup-card">
+        <header class="signup-head">
+          <div class="logo-stack">
+            <img src="../../src/assets/images/dabom2.png" alt="DaBom" class="logo-mark" />
+          </div>
+          <h1>회원가입</h1>
+          <p>DaBom 커뮤니티의 새로운 멤버가 되어보세요</p>
+        </header>
+
+        <form id="signupForm" class="signup-form" novalidate>
+          <div class="form-group">
+            <label for="email">이메일 *</label>
+            <div class="input-with-button">
+              <input id="email" type="email" placeholder="이메일을 입력하세요" required />
+              <button type="button" class="btn-check" id="checkEmailBtn">중복확인</button>
+            </div>
+            <p class="feedback" id="emailFeedback"></p>
+          </div>
+
+          <div class="form-group">
+            <label for="channelName">닉네임(채널명) *</label>
+            <div class="input-with-button">
+              <input id="channelName" type="text" placeholder="사용자명을 입력하세요" required />
+              <button type="button" class="btn-check" id="checkChannelBtn">중복확인</button>
+            </div>
+            <p class="help-text">영문, 숫자, 언더스코어만 사용 가능 (3-20자)</p>
+            <p class="feedback" id="channelFeedback"></p>
+          </div>
+
+          <div class="form-group">
+            <label for="password">비밀번호 *</label>
+            <div class="password-input">
+              <input id="password" type="password" placeholder="비밀번호를 입력하세요" required />
+              <button type="button" class="toggle-password" id="togglePassword">표시</button>
+            </div>
+            <div class="password-strength">
+              <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+              <span class="strength-text" id="strengthText">비밀번호 강도: 입력 전</span>
+            </div>
+            <p class="help-text">영문 소문자, 특수문자 포함 8자 이상</p>
+          </div>
+
+          <div class="form-group">
+            <label for="password2">비밀번호 확인 *</label>
+            <div class="password-input">
+              <input id="password2" type="password" placeholder="비밀번호를 다시 입력하세요" required />
+              <button type="button" class="toggle-password" id="togglePassword2">표시</button>
+            </div>
+            <p class="feedback" id="password2Feedback"></p>
+          </div>
+
+          <div class="terms-box">
+            <label><input type="checkbox" required /> [필수] 서비스 이용약관 동의</label>
+            <label><input type="checkbox" required /> [필수] 개인정보 처리방침 동의</label>
+            <label><input type="checkbox" required /> [필수] 만 14세 이상 확인</label>
+          </div>
+
+          <button type="submit" class="btn-signup">회원가입 완료</button>
+        </form>
+
+        <footer class="signup-foot">
+          <p>이미 계정이 있으신가요? <a href="./login-sample.html">로그인</a></p>
+        </footer>
+      </section>
+    </main>
+
+    <script>
+      const emailInput = document.getElementById('email');
+      const channelInput = document.getElementById('channelName');
+      const passwordInput = document.getElementById('password');
+      const password2Input = document.getElementById('password2');
+      const emailFeedback = document.getElementById('emailFeedback');
+      const channelFeedback = document.getElementById('channelFeedback');
+      const password2Feedback = document.getElementById('password2Feedback');
+      const strengthFill = document.getElementById('strengthFill');
+      const strengthText = document.getElementById('strengthText');
+
+      function setFeedback(el, type, text) {
+        el.className = 'feedback ' + type;
+        el.textContent = text;
+      }
+
+      document.getElementById('checkEmailBtn').addEventListener('click', () => {
+        const value = emailInput.value.trim();
+        const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        if (!value || !ok) {
+          setFeedback(emailFeedback, 'error', '올바른 이메일 형식을 입력해주세요.');
+          return;
+        }
+        setFeedback(emailFeedback, value.includes('taken') ? 'error' : 'success', value.includes('taken') ? '이미 사용 중인 이메일입니다.' : '사용 가능한 이메일입니다.');
+      });
+
+      document.getElementById('checkChannelBtn').addEventListener('click', () => {
+        const value = channelInput.value.trim();
+        const ok = /^[a-zA-Z0-9_]{3,20}$/.test(value);
+        if (!value || !ok) {
+          setFeedback(channelFeedback, 'error', '사용자명은 3-20자의 영문, 숫자, 언더스코어만 사용할 수 있습니다.');
+          return;
+        }
+        setFeedback(channelFeedback, value === 'admin' ? 'error' : 'success', value === 'admin' ? '이미 사용 중인 채널명입니다.' : '사용 가능한 채널명입니다.');
+      });
+
+      function updateStrength(password) {
+        let strength = 0;
+        if (password.length >= 8) strength++;
+        if (/[a-z]/.test(password)) strength++;
+        if (/[A-Z]/.test(password)) strength++;
+        if (/[0-9]/.test(password)) strength++;
+        if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+        let label = '입력 전';
+        let cls = 'none';
+
+        if (password.length > 0) {
+          if (strength <= 2) {
+            label = '약함';
+            cls = 'weak';
+          } else if (strength <= 3) {
+            label = '보통';
+            cls = 'medium';
+          } else {
+            label = '강함';
+            cls = 'strong';
+          }
+        }
+
+        strengthFill.className = 'strength-fill ' + cls;
+        strengthText.textContent = '비밀번호 강도: ' + label;
+      }
+
+      function updatePasswordMatch() {
+        if (!password2Input.value) {
+          setFeedback(password2Feedback, '', '');
+          return;
+        }
+        if (passwordInput.value === password2Input.value) {
+          setFeedback(password2Feedback, 'success', '비밀번호가 일치합니다.');
+        } else {
+          setFeedback(password2Feedback, 'error', '비밀번호가 일치하지 않습니다.');
+        }
+      }
+
+      document.getElementById('togglePassword').addEventListener('click', () => {
+        passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+      });
+
+      document.getElementById('togglePassword2').addEventListener('click', () => {
+        password2Input.type = password2Input.type === 'password' ? 'text' : 'password';
+      });
+
+      passwordInput.addEventListener('input', () => {
+        updateStrength(passwordInput.value);
+        updatePasswordMatch();
+      });
+      password2Input.addEventListener('input', updatePasswordMatch);
+
+      document.getElementById('signupForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        alert('샘플 페이지입니다. 실제 회원가입 요청은 전송하지 않습니다.');
+      });
+    </script>
+  </body>
+</html>

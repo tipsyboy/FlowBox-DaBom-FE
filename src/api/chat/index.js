@@ -25,9 +25,7 @@ export const getTogetherSearch = async (search) => {
 export const getChatList = async () => {
   const requestUrl = '/api/chat/list';
   try {
-    const response = await api.get(requestUrl, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` },
-    });
+    const response = await api.get(requestUrl);
     return response.data.data;
   } catch (error) {
     console.error('Failed to fetch chat list:', error);
@@ -39,7 +37,6 @@ export const getChatRoom = async (roomIdx, page = 0, size = 20) => {
   const requestUrl = `/api/chat/read/${roomIdx}`;
   try {
     const response = await api.get(requestUrl, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` },
       params: { page, size },
     });
     return response.data.data;
@@ -52,9 +49,7 @@ export const getChatRoom = async (roomIdx, page = 0, size = 20) => {
 export const createChatRoom = async (videoIdx) => {
   const requestUrl = `/api/chat/room/${videoIdx}`;
   try {
-    const response = await api.post(requestUrl, {}, { // Use api.post
-      headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` },
-    });
+    const response = await api.post(requestUrl, {});
     return response.data.data;
   } catch (error) {
     console.error('Failed to create chat room:', error);

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaBom - Channel Main Sample</title>
+    <link rel="stylesheet" href="./channel-main-sample.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../2-main-explore/main-page-sample.html">
+          <img src="../../src/assets/images/dabom2.png" alt="DaBom logo" />
+        </a>
+        <div class="search-wrap">
+          <input type="text" placeholder="채널/영상 검색" />
+          <button>검색</button>
+        </div>
+        <div class="auth-links">
+          <a href="../1-auth/login-sample.html">로그인</a>
+          <a href="../1-auth/signup-sample.html">회원가입</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="channel-header">
+      <img src="../../src/assets/images/banner.png" alt="채널 배너" class="channel-banner" />
+      <div class="channel-info">
+        <div class="profile-section">
+          <img src="../../src/assets/images/dabom2.png" alt="채널 프로필" class="channel-profile-img" />
+          <div class="channel-details">
+            <h1 class="channel-name">FlowBox Studio</h1>
+            <p class="channel-handle">@flowbox_studio</p>
+            <div class="channel-meta">
+              <span>구독자 12,483명</span>
+              <span>동영상 137개</span>
+              <span>누적 조회수 1,230,998회</span>
+            </div>
+          </div>
+        </div>
+        <div class="channel-actions">
+          <button class="subscribe-btn" id="subscribeBtn"><i class="fas fa-bell"></i> 구독</button>
+          <button class="message-btn"><i class="fas fa-envelope"></i> 메시지</button>
+        </div>
+      </div>
+    </section>
+
+    <nav class="channel-nav">
+      <a class="nav-item active" href="./channel-main-sample.html">동영상</a>
+      <a class="nav-item" href="./channel-playlists-sample.html">재생목록</a>
+      <a class="nav-item" href="./channel-community-sample.html">커뮤니티</a>
+      <a class="nav-item" href="./channel-about-sample.html">정보</a>
+    </nav>
+
+    <main class="channel-content">
+      <section class="tab-header">
+        <h2>동영상</h2>
+        <div class="sort-wrap">
+          <button class="sort-btn active">최신순</button>
+          <button class="sort-btn">인기순</button>
+        </div>
+      </section>
+
+      <section class="video-grid">
+        <article class="video-card">
+          <a href="../2-main-explore/video-player-sample.html" class="thumb-wrap">
+            <img src="../../src/assets/images/banner.png" alt="영상 썸네일" />
+            <span class="duration">12:34</span>
+          </a>
+          <div class="video-body">
+            <h3>Vue 컴포넌트 분리 기준 잡기</h3>
+            <p>조회수 8.2K회 · 3일 전</p>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <a href="../2-main-explore/video-player-sample.html" class="thumb-wrap">
+            <img src="../../src/assets/images/banner.png" alt="영상 썸네일" />
+            <span class="duration">09:11</span>
+          </a>
+          <div class="video-body">
+            <h3>프로젝트 공통 CSS 리뉴얼 실전</h3>
+            <p>조회수 6.9K회 · 5일 전</p>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <a href="../2-main-explore/video-player-sample.html" class="thumb-wrap">
+            <img src="../../src/assets/images/banner.png" alt="영상 썸네일" />
+            <span class="duration">16:45</span>
+          </a>
+          <div class="video-body">
+            <h3>Composition API로 채널 페이지 재구성</h3>
+            <p>조회수 5.1K회 · 1주 전</p>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <a href="../2-main-explore/video-player-sample.html" class="thumb-wrap">
+            <img src="../../src/assets/images/banner.png" alt="영상 썸네일" />
+            <span class="duration">21:03</span>
+          </a>
+          <div class="video-body">
+            <h3>리팩토링 단계별 적용 체크리스트</h3>
+            <p>조회수 9.4K회 · 2주 전</p>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <a href="../2-main-explore/video-player-sample.html" class="thumb-wrap">
+            <img src="../../src/assets/images/banner.png" alt="영상 썸네일" />
+            <span class="duration">08:58</span>
+          </a>
+          <div class="video-body">
+            <h3>채널 커뮤니티 탭 UI 정리</h3>
+            <p>조회수 4.2K회 · 2주 전</p>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <a href="../2-main-explore/video-player-sample.html" class="thumb-wrap">
+            <img src="../../src/assets/images/banner.png" alt="영상 썸네일" />
+            <span class="duration">13:20</span>
+          </a>
+          <div class="video-body">
+            <h3>공통 모달 컴포넌트 설계 포인트</h3>
+            <p>조회수 3.7K회 · 3주 전</p>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <a href="../2-main-explore/video-player-sample.html" class="thumb-wrap">
+            <img src="../../src/assets/images/banner.png" alt="영상 썸네일" />
+            <span class="duration">17:42</span>
+          </a>
+          <div class="video-body">
+            <h3>라우터 구조 분리와 유지보수 전략</h3>
+            <p>조회수 10.1K회 · 3주 전</p>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <a href="../2-main-explore/video-player-sample.html" class="thumb-wrap">
+            <img src="../../src/assets/images/banner.png" alt="영상 썸네일" />
+            <span class="duration">11:14</span>
+          </a>
+          <div class="video-body">
+            <h3>댓글 영역 컴포넌트 재사용 예시</h3>
+            <p>조회수 2.8K회 · 1개월 전</p>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <a href="../2-main-explore/video-player-sample.html" class="thumb-wrap">
+            <img src="../../src/assets/images/banner.png" alt="영상 썸네일" />
+            <span class="duration">25:09</span>
+          </a>
+          <div class="video-body">
+            <h3>서비스 페이지 분류 기준 다시 세우기</h3>
+            <p>조회수 7.6K회 · 1개월 전</p>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <a href="../2-main-explore/video-player-sample.html" class="thumb-wrap">
+            <img src="../../src/assets/images/banner.png" alt="영상 썸네일" />
+            <span class="duration">06:47</span>
+          </a>
+          <div class="video-body">
+            <h3>채널 홈 상단 액션 UX 개선</h3>
+            <p>조회수 1.9K회 · 1개월 전</p>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <a href="../2-main-explore/video-player-sample.html" class="thumb-wrap">
+            <img src="../../src/assets/images/banner.png" alt="영상 썸네일" />
+            <span class="duration">19:36</span>
+          </a>
+          <div class="video-body">
+            <h3>대규모 CSS 파일 분리와 네이밍 규칙</h3>
+            <p>조회수 11.4K회 · 1개월 전</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      const subscribeBtn = document.getElementById('subscribeBtn');
+      subscribeBtn.addEventListener('click', () => {
+        const on = subscribeBtn.classList.toggle('is-subscribed');
+        subscribeBtn.innerHTML = on ? '<i class="fas fa-bell"></i> 구독 중' : '<i class="fas fa-bell"></i> 구독';
+      });
+    </script>
+  </body>
+</html>

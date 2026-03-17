@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaBom - Video Player Sample</title>
+    <link rel="stylesheet" href="./video-player-sample.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./main-page-sample.html">
+          <img src="../../src/assets/images/dabom2.png" alt="DaBom logo" />
+        </a>
+        <div class="search-wrap">
+          <input type="text" placeholder="영상 검색" />
+          <button>검색</button>
+        </div>
+        <div class="auth-links">
+          <a href="../1-auth/login-sample.html">로그인</a>
+          <a href="../1-auth/signup-sample.html">회원가입</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-wrap">
+      <section class="player-section">
+        <div class="player-frame">
+          <video controls poster="../../src/assets/images/banner.png" class="player">
+            지원하지 않는 비디오 플레이어입니다.
+          </video>
+        </div>
+      </section>
+
+      <section class="content-wrap">
+        <div class="left-column">
+          <h1 class="video-title">Vue3 Composition API로 영상 페이지 리팩토링하기</h1>
+
+          <div class="channel-panel">
+            <div class="channel-left">
+              <img class="channel-avatar" src="../../src/assets/images/dabom2.png" alt="채널 프로필" />
+              <div class="channel-meta">
+                <strong>FlowBox Studio</strong>
+                <span>구독자 12,483명</span>
+              </div>
+            </div>
+            <div class="channel-actions">
+              <button class="btn btn-primary" id="subscribeBtn">구독</button>
+              <button class="btn"><i class="fa-solid fa-envelope"></i> 메시지</button>
+              <button class="btn"><i class="fas fa-users"></i> 투게더</button>
+              <button class="btn" id="copyBtn"><i class="fas fa-share"></i> 공유</button>
+              <button class="btn"><i class="fas fa-plus"></i> 저장</button>
+            </div>
+          </div>
+
+          <div class="description-box">
+            <div class="meta-rating-box">
+              <p class="description-meta">조회수 21,903회 · 2026.03.07</p>
+              <div class="stars" aria-label="rating">
+                <i class="fas fa-star active"></i>
+                <i class="fas fa-star active"></i>
+                <i class="fas fa-star active"></i>
+                <i class="fas fa-star active"></i>
+                <i class="far fa-star"></i>
+              </div>
+            </div>
+            <p class="description-text">
+              수업 프로젝트에서 생긴 화면/컴포넌트 중복을 줄이기 위해
+              `헤더`, `채널 정보`, `댓글`, `추천 영상` 단위를 분리하는 과정을 정리했습니다.<br />
+              실제 적용할 때는 먼저 공통 CSS 토큰을 정의하고, 페이지별 컴포넌트를 단계적으로 치환하는 순서를 추천합니다.
+            </p>
+            <div class="tags">
+              <span>#vue3</span>
+              <span>#composition-api</span>
+              <span>#refactoring</span>
+              <span>#frontend</span>
+            </div>
+          </div>
+
+          <div class="comments-section">
+            <div class="comments-head">
+              <h2>댓글 3개</h2>
+              <select>
+                <option>최신순</option>
+                <option>인기순</option>
+                <option>오래된순</option>
+              </select>
+            </div>
+
+            <div class="comment-write">
+              <img class="comment-avatar" src="../../src/assets/images/dabom2.png" alt="내 프로필" />
+              <div class="comment-input-wrap">
+                <textarea placeholder="댓글을 입력해주세요..."></textarea>
+                <div class="comment-write-actions">
+                  <button class="btn btn-ghost">취소</button>
+                  <button class="btn btn-primary">댓글 달기</button>
+                </div>
+              </div>
+            </div>
+
+            <ul class="comment-list">
+              <li class="comment-item">
+                <img class="comment-avatar" src="../../src/assets/images/dabom2.png" alt="프로필" />
+                <div class="comment-body">
+                  <div class="comment-top">
+                    <strong>dabom_user</strong>
+                    <span>1시간 전</span>
+                  </div>
+                  <p>구조 설명이 명확해서 적용 포인트를 잡기 좋네요.</p>
+                  <button class="like-btn"><i class="fas fa-thumbs-up"></i> 8</button>
+                </div>
+              </li>
+
+              <li class="comment-item">
+                <img class="comment-avatar" src="../../src/assets/images/dabom2.png" alt="프로필" />
+                <div class="comment-body">
+                  <div class="comment-top">
+                    <strong>frontend_note</strong>
+                    <span>3시간 전</span>
+                  </div>
+                  <p>댓글/설명/메타 컴포넌트 분리가 특히 좋았습니다.</p>
+                  <button class="like-btn"><i class="fas fa-thumbs-up"></i> 5</button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <aside class="right-column">
+          <h3>추천 영상</h3>
+          <a class="recommend-card" href="#">
+            <img src="../../src/assets/images/banner.png" alt="추천 영상" />
+            <div>
+              <strong>Pinia 스토어 구조 정리</strong>
+              <p>FlowBox Studio · 조회수 7.3K</p>
+            </div>
+          </a>
+          <a class="recommend-card" href="#">
+            <img src="../../src/assets/images/banner.png" alt="추천 영상" />
+            <div>
+              <strong>공통 CSS 토큰 적용법</strong>
+              <p>Dabom Dev · 조회수 5.1K</p>
+            </div>
+          </a>
+          <a class="recommend-card" href="#">
+            <img src="../../src/assets/images/banner.png" alt="추천 영상" />
+            <div>
+              <strong>모달 컴포넌트 재사용 패턴</strong>
+              <p>Frontend Notes · 조회수 4.7K</p>
+            </div>
+          </a>
+        </aside>
+      </section>
+    </main>
+
+    <script>
+      const subscribeBtn = document.getElementById('subscribeBtn');
+      subscribeBtn.addEventListener('click', () => {
+        const active = subscribeBtn.classList.toggle('is-active');
+        subscribeBtn.textContent = active ? '구독중' : '구독';
+      });
+
+      document.getElementById('copyBtn').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          alert('링크가 복사되었습니다.');
+        } catch (error) {
+          alert('복사에 실패했습니다.');
+        }
+      });
+    </script>
+  </body>
+</html>

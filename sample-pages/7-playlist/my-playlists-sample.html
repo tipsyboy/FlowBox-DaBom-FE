@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Playlists Sample</title>
+    <link rel="stylesheet" href="./playlist-sample.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../2-main-explore/main-page-sample.html"><img src="../../src/assets/images/dabom2.png" alt="DaBom" /></a>
+        <div class="search-wrap"><input type="text" placeholder="플레이리스트 검색" /><button>검색</button></div>
+        <div class="auth-links"><a href="../1-auth/login-sample.html">로그인</a><a href="../1-auth/signup-sample.html">회원가입</a></div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="head">
+        <div>
+          <h1>내 플레이리스트</h1>
+          <p>총 12개</p>
+        </div>
+        <button class="btn btn-primary">새 플레이리스트</button>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <div class="cover"><img src="../../src/assets/images/banner.png" alt="cover" /><span class="count">24개</span></div>
+          <div class="body"><h3>리팩토링 모음</h3><p>마지막 수정: 2026.03.08</p><a class="btn" href="./playlist-detail-sample.html">열기</a></div>
+        </article>
+        <article class="card">
+          <div class="cover"><img src="../../src/assets/images/banner.png" alt="cover" /><span class="count">11개</span></div>
+          <div class="body"><h3>Vue3 정리</h3><p>마지막 수정: 2026.03.06</p><a class="btn" href="./playlist-detail-sample.html">열기</a></div>
+        </article>
+        <article class="card">
+          <div class="cover"><img src="../../src/assets/images/banner.png" alt="cover" /><span class="count">36개</span></div>
+          <div class="body"><h3>업무 참고 영상</h3><p>마지막 수정: 2026.03.01</p><a class="btn" href="./playlist-detail-sample.html">열기</a></div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

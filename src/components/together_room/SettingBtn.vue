@@ -1,37 +1,23 @@
-<script setup>
-const emits = defineEmits([''])
-
-const openSetting = () => {
-    
-}
-</script>
-
 <template>
-<button class="setting-btn" id="settingsBtn" title="설정" @click="openSetting">
+  <button class="setting-btn" type="button" title="설정">
     <i class="fas fa-cog"></i>
-</button>
+  </button>
 </template>
 
 <style scoped>
 .setting-btn {
-    display: flexbox;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 50%;
-    background-color: transparent;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 1.2rem;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 18px;
 }
 
 .setting-btn:hover {
-    background-color: var(--hover-color);
-    color: var(--text-primary);
-}
-
-.setting-btn.active {
-    background-color: var(--primary-color);
-    color: white;
+  background: var(--hover-color);
+  color: var(--text-primary);
 }
 </style>

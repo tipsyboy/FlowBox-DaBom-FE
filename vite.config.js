@@ -2,13 +2,11 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    vueDevTools(),
   ],
   define: {
     global: 'window',
@@ -19,7 +17,8 @@ export default defineConfig({
     },
   },
   server: {
-    // host: "0.0.0.0",
+    host: '127.0.0.1',
+    port: 5174,
     proxy: {
       // API 요청을 백엔드 서버로 프록시
       '/api': {

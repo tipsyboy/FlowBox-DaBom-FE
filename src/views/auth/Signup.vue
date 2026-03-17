@@ -1,16 +1,16 @@
 <script setup>
-import {reactive} from 'vue';
-import api from "@/api/auth/index.js"
-import SignupForm from '@/entity/auth/SignupForm.js';
-import SignupFormErrors from '@/entity/auth/SignupFormErrors.js';
-import {useRouter} from 'vue-router';
-import Modal from '@/components/main/Modal.vue';
-
+import { reactive } from 'vue'
+import api from '@/api/auth/index.js'
+import SignupForm from '@/forms/auth/signupForm.js'
+import SignupFormErrors from '@/forms/auth/signupFormErrors.js'
+import { useRouter } from 'vue-router'
+import Modal from '@/components/ui/Modal.vue'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
 const router = useRouter()
 const form = reactive({
   signupForm: new SignupForm(),
-  signupFormErrors: new SignupFormErrors()
+  signupFormErrors: new SignupFormErrors(),
 })
 
 const state = reactive({
@@ -21,33 +21,33 @@ const state = reactive({
   signupSuccess: false,
   signupRedirectTimeoutId: null,
   duplicatedEmail: true,
-  duplicatedChannelName:true
+  duplicatedChannelName: true,
 })
 
 const checkEmail = reactive({
-  email: ''
+  email: '',
 })
 
 const checkChannelName = reactive({
-  channelName: ''
+  channelName: '',
 })
 
 const togglePassword = () => {
-  state.showPassword = !state.showPassword;
+  state.showPassword = !state.showPassword
 }
 
 const toggleConfirmPassword = () => {
-  state.confirmPassword = !state.confirmPassword;
+  state.confirmPassword = !state.confirmPassword
 }
 
 const checkEmailExists = async (email) => {
   if (email === '') {
-    alert("이메일을 입력해주세요.");
+    alert('이메일을 입력해주세요.')
     return
   }
 
   if (!validateEmail()) {
-    form.signupForm.isEmailChecked = null;
+    form.signupForm.isEmailChecked = null
     return
   }
   checkEmail.email = email
@@ -58,12 +58,12 @@ const checkEmailExists = async (email) => {
 
 const checkChannelNameExists = async (channelName) => {
   if (channelName === '') {
-    alert("채널명을 입력해주세요.");
+    alert('채널명을 입력해주세요.')
     return
   }
 
   if (!validateChannelName()) {
-    form.signupForm.isChannelChecked = null;
+    form.signupForm.isChannelChecked = null
     return
   }
   checkChannelName.channelName = channelName
@@ -85,7 +85,8 @@ const validateEmail = () => {
 const validateChannelName = () => {
   const channelNameRegex = /^[a-zA-Z0-9_]{3,20}$/
   if (!form.signupForm.channelName || !channelNameRegex.test(form.signupForm.channelName)) {
-    form.signupFormErrors.channelName = '사용자명은 3-20자의 영문, 숫자, 언더스코어만 사용할 수 있습니다.'
+    form.signupFormErrors.channelName =
+      '사용자명은 3-20자의 영문, 숫자, 언더스코어만 사용할 수 있습니다.'
     return false
   }
   form.signupFormErrors.channelName = ''
@@ -109,34 +110,43 @@ const validateConfirmPassword = () => {
 }
 
 const validateSignupForm = () => {
-  Object.keys(form.signupFormErrors).forEach(errorField => form.signupFormErrors[errorField] = '') // 에러 필드 초기화
+  Object.keys(form.signupFormErrors).forEach(
+    (errorField) => (form.signupFormErrors[errorField] = ''),
+  ) // 에러 필드 초기화
   console.log(form.signupForm)
   const emailValid = validateEmail()
   const channelValid = validateChannelName()
   const passwordValid = validatePassword()
   const confirmPasswordValid = validateConfirmPassword()
   // null && true && true && ... = null (falsy)
-  return emailValid && channelValid && passwordValid && confirmPasswordValid && form.signupForm.isEmailChecked && form.signupForm.isChannelChecked
+  return (
+    emailValid &&
+    channelValid &&
+    passwordValid &&
+    confirmPasswordValid &&
+    form.signupForm.isEmailChecked &&
+    form.signupForm.isChannelChecked
+  )
 }
 
 const updatePasswordStrength = () => {
-  let strength = 0;
+  let strength = 0
 
-  if (form.signupForm.password.length >= 8) strength++;
-  if (/[a-z]/.test(form.signupForm.password)) strength++;
-  if (/[A-Z]/.test(form.signupForm.password)) strength++;
-  if (/[0-9]/.test(form.signupForm.password)) strength++;
-  if (/[^a-zA-Z0-9]/.test(form.signupForm.password)) strength++;
+  if (form.signupForm.password.length >= 8) strength++
+  if (/[a-z]/.test(form.signupForm.password)) strength++
+  if (/[A-Z]/.test(form.signupForm.password)) strength++
+  if (/[0-9]/.test(form.signupForm.password)) strength++
+  if (/[^a-zA-Z0-9]/.test(form.signupForm.password)) strength++
 
   if (strength <= 2) {
     state.passwordStrengthClass = 'weak'
-    state.passwordStrengthLabel = '약함';
+    state.passwordStrengthLabel = '약함'
   } else if (strength <= 3) {
     state.passwordStrengthClass = 'medium'
-    state.passwordStrengthLabel = '보통';
+    state.passwordStrengthLabel = '보통'
   } else {
     state.passwordStrengthClass = 'strong'
-    state.passwordStrengthLabel = '강함';
+    state.passwordStrengthLabel = '강함'
   }
 }
 
@@ -144,8 +154,8 @@ const signupSuccessHandler = () => {
   state.signupSuccess = true
 }
 const handleModalConfirm = () => {
-  state.signupSuccess = false;
-  router.push({name: 'login'});
+  state.signupSuccess = false
+  router.push({ name: 'login' })
 }
 
 const signUp = async () => {
@@ -158,78 +168,121 @@ const signUp = async () => {
 </script>
 
 <template>
-  <Modal v-if="state.signupSuccess" title="회원가입 완료" message="성공적으로 회원가입이 완료되었습니다. 로그인 페이지로 이동합니다."
-         @confirm="handleModalConfirm"/>
-  <div class="singup-container">
+  <Modal
+    v-if="state.signupSuccess"
+    title="회원가입 완료"
+    message="성공적으로 회원가입이 완료되었습니다. 로그인 페이지로 이동합니다."
+    @confirm="handleModalConfirm"
+  />
+  <div class="signup-container">
     <div class="signup-form-wrapper">
       <div class="signup-header">
+        <img src="@/assets/images/dabom2.png" alt="DaBom" class="auth-logo" />
         <h1>회원가입</h1>
         <p>DaBom 커뮤니티의 새로운 멤버가 되어보세요</p>
       </div>
 
       <!-- signup form -->
-      <form action="#" class="signup-form" id="signupForm" @submit.prevent="onSubmit()">
+      <form action="#" class="signup-form" id="signupForm" @submit.prevent="signUp">
         <div class="form-step active" id="step1">
           <div class="form-group">
             <label for="email">이메일 *</label>
             <div class="input-with-button">
-              <input type="email" id="email" name="email" required v-model="form.signupForm.email"
-                     placeholder="이메일을 입력하세요">
-              <button type="button" class="btn-check" id="checkEmailBtn"
-                      @click="checkEmailExists(form.signupForm.email)">중복확인
-              </button>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                v-model="form.signupForm.email"
+                placeholder="이메일을 입력하세요"
+              />
+              <ButtonBasic
+                type="button"
+                class="btn-check"
+                id="checkEmailBtn"
+                variant="primary"
+                @click="checkEmailExists(form.signupForm.email)"
+                >중복확인
+              </ButtonBasic>
             </div>
-            <span v-if="form.signupForm.isEmailChecked !== null" :class="{
-                            'success-message': form.signupForm.isEmailChecked,
-                            'error-message': !form.signupForm.isEmailChecked
-                        }">
-                            {{ form.signupForm.emailCheckMessage() }}
-                        </span>
+            <span
+              v-if="form.signupForm.isEmailChecked !== null"
+              :class="{
+                'success-message': form.signupForm.isEmailChecked,
+                'error-message': !form.signupForm.isEmailChecked,
+              }"
+            >
+              {{ form.signupForm.emailCheckMessage() }}
+            </span>
             <span class="error-message" v-if="form.signupFormErrors.email">
-                            {{ form.signupFormErrors.email }}
-                        </span>
+              {{ form.signupFormErrors.email }}
+            </span>
           </div>
 
           <div class="form-group">
             <label for="channelName">닉네임(채널명) *</label>
             <div class="input-with-button">
-              <input type="text" id="channelName" name="channelName" required
-                     v-model="form.signupForm.channelName" placeholder="사용자명을 입력하세요">
-              <button type="button" class="btn-check" id="checkChannelNameBtn"
-                      @click="checkChannelNameExists(form.signupForm.channelName)">중복확인
-              </button>
+              <input
+                type="text"
+                id="channelName"
+                name="channelName"
+                required
+                v-model="form.signupForm.channelName"
+                placeholder="사용자명을 입력하세요"
+              />
+              <ButtonBasic
+                type="button"
+                class="btn-check"
+                id="checkChannelNameBtn"
+                variant="primary"
+                @click="checkChannelNameExists(form.signupForm.channelName)"
+                >중복확인
+              </ButtonBasic>
             </div>
-            <span v-if="form.signupForm.isChannelChecked !== null" :class="{
-                            'success-message': form.signupForm.isChannelChecked,
-                            'error-message': !form.signupForm.isChannelChecked
-                        }">
-                            {{ form.signupForm.channelCheckMessage() }}
-                        </span>
+            <span
+              v-if="form.signupForm.isChannelChecked !== null"
+              :class="{
+                'success-message': form.signupForm.isChannelChecked,
+                'error-message': !form.signupForm.isChannelChecked,
+              }"
+            >
+              {{ form.signupForm.channelCheckMessage() }}
+            </span>
             <span class="error-message" v-if="form.signupFormErrors.channelName">
-                            {{ form.signupFormErrors.channelName }}
-                        </span>
+              {{ form.signupFormErrors.channelName }}
+            </span>
             <span class="help-text">영문, 숫자, 언더스코어만 사용 가능 (3-20자)</span>
           </div>
 
           <div class="form-group">
             <label for="password">비밀번호 *</label>
             <div class="password-input">
-              <input :type="state.showPassword ? 'text' : 'password'" id="password" name="password"
-                     required v-model="form.signupForm.password" @input="updatePasswordStrength()"
-                     placeholder="비밀번호를 입력하세요">
-              <button type="button" class="toggle-password" id="togglePassword" @click="togglePassword">
+              <input
+                :type="state.showPassword ? 'text' : 'password'"
+                id="password"
+                name="password"
+                required
+                v-model="form.signupForm.password"
+                @input="updatePasswordStrength()"
+                placeholder="비밀번호를 입력하세요"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                id="togglePassword"
+                @click="togglePassword"
+              >
                 <i :class="state.showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
             <span class="error-message" v-if="form.signupFormErrors.password">
-                            {{ form.signupFormErrors.password }}
-                        </span>
+              {{ form.signupFormErrors.password }}
+            </span>
             <div class="password-strength" id="passwordStrength">
               <div class="strength-bar">
                 <div class="strength-fill" :class="state.passwordStrengthClass"></div>
               </div>
               <span class="strength-text">비밀번호 강도: {{ state.passwordStrengthLabel }}</span>
-
             </div>
             <span class="help-text">영문 소문자, 특수문자 포함 8자 이상</span>
           </div>
@@ -237,17 +290,26 @@ const signUp = async () => {
           <div class="form-group">
             <label for="confirmPassword">비밀번호 확인 *</label>
             <div class="password-input">
-              <input :type="state.confirmPassword ? 'text' : 'password'" id="confirmPassword"
-                     name="confirmPassword" required v-model="form.signupForm.password2"
-                     placeholder="비밀번호를 다시 입력하세요">
-              <button type="button" class="toggle-password" id="toggleConfirmPassword"
-                      @click="toggleConfirmPassword">
+              <input
+                :type="state.confirmPassword ? 'text' : 'password'"
+                id="confirmPassword"
+                name="confirmPassword"
+                required
+                v-model="form.signupForm.password2"
+                placeholder="비밀번호를 다시 입력하세요"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                id="toggleConfirmPassword"
+                @click="toggleConfirmPassword"
+              >
                 <i :class="state.confirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
             <span class="error-message" v-if="form.signupFormErrors.password2">
-                            {{ form.signupFormErrors.password2 }}
-                        </span>
+              {{ form.signupFormErrors.password2 }}
+            </span>
           </div>
 
           <!-- 생년월일 -->
@@ -277,8 +339,21 @@ const signUp = async () => {
               <span class="timer" id="verificationTimer">03:00</span>
           </div> -->
 
+          <!--          <div class="terms-box">-->
+          <!--            <label><input type="checkbox" required> [필수] 서비스 이용약관 동의</label>-->
+          <!--            <label><input type="checkbox" required> [필수] 개인정보 처리방침 동의</label>-->
+          <!--            <label><input type="checkbox" required> [필수] 만 14세 이상 확인</label>-->
+          <!--          </div>-->
+
           <div class="form-navigation">
-            <button type="submit" class="btn-signup" id="submitSignup" @click="signUp()">회원가입</button>
+            <ButtonBasic
+              type="submit"
+              variant="primary"
+              size="lg"
+              class="btn-signup"
+              id="submitSignup"
+              >회원가입</ButtonBasic
+            >
           </div>
         </div>
       </form>
@@ -296,44 +371,45 @@ const signUp = async () => {
 /* ##### signup container ##### */
 .signup-container {
   display: flex;
-  min-height: 100vh;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 78px);
+  padding: 12px 16px 28px;
+  background-color: var(--background-color);
 }
-
 
 /* ##### signup wrapper ##### */
 .signup-form-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  background-color: var(--background-color);
-  padding: 0.7rem;
+  width: min(620px, 100%);
   /* border: 1px solid var(--border-color); */
   /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); */
   color: var(--text-primary);
 }
 
 /* ##### signusignup guide ##### */
-.singup-header {
-  display: flex;
+.signup-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+
+.auth-logo {
+  width: 72px;
+  margin-bottom: 8px;
 }
 
 .signup-header h1 {
-  text-align: center;
-  color: var(--text-primary);
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin: 0 0 8px;
+  font-size: 34px;
+  line-height: 1.2;
 }
 
 .signup-header p {
+  margin: 0;
   color: var(--text-secondary);
-  font-size: 1rem;
-  margin-bottom: 20px;
+  font-size: 15px;
 }
-
 
 /* ##### logo ##### */
 /* .logo {
@@ -354,16 +430,14 @@ const signUp = async () => {
     font-size: 0.875rem;
 } */
 
-
 /* ##### signup form ##### */
 .signup-form {
   width: 100%;
-  max-width: 650px;
   background-color: var(--card-bg);
-  padding: 2rem;
-  border-radius: 20px;
+  padding: 20px 24px 22px;
+  border-radius: 14px;
   border: 1px solid var(--border-color);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
   position: relative;
 }
 
@@ -380,9 +454,9 @@ const signUp = async () => {
 
 .form-group input {
   width: 100%;
-  padding: 1rem;
+  padding: 0.85rem 0.95rem;
   background-color: var(--hover-color);
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   color: var(--text-primary);
   font-size: 1rem;
@@ -405,20 +479,16 @@ const signUp = async () => {
 }
 
 .btn-check {
-  padding: 1rem 1.5rem;
-  background-color: var(--primary-color);
-  border: none;
+  padding: 0 16px;
   border-radius: 10px;
-  color: white;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
   transition: var(--transition);
   white-space: nowrap;
 }
 
 .btn-check:hover {
-  background-color: #ff3838;
+  filter: brightness(1.05);
 }
 
 /* password */
@@ -509,13 +579,37 @@ const signUp = async () => {
     opacity: 1;
 } */
 
-
 /* ##### signup guide ##### */
 .help-text {
   color: var(--text-secondary);
   font-size: 0.75rem;
   margin-top: 0.25rem;
   display: block;
+}
+
+.terms-box {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #262626;
+  display: grid;
+  gap: 8px;
+}
+
+.terms-box label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.terms-box input[type='checkbox'] {
+  width: auto;
+  margin: 0;
+  flex-shrink: 0;
 }
 
 .btn-view-terms {
@@ -544,11 +638,11 @@ const signUp = async () => {
 
 .btn-signup {
   flex: 1;
-  padding: 1rem;
+  padding: 14px 16px;
   border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 600;
+  border-radius: 11px;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition);
   display: flex;
@@ -560,7 +654,20 @@ const signUp = async () => {
 
 .btn-signup:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
   box-shadow: 0 8px 25px rgba(46, 213, 115, 0.4);
+}
+
+@media (max-width: 780px) {
+  .signup-container {
+    padding: 10px 12px 22px;
+  }
+
+  .signup-form {
+    padding: 18px 14px 18px;
+  }
+
+  .input-with-button {
+    flex-direction: column;
+  }
 }
 </style>

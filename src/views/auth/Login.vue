@@ -1,21 +1,22 @@
 <script setup>
-import {reactive, ref} from 'vue';
-import LoginForm from '@/entity/auth/LoginForm.js';
-import Modal from '@/components/main/Modal.vue'
-import api, {getCurrentMemberInfo} from '@/api/auth/index.js'
-import useMemberStore from '@/stores/useMemberStore.js';
+import { reactive, ref } from 'vue'
+import LoginForm from '@/forms/auth/loginForm.js'
+import Modal from '@/components/ui/Modal.vue'
+import ButtonBasic from '@/components/ui/ButtonBasic.vue'
+import api from '@/api/auth/index.js'
+import useMemberStore from '@/stores/useMemberStore.js'
 
-const memberStore = useMemberStore();
+const memberStore = useMemberStore()
 const form = reactive({
-  loginForm: new LoginForm()
+  loginForm: new LoginForm(),
 })
 const showErrorModal = ref(false)
 const errorMessage = ref('')
 const errorTitle = 'Together 생성 에러'
 const socialLogin = reactive({
-  "google": "/oauth2/authorization/google",
-  "kakao": "/oauth2/authorization/kakao",
-  "naver": "/oauth2/authorization/naver"
+  google: '/oauth2/authorization/google',
+  kakao: '/oauth2/authorization/kakao',
+  naver: '/oauth2/authorization/naver',
 })
 
 const closeErrorModal = () => {
@@ -23,186 +24,210 @@ const closeErrorModal = () => {
 }
 
 const state = reactive({
-  showPassword: false
+  showPassword: false,
 })
 
 const togglePassword = () => {
-  state.showPassword = !state.showPassword;
+  state.showPassword = !state.showPassword
 }
 
 const login = async () => {
   const data = await api.login(form.loginForm)
-  const channelName = data.data;
+  const channelName = data.data
   if (data.code !== 200) {
-    showErrorModal.value = true;
-    errorMessage.value = "로그인을 다시 시도해주세요."
-    return;
+    showErrorModal.value = true
+    errorMessage.value = '로그인을 다시 시도해주세요.'
+    return
   }
   memberStore.setWithEncrypt(channelName)
   window.location.href = '/'
 }
 
 const showSocialLoginPopup = (url) => {
-  const popupHeight = 500;
-  const popupWidth = 500;
-  const left = (window.screen.width - popupWidth) / 2;
-  const top = (window.screen.height - popupHeight) / 2;
+  const popupHeight = 500
+  const popupWidth = 500
+  const left = (window.screen.width - popupWidth) / 2
+  const top = (window.screen.height - popupHeight) / 2
 
-  const popupOptions = `height=${popupHeight},width=${popupWidth},left=${left},top=${top},scrollbars=yes,resizable=yes`;
+  const popupOptions = `height=${popupHeight},width=${popupWidth},left=${left},top=${top},scrollbars=yes,resizable=yes`
 
-  openPopup(popupOptions, url);
-};
+  openPopup(popupOptions, url)
+}
 
 const openPopup = async (options, url) => {
-  const popup = window.open(url, "_blank", options);
-  window.addEventListener("message", async (event) => {
+  const popup = window.open(url, '_blank', options)
+  window.addEventListener('message', async (event) => {
     if (event.data === 'true') {
-      let res = await api.getCurrentMemberInfo();
-      window.location.href = '/';
+      let res = await api.getCurrentMemberInfo()
+      window.location.href = '/'
       return memberStore.setWithEncrypt(res.data.name)
     }
-    popup.close();
-    showErrorModal.value = true;
-    errorMessage.value = "소셜 로그인을 다시 시도해주세요."
+    popup.close()
+    showErrorModal.value = true
+    errorMessage.value = '소셜 로그인을 다시 시도해주세요.'
   })
-};
+}
 </script>
 
 <template>
-  <div class="login-container">
-    <div class="login-form-wrapper">
-      <div class="login-header">
-        <h1>로그인</h1>
-        <p>DaBom에서 새로운 스트리밍 경험을 시작하세요</p>
-      </div>
-      <div class="login-form-container">
-        <form class="login-form" id="loginForm" @submit.prevent="login()">
-          <div class="form-group">
-            <label for="email">이메일</label>
-            <input type="email" id="email" name="email" required placeholder="이메일을 입력하세요"
-                   v-model="form.loginForm.email">
-            <span class="error-message" id="emailError"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="password">비밀번호</label>
-            <div class="password-input">
-              <input :type="state.showPassword ? 'text' : 'password'" id="password" name="password"
-                     v-model="form.loginForm.password" required placeholder="비밀번호를 입력하세요">
-              <button type="button" class="toggle-password" id="togglePassword" @click="togglePassword">
-                <i :class="state.showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
-              </button>
+  <div class="auth-page">
+    <main class="auth-main">
+      <div class="login-form-wrapper">
+        <div class="login-header">
+          <img src="@/assets/images/dabom2.png" alt="DaBom" class="auth-logo" />
+          <h1>로그인</h1>
+          <p>DaBom 계정으로 로그인하여 서비스를 이용하세요.</p>
+        </div>
+        <div class="login-form-container g-card">
+          <form class="login-form" id="loginForm" @submit.prevent="login()">
+            <div class="form-group">
+              <label for="email">이메일</label>
+              <input
+                class="g-input"
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="이메일을 입력하세요"
+                v-model="form.loginForm.email"
+              />
             </div>
-            <span class="error-message" id="passwordError"></span>
+
+            <div class="form-group">
+              <label for="password">비밀번호</label>
+              <div class="password-input">
+                <input
+                  class="g-input"
+                  :type="state.showPassword ? 'text' : 'password'"
+                  id="password"
+                  name="password"
+                  v-model="form.loginForm.password"
+                  required
+                  placeholder="비밀번호를 입력하세요"
+                />
+                <button
+                  type="button"
+                  class="toggle-password"
+                  id="togglePassword"
+                  @click="togglePassword"
+                >
+                  <i :class="state.showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-options">
+              <label class="remember-me">
+                <input type="checkbox" id="rememberMe" />
+                <span class="checkmark"></span>
+                로그인 상태 유지
+              </label>
+              <a href="#" class="forgot-link">비밀번호를 잊으셨나요?</a>
+            </div>
+
+            <ButtonBasic type="submit" variant="primary" size="lg" class="btn-login">
+              <i class="fas fa-sign-in-alt"></i>
+              로그인
+            </ButtonBasic>
+          </form>
+
+          <div class="divider">
+            <span>또는</span>
           </div>
 
-          <div class="form-options">
-            <label class="remember-me">
-              <input type="checkbox" id="rememberMe">
-              <span class="checkmark"></span>
-              로그인 상태 유지
-            </label>
-            <a href="#" class="forgot-link">비밀번호를 잊으셨나요?</a>
+          <div class="social-login-container">
+            <button
+              class="social-icon-btn kakao"
+              title="kakao"
+              @click="showSocialLoginPopup(socialLogin.kakao)"
+            >
+              <i class="fas fa-comment"></i>
+            </button>
+            <button
+              class="social-icon-btn naver"
+              title="naver"
+              @click="showSocialLoginPopup(socialLogin.naver)"
+            >
+              <span>N</span>
+            </button>
+            <button
+              class="social-icon-btn google"
+              title="google"
+              @click="showSocialLoginPopup(socialLogin.google)"
+            >
+              <i class="fab fa-google"></i>
+            </button>
           </div>
 
-          <button type="submit" class="btn-login">
-            <i class="fas fa-sign-in-alt"></i>
-            로그인
-          </button>
-        </form>
-
-        <div class="divider">
-          <span>또는</span>
-        </div>
-
-        <div class="social-login-container">
-          <button class="social-icon-btn kakao" title="kakao" @click="showSocialLoginPopup(socialLogin.kakao)">
-            <i class="fas fa-comment"></i>
-          </button>
-          <button class="social-icon-btn naver" title="naver" @click="showSocialLoginPopup(socialLogin.naver)">
-            <span>N</span>
-          </button>
-          <button class="social-icon-btn google" title="google" @click="showSocialLoginPopup(socialLogin.google)">
-            <i class="fab fa-google"></i>
-          </button>
-<!--          <button class="social-icon-btn apple" title="apple">-->
-<!--            <i class="fab fa-apple"></i>-->
-<!--          </button>-->
-        </div>
-
-        <div class="signup-link">
-          <p>계정이 없으신가요?
-            <RouterLink :to="{ name: 'signup' }">회원가입</RouterLink>
-          </p>
+          <div class="signup-link">
+            <p>
+              계정이 없으신가요?
+              <RouterLink :to="{ name: 'signup' }">회원가입</RouterLink>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   </div>
-  <Modal v-if="showErrorModal" @confirm="closeErrorModal" :title="errorTitle" :message="errorMessage"/>
+  <Modal
+    v-if="showErrorModal"
+    @confirm="closeErrorModal"
+    :title="errorTitle"
+    :message="errorMessage"
+  />
 </template>
 
 <style scoped>
+.auth-page {
+  min-height: 100vh;
+  background: #1f1f1f;
+}
+
+.auth-main {
+  min-height: calc(100vh - 78px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12px 16px 28px;
+}
+
 .login-form-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: var(--background-color);
-  padding: 0.7rem;
-  /* border: 1px solid var(--border-color); */
-  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); */
+  max-width: 560px;
   color: var(--text-primary);
-}
-
-.login-background {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  display: none;
-  /* Hidden on mobile */
-}
-
-.background-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
 }
 
 .login-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
 }
 
+.auth-logo {
+  width: 72px;
+  margin-bottom: 8px;
+}
+
+.login-header h1 {
+  margin: 0 0 8px;
+  font-size: 34px;
+  line-height: 1.2;
+}
 
 .login-header p {
+  margin: 10px 0 0;
   color: var(--text-secondary);
   font-size: 1rem;
 }
 
 .login-form-container {
   width: 100%;
-  max-width: 600px;
-  background-color: var(--card-bg);
   padding: 2.5rem;
-  border-radius: 20px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.25);
 }
-
-/* .login-form { */
-/* width: 100%;
-    max-width: 600px;
-    background-color: var(--TogetherCard-bg);
-    padding: 2.5rem;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); */
-/* } */
 
 .form-group {
   margin-bottom: 1.5rem;
@@ -215,25 +240,8 @@ const openPopup = async (options, url) => {
   margin-bottom: 0.5rem;
 }
 
-.form-group input {
-  width: 100%;
-  padding: 1rem;
-  background-color: var(--hover-color);
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
-  color: var(--text-primary);
-  font-size: 1rem;
-  transition: var(--transition);
-  outline: none;
-}
-
-.form-group input:focus {
-  border-color: var(--primary-color);
-  background-color: var(--dark-bg);
-}
-
-.form-group input::placeholder {
-  color: var(--text-secondary);
+.login-form-container .g-input {
+  padding: 0.9rem 0.95rem;
 }
 
 .password-input {
@@ -259,19 +267,6 @@ const openPopup = async (options, url) => {
   background-color: var(--border-color);
 }
 
-.error-message {
-  color: var(--primary-color);
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
-  display: block;
-  opacity: 0;
-  transition: var(--transition);
-}
-
-.error-message.show {
-  opacity: 1;
-}
-
 .form-options {
   display: flex;
   justify-content: space-between;
@@ -287,7 +282,7 @@ const openPopup = async (options, url) => {
   font-size: 0.875rem;
 }
 
-.remember-me input[type="checkbox"] {
+.remember-me input[type='checkbox'] {
   display: none;
 }
 
@@ -337,29 +332,14 @@ const openPopup = async (options, url) => {
 
 .btn-login {
   width: 100%;
-  padding: 1rem;
-  background: linear-gradient(135deg, var(--primary-color), #ff3838);
-  border: none;
-  border-radius: 10px;
-  color: white;
-  font-size: 1.1rem;
+  min-height: 48px;
+  font-size: 1.02rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
-}
-
-.btn-login:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
-}
-
-.btn-login:active {
-  transform: translateY(0);
 }
 
 .divider {
@@ -415,12 +395,12 @@ const openPopup = async (options, url) => {
 
 /* 플랫폼별 색상 */
 .social-icon-btn.kakao {
-  background-color: #FEE500;
+  background-color: #fee500;
   color: #000;
 }
 
 .social-icon-btn.naver {
-  background-color: #03C75A;
+  background-color: #03c75a;
   color: white;
   font-weight: bold;
   font-size: 1rem;
@@ -428,7 +408,7 @@ const openPopup = async (options, url) => {
 
 .social-icon-btn.google {
   background-color: white;
-  color: #4285F4;
+  color: #4285f4;
   border: 1px solid #ddd;
 }
 
@@ -437,10 +417,9 @@ const openPopup = async (options, url) => {
   color: white;
 }
 
-
 .signup-link {
   text-align: center;
-  margin-top: 0.5rem;
+  margin-top: 0.35rem;
   padding-top: 1.5rem;
 }
 
@@ -460,81 +439,25 @@ const openPopup = async (options, url) => {
   color: #ff3838;
 }
 
-
-/* Loading state */
-.btn-login.loading {
-  pointer-events: none;
-  opacity: 0.7;
-}
-
-.btn-login.loading:after {
-  content: '';
-  width: 20px;
-  height: 20px;
-  border: 2px solid transparent;
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-left: 0.5rem;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive Design */
-@media (min-width: 768px) {
-  .login-container {
-    flex-direction: row;
-  }
-
-  .login-background {
-    display: block;
-  }
-}
-
 @media (max-width: 768px) {
-  .login-form-wrapper {
-    padding: 1rem;
+  .auth-main {
+    padding: 10px 14px 22px;
   }
 
-  .login-form {
-    padding: 2rem 1.5rem;
-  }
-
-  .logo h1 {
-    font-size: 2rem;
-  }
-
-  .login-header h2 {
-    font-size: 1.5rem;
+  .login-form-container {
+    padding: 1.6rem 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
-  .login-form {
-    padding: 1.5rem 1rem;
-  }
-
   .form-options {
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
   }
 
-  .social-login {
-    gap: 0.5rem;
-  }
-
-  .social-btn {
-    padding: 0.875rem;
-    font-size: 0.9rem;
+  .social-login-container {
+    gap: 1rem;
   }
 }
 </style>
