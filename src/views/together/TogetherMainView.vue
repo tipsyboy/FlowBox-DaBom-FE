@@ -13,6 +13,8 @@ const searchQuery = ref('')
 const inviteCode = ref('')
 const createModalOpen = ref(false)
 const showInviteCodeModal = ref(false)
+const inviteCodeModalTitle = ref('초대 코드 확인')
+const inviteCodeModalMessage = ref('숫자 형태의 초대 코드를 입력해 주세요.')
 
 const createdRooms = ref([])
 const joinedRooms = ref([])
@@ -21,6 +23,7 @@ const activeRooms = ref([])
 const extractList = (response) => {
   if (Array.isArray(response)) return response
   if (Array.isArray(response?.data)) return response.data
+  if (Array.isArray(response?.data?.togethers)) return response.data.togethers
   if (Array.isArray(response?.data?.content)) return response.data.content
   if (Array.isArray(response?.content)) return response.content
   return []
@@ -30,9 +33,17 @@ const roomId = (room) => room.togetherIdx || room.id
 
 const roomTitle = (room) => room.title || room.name || '이름 없는 방'
 
+const roomHost = (room) => {
+  if (typeof room.master === 'object') {
+    return room.master?.name || '알 수 없음'
+  }
+
+  return room.masterName || room.master || room.host || room.channelName || '알 수 없음'
+}
+
 const roomMeta = (room) => {
-  const currentMember = room.currentMemberCount ?? room.currentMember ?? room.memberCount ?? 0
-  const maxMember = room.maxMemberNumber ?? room.maxMember ?? room.maxCount
+  const currentMember = room.joinMemberNumber ?? room.currentMemberCount ?? room.currentMember ?? room.memberCount ?? 0
+  const maxMember = room.maxMemberNum ?? room.maxMemberNumber ?? room.maxMember ?? room.maxCount
   const openness = room.isOpen === false ? '비공개방' : '공개방'
 
   if (maxMember) {
@@ -51,8 +62,8 @@ const mapListRoom = (room) => ({
 const mapActiveRoom = (room) => ({
   id: roomId(room),
   title: roomTitle(room),
-  host: room.masterName || room.host || room.channelName || '알 수 없음',
-  members: room.currentMemberCount ?? room.currentMember ?? room.memberCount ?? 0,
+  host: roomHost(room),
+  members: room.joinMemberNumber ?? room.currentMemberCount ?? room.currentMember ?? room.memberCount ?? 0,
 })
 
 const loadTogetherRooms = async () => {
@@ -92,13 +103,29 @@ const closeCreateModal = () => {
   createModalOpen.value = false
 }
 
-const joinByCode = () => {
-  const parsed = Number(inviteCode.value)
-  if (!Number.isNaN(parsed) && parsed > 0) {
-    moveToRoom(parsed)
+const openInviteCodeModal = (title, message) => {
+  inviteCodeModalTitle.value = title
+  inviteCodeModalMessage.value = message
+  showInviteCodeModal.value = true
+}
+
+const joinByCode = async () => {
+  const trimmedCode = inviteCode.value.trim()
+  if (!trimmedCode) {
+    openInviteCodeModal('초대 코드 확인', '초대 코드를 입력해 주세요.')
     return
   }
-  showInviteCodeModal.value = true
+
+  const response = await togetherApi.joinTogetherWithCode(trimmedCode)
+  if (response.code === 200) {
+    const togetherIdx = response.data?.togetherIdx ?? response.data?.id ?? response.data
+    if (togetherIdx) {
+      moveToRoom(togetherIdx)
+      return
+    }
+  }
+
+  openInviteCodeModal('입장 실패', response.message || '초대 코드로 방에 입장하지 못했습니다.')
 }
 
 onMounted(async () => {
@@ -201,8 +228,8 @@ onMounted(async () => {
     />
     <Modal
       v-if="showInviteCodeModal"
-      title="초대 코드 확인"
-      message="숫자 형태의 초대 코드를 입력해 주세요."
+      :title="inviteCodeModalTitle"
+      :message="inviteCodeModalMessage"
       @confirm="showInviteCodeModal = false"
     />
   </main>
