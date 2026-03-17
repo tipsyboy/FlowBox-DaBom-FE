@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import SearchBar from '@/components/app/SearchBar.vue'
 import ButtonBasic from '@/components/ui/ButtonBasic.vue'
+import Modal from '@/components/ui/Modal.vue'
 import CreateTogetherModal from '@/components/together/CreateTogetherModal.vue'
 import togetherApi from '@/api/together/index.js'
 
@@ -11,6 +12,7 @@ const router = useRouter()
 const searchQuery = ref('')
 const inviteCode = ref('')
 const createModalOpen = ref(false)
+const showInviteCodeModal = ref(false)
 
 const createdRooms = ref([])
 const joinedRooms = ref([])
@@ -96,7 +98,7 @@ const joinByCode = () => {
     moveToRoom(parsed)
     return
   }
-  alert('숫자 형태의 초대 코드를 입력해 주세요. (샘플 동작)')
+  showInviteCodeModal.value = true
 }
 
 onMounted(async () => {
@@ -196,6 +198,12 @@ onMounted(async () => {
       v-if="createModalOpen"
       :visible="createModalOpen"
       @close="closeCreateModal"
+    />
+    <Modal
+      v-if="showInviteCodeModal"
+      title="초대 코드 확인"
+      message="숫자 형태의 초대 코드를 입력해 주세요."
+      @confirm="showInviteCodeModal = false"
     />
   </main>
 </template>

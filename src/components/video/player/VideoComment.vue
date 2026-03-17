@@ -3,6 +3,8 @@ import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { getComments, postComment, deleteComment, videoCommentLikes } from '@/api/video-comment/index.js'
 import ButtonBasic from '@/components/ui/ButtonBasic.vue'
+import Modal from '@/components/ui/Modal.vue'
+import authApi from '@/api/auth/index.js'
 
 const route = useRoute()
 const videoId = ref(route.params.id)
@@ -26,6 +28,15 @@ const page = ref(0)
 const pageSize = 10
 const hasMore = ref(true)
 const likingComments = ref(new Set())
+const modalTitle = ref('')
+const modalMessage = ref('')
+const showFeedbackModal = ref(false)
+
+const openFeedbackModal = (title, message) => {
+  modalTitle.value = title
+  modalMessage.value = message
+  showFeedbackModal.value = true
+}
 
 const loadComments = async (reset = false) => {
   if (!videoId.value) return
@@ -64,18 +75,18 @@ const loadComments = async (reset = false) => {
   } catch (error) {
     comments.value = []
     hasMore.value = false
-    alert(error.response?.data?.message || '댓글 목록을 불러오는데 실패했습니다.')
+    openFeedbackModal('댓글 불러오기 실패', error.response?.data?.message || '댓글 목록을 불러오는데 실패했습니다.')
   }
 }
 
 const submitComment = async () => {
   if (!videoId.value) {
-    alert('비디오 ID가 없습니다.')
+    openFeedbackModal('댓글 작성 불가', '비디오 ID가 없습니다.')
     return
   }
 
   if (!commentText.value.trim()) {
-    alert('댓글을 입력해주세요.')
+    openFeedbackModal('댓글 작성 불가', '댓글을 입력해주세요.')
     return
   }
 
@@ -84,7 +95,7 @@ const submitComment = async () => {
     commentText.value = ''
     loadComments(true)
   } catch (error) {
-    alert(error.response?.data?.message || '댓글 작성에 실패했습니다.')
+    openFeedbackModal('댓글 작성 실패', error.response?.data?.message || '댓글 작성에 실패했습니다.')
   }
 }
 
@@ -95,7 +106,7 @@ const handleDeleteComment = async (commentId) => {
     await deleteComment(commentId)
     loadComments(true)
   } catch (error) {
-    alert(error.response?.data?.message || '댓글 삭제에 실패했습니다.')
+    openFeedbackModal('댓글 삭제 실패', error.response?.data?.message || '댓글 삭제에 실패했습니다.')
   }
 }
 
@@ -115,7 +126,7 @@ const handleCommentLike = async (comment) => {
       }
     }
   } catch (error) {
-    alert('좋아요 처리에 실패했습니다.')
+    openFeedbackModal('좋아요 처리 실패', '좋아요 처리에 실패했습니다.')
   } finally {
     likingComments.value.delete(comment.idx)
   }
@@ -140,7 +151,14 @@ watch(() => route.params.id, (newVideoId) => {
 }, { immediate: true })
 
 onMounted(() => {
-  currentUser.value = { id: 1 }
+  authApi.getCurrentMemberInfo()
+    .then((response) => {
+      const memberIdx = response?.data?.id ?? response?.data?.idx ?? response?.data?.memberIdx
+      currentUser.value = memberIdx ? { id: memberIdx } : null
+    })
+    .catch(() => {
+      currentUser.value = null
+    })
 })
 </script>
 
@@ -207,6 +225,12 @@ onMounted(() => {
       <ButtonBasic variant="primary" @click="loadMoreComments">더 보기</ButtonBasic>
     </div>
   </div>
+  <Modal
+    v-if="showFeedbackModal"
+    :title="modalTitle"
+    :message="modalMessage"
+    @confirm="showFeedbackModal = false"
+  />
 </template>
 
 <style scoped>
@@ -253,7 +277,7 @@ onMounted(() => {
 .comment-input-wrap textarea {
   width: 100%;
   min-height: 92px;
-  resize: vertical;
+  resize: none;
   border: 1px solid var(--border-color);
   border-radius: 10px;
   background: var(--hover-color);

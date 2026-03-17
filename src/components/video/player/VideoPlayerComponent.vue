@@ -18,7 +18,6 @@ const addMasterSubscription = () => {
   if (props.socket && props.socket.connected) {
     const masterSubscription = props.socket.subscribe(`/topic/master/together/${props.togetherIdx}`, (msg) => {
       try {
-        console.log('마스터 메시지:', msg)
         const data = JSON.parse(msg.body)
         if(!props.isMaster){
           videoMove(data)
@@ -44,7 +43,6 @@ const videoMove = (data) => {
 
 const sendMessage = () => {
   let body
-  console.log(videoPlayer.value.currentTime)
   if (props.isMaster) {
     body = {
       "currentTime": videoPlayer.value.currentTime,
@@ -79,7 +77,6 @@ const initHlsPlayer = () => {
 
     // HLS 이벤트 리스너
     hls.on(Hls.Events.MANIFEST_PARSED, () => {
-      console.log('HLS manifest parsed, ready to play')
     })
 
     hls.on(Hls.Events.ERROR, (event, data) => {
@@ -89,15 +86,12 @@ const initHlsPlayer = () => {
       if (data.fatal) {
         switch (data.type) {
           case Hls.ErrorTypes.NETWORK_ERROR:
-            console.log('Network error, trying to recover...')
             hls.startLoad()
             break
           case Hls.ErrorTypes.MEDIA_ERROR:
-            console.log('Media error, trying to recover...')
             hls.recoverMediaError()
             break
           default:
-            console.log('Fatal error, destroying HLS...')
             hls.destroy()
             break
         }

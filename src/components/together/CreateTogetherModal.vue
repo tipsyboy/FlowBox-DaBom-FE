@@ -19,8 +19,10 @@ const roomBody = reactive({
   isOpen: ""
 })
 const showErrorModal = ref(false)
+const showSuccessModal = ref(false)
 const errorMessage = ref('')
 const errorTitle = 'Together 생성 에러'
+const createdTogetherIdx = ref(null)
 
 const closeErrorModal = () => {
   showErrorModal.value = false
@@ -52,12 +54,15 @@ const saveTogetherRoom = async () => {
 const sendApi = async () => {
   let idx = await saveTogetherRoom()
   if(!showErrorModal.value) {
-    alert("방을 생성했습니다.")
-    closeModal()
-    router.push({ name: 'togetherRoom', params: {id: idx}})
+    createdTogetherIdx.value = idx
+    showSuccessModal.value = true
   }
-  console.log(errorMessage.value)
-  console.log(showErrorModal.value)
+}
+
+const handleCreateSuccess = () => {
+  showSuccessModal.value = false
+  closeModal()
+  router.push({ name: 'togetherRoom', params: {id: createdTogetherIdx.value}})
 }
 </script>
 
@@ -78,6 +83,12 @@ const sendApi = async () => {
         </button>
       </div>
       <Modal v-if="showErrorModal" @confirm="closeErrorModal" :title="errorTitle" :message="errorMessage"  />
+      <Modal
+        v-if="showSuccessModal"
+        @confirm="handleCreateSuccess"
+        title="Together 방 생성"
+        message="방을 생성했습니다."
+      />
       <form class="create-room-form" @submit.prevent="sendApi">
         <!-- 방 이름 입력 -->
         <div class="form-group">

@@ -22,6 +22,8 @@ const videoRating = ref(0)
 const showPlaylistModal = ref(false)
 const showChatModal = ref(false)
 const showLoginModal = ref(false)
+const showShareModal = ref(false)
+const showChatErrorModal = ref(false)
 const channelIdx = ref(0)
 const subscribeState = ref(false)
 
@@ -37,7 +39,7 @@ const createChatRoom = async () => {
     await api.createChatRoom(videoIdx)
     showChatModal.value = true
   } catch (error) {
-    alert('채팅방 생성에 실패했습니다.')
+    showChatErrorModal.value = true
   }
 }
 
@@ -74,7 +76,7 @@ const showTogetherModal = () => {
 const copyVideo = async () => {
   const currentUrl = window.location.href
   await navigator.clipboard.writeText(currentUrl)
-  alert('클립보드에 복사되었습니다!')
+  showShareModal.value = true
 }
 
 const navigateToChatRoom = () => {
@@ -127,10 +129,22 @@ watch(
     @confirm="navigateToChatRoom"
   />
   <Modal
+    v-if="showChatErrorModal"
+    title="채팅방 생성 실패"
+    message="채팅방 생성에 실패했습니다."
+    @confirm="showChatErrorModal = false"
+  />
+  <Modal
     v-if="showLoginModal"
     title="로그인이 필요합니다."
     message="채팅을 시작하려면 로그인해주세요."
     @confirm="showLoginModal = false"
+  />
+  <Modal
+    v-if="showShareModal"
+    title="링크 복사 완료"
+    message="클립보드에 복사되었습니다."
+    @confirm="showShareModal = false"
   />
   <CreateTogetherModal
     v-if="showModal"
