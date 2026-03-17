@@ -1,7 +1,9 @@
 <script setup>
 import { useRouter } from 'vue-router';
 
-const props = defineProps(['video'])
+const props = defineProps({
+  video: Object,
+})
 const router = useRouter()
 
 const playVideo = () => {

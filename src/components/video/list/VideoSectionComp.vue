@@ -1,7 +1,11 @@
 <script setup>
 import VideoCardComp from '@/components/video/list/VideoCardComp.vue'
 
-const props = defineProps(['title', 'icon', 'videos'])
+const props = defineProps({
+  title: String,
+  icon: String,
+  videos: Array,
+})
 </script>
 
 <template>

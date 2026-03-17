@@ -11,7 +11,9 @@ import CreateTogetherModal from '@/components/together/CreateTogetherModal.vue'
 import { useRouter } from 'vue-router'
 import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
-const props = defineProps(['videoInfo'])
+const props = defineProps({
+  videoInfo: Object,
+})
 const router = useRouter()
 const memberStore = useMemberStore()
 

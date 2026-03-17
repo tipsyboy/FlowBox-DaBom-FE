@@ -11,7 +11,10 @@
 <script setup>
 import ButtonBasic from '@/components/ui/ButtonBasic.vue'
 
-const props = defineProps(['title', 'message'])
+const props = defineProps({
+  title: String,
+  message: String,
+})
 const emit = defineEmits(['confirm'])
 </script>
 

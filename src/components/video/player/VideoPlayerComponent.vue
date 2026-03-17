@@ -2,7 +2,13 @@
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import Hls from 'hls.js'
 
-const props = defineProps(['video_url', 'is_open_modal', 'socket', 'togetherIdx', 'isMaster'])
+const props = defineProps({
+  video_url: String,
+  is_open_modal: Boolean,
+  socket: Object,
+  togetherIdx: [String, Number],
+  isMaster: Boolean,
+})
 
 const videoPlayer = ref(null)
 let hls = null
