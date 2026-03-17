@@ -135,7 +135,7 @@ onUnmounted(() => {
   <video
     id="mainVideoPlayer"
     ref="videoPlayer"
-    class='video-player'
+    class="video-player"
     controls
     playsinline
     @seeked="sendMessage"
